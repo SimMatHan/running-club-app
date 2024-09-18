@@ -1,38 +1,72 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Ensures the app takes up full viewport height */
+.app-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+/* This ensures the content area takes up the rest of the space above the navbar */
+.content {
+  flex: 1;
+  padding: 20px; /* Add padding for space around the content */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Position the Navbar at the bottom */
+nav {
+  background-color: #f8f8f8; /* Background color of the navbar */
+  padding: 10px 0;           /* Padding for the navbar */
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  border-top: 1px solid #ddd; /* Add a top border to distinguish it */
+}
+
+/* Optional: Style the Navbar links */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px 20px;
+}
+
+/* Top Navbar (top-right) */
+.top-navbar {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.top-navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.top-navbar ul li {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.top-navbar ul li a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.top-navbar ul li a:hover {
+  background-color: #f0f0f0;
 }

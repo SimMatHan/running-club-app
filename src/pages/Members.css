@@ -1,0 +1,15 @@
+/* Members.css */
+.maintenance-container {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .maintenance-container h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .maintenance-container p {
+    color: #999;
+  }
+  

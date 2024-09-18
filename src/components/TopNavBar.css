@@ -1,0 +1,29 @@
+/* TopNavBar.css */
+.top-navbar {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+  
+  .top-navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .top-navbar ul li {
+    display: inline-block;
+    margin-left: 10px;
+  }
+  
+  .top-navbar ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .top-navbar ul li a:hover {
+    background-color: #f0f0f0;
+  }
+  

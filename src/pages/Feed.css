@@ -1,0 +1,25 @@
+/* Feed.css */
+.feed-container {
+    padding: 50px;
+  }
+  
+  .feed-container h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+  
+  .event-list, .message-list {
+    margin-top: 20px;
+  }
+  
+  .event-item, .message-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .event-item h3 {
+    margin: 0 0 10px;
+  }
+  
