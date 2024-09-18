@@ -1,72 +1,47 @@
-/* Ensures the app takes up full viewport height */
+/* Global resets and default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* App-wide container */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #fff;
 }
 
-/* This ensures the content area takes up the rest of the space above the navbar */
+/* Content area to fill available space */
 .content {
   flex: 1;
-  padding: 20px; /* Add padding for space around the content */
+  padding: 20px;
 }
 
-/* Position the Navbar at the bottom */
-nav {
-  background-color: #f8f8f8; /* Background color of the navbar */
-  padding: 10px 0;           /* Padding for the navbar */
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  text-align: center;
-  border-top: 1px solid #ddd; /* Add a top border to distinguish it */
-}
-
-/* Optional: Style the Navbar links */
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-around;
-}
-
-nav ul li {
-  display: inline;
-}
-
-nav ul li a {
+/* General link styles */
+a {
+  color: #007bff;
   text-decoration: none;
-  color: #333;
-  padding: 10px 20px;
 }
 
-/* Top Navbar (top-right) */
-.top-navbar {
-  position: absolute;
-  top: 10px;
-  right: 20px;
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }
 
-.top-navbar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.top-navbar ul li {
-  display: inline-block;
-  margin-left: 10px;
-}
-
-.top-navbar ul li a {
-  text-decoration: none;
-  color: #333;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.top-navbar ul li a:hover {
-  background-color: #f0f0f0;
+/* For horizontal rule (divider) between sections */
+hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ddd;
 }
