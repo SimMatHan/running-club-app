@@ -1,11 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { db } from "../firebaseConfig";  // Firestore
+import { collection, getDocs } from "firebase/firestore";  // Firestore methods
 import './Feed.css';
-
-// Dummy data for now (you'll eventually fetch this from Firebase)
-const upcomingEvents = [
-  { id: 1, title: "5K Marathon", date: "2024-09-25", location: "Central Park" },
-  { id: 2, title: "Trail Run", date: "2024-09-30", location: "Mountain Trail" }
-];
 
 const messages = [
   { id: 1, user: "John", text: "Who's joining the marathon this weekend?" },
@@ -13,20 +9,49 @@ const messages = [
 ];
 
 const Feed = () => {
+  const [upcomingEvents, setUpcomingEvents] = useState([]); // State to store fetched events
+  const [error, setError] = useState("");  // Error handling state
+
+  // Function to fetch upcoming events from Firestore
+  const fetchUpcomingEvents = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "arrangements"));  // Fetch data from the 'arrangements' collection
+      const fetchedEvents = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setUpcomingEvents(fetchedEvents);  // Set the fetched events in the state
+    } catch (err) {
+      console.error("Error fetching events: ", err);
+      setError("Failed to load events. Please try again later.");
+    }
+  };
+
+  // Use effect to fetch events on component mount
+  useEffect(() => {
+    fetchUpcomingEvents();
+  }, []);
+
   return (
     <div className="feed-container">
       {/* Section for Upcoming Events */}
       <section className="event-list">
         <h2>Upcoming Events</h2>
-        <ul>
-          {upcomingEvents.map(event => (
-            <li key={event.id} className="event-item">
-              <h3>{event.title}</h3>
-              <p>Date: {event.date}</p>
-              <p>Location: {event.location}</p>
-            </li>
-          ))}
-        </ul>
+        {error && <p className="error-message">{error}</p>}
+        {upcomingEvents.length > 0 ? (
+          <ul>
+            {upcomingEvents.map(event => (
+              <li key={event.id} className="event-item">
+                <h3>{event.title}</h3>
+                <p>Date: {event.date}</p>
+                <p>Distance: {event.distance}</p>
+                <p>Location: {event.location}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="no-events">No upcoming events found.</p>
+        )}
       </section>
 
       {/* Divider */}

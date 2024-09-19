@@ -1,15 +1,102 @@
-/* Calendar.css */
-.maintenance-container {
-    text-align: center;
-    padding: 50px;
-  }
-  
-  .maintenance-container h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-  
-  .maintenance-container p {
-    color: #999;
-  }
-  
+/* Container for the whole calendar page */
+.calendar-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Form styling */
+.arrangement-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.arrangement-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.arrangement-form input,
+.arrangement-form textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.arrangement-form button {
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.arrangement-form button:hover {
+  background-color: #218838;
+}
+
+/* Success and error messages */
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
+/* Upcoming Arrangements */
+.arrangements-list {
+  margin-top: 40px;
+}
+
+.arrangements-list h2 {
+  margin-bottom: 20px;
+}
+
+/* Each arrangement item */
+.arrangement-item {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.arrangement-item:hover {
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.arrangement-item h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.arrangement-item p {
+  margin: 5px 0;
+}
+
+.arrangement-item strong {
+  color: #007bff;
+}
+
+.arrangement-item small {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+.no-arrangements {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 20px;
+}
