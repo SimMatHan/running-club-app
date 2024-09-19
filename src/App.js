@@ -4,23 +4,23 @@ import Profile from "./pages/Profile";
 import Feed from "./pages/Feed";
 import Calendar from "./pages/Calendar";
 import Members from "./pages/Members";
-import Navbar from "./components/Navbar"; 
-import TopNavBar from "./components/TopNavBar";  // Updated import
-import './App.css';  // Ensure this is imported to apply the CSS styles
+import Login from "./pages/Login";  // Import the Login page
+import Navbar from "./components/Navbar";
+import TopNavBar from "./components/TopNavBar";
+import './App.css';
 
 function App() {
   return (
     <div className="app-container">
-      <div className="content">
-        <TopNavBar />  {/* Use the updated component name here */}
-        <Routes>
-          <Route path="/" element={<Feed />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/feed" element={<Feed />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/members" element={<Members />} />
-        </Routes>
-      </div>
+      <TopNavBar />
+      <Routes>
+        <Route path="/" element={<Feed />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/members" element={<Members />} />
+        <Route path="/login" element={<Login />} />  {/* Add the login route */}
+      </Routes>
       <Navbar />
     </div>
   );
