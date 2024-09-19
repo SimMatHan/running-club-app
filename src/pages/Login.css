@@ -39,3 +39,17 @@
     background-color: #0056b3;
   }
   
+  /* Success message styling */
+  .success-message {
+    color: green;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: red;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
