@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Profile from "./pages/Profile";
 import Feed from "./pages/Feed";
 import Calendar from "./pages/Calendar";
@@ -7,21 +7,34 @@ import Members from "./pages/Members";
 import Login from "./pages/Login";  // Import the Login page
 import Navbar from "./components/Navbar";
 import TopNavBar from "./components/TopNavBar";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebaseConfig";  // Import Firebase authentication
 import './App.css';
 
 function App() {
+  const [user, loading] = useAuthState(auth);  // Track authentication state
+
+  if (loading) {
+    return <p>Loading...</p>;  // Show a loading state while Firebase checks authentication
+  }
+
   return (
     <div className="app-container">
-      <TopNavBar />
+      {/* Only show the navigation bars when the user is authenticated */}
+      {user && <TopNavBar />}
+      
       <Routes>
-        <Route path="/" element={<Feed />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/feed" element={<Feed />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/members" element={<Members />} />
-        <Route path="/login" element={<Login />} />  {/* Add the login route */}
+        {/* Redirect to Feed if user is authenticated, otherwise go to Login */}
+        <Route path="/" element={user ? <Feed /> : <Navigate to="/login" />} />
+        <Route path="/feed" element={user ? <Feed /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
+        <Route path="/calendar" element={user ? <Calendar /> : <Navigate to="/login" />} />
+        <Route path="/members" element={user ? <Members /> : <Navigate to="/login" />} />
+        <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />  {/* If already logged in, redirect to Feed */}
       </Routes>
-      <Navbar />
+
+      {/* Only show the bottom Navbar when the user is authenticated */}
+      {user && <Navbar />}
     </div>
   );
 }
