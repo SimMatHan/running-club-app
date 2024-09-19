@@ -59,62 +59,68 @@ const Profile = () => {
   }
 
   return (
-    <div className="profile-container">
-      <h1>Profile</h1>
+    <div className="profile-page">
+      {/* Title Section */}
+      <div className="profile-title">
+        <h1>Profile</h1>
+      </div>
 
-      {/* Success/Error Message */}
-      {message && <p className="message">{message}</p>}
+      {/* Main Content Section */}
+      <div className="profile-content">
+        {/* Success/Error Message */}
+        {message && <p className="message">{message}</p>}
 
-      {/* Profile Form */}
-      <form onSubmit={handleSave} className="profile-form">
-        {/* Username - disabled */}
-        <div className="form-group">
-          <label>Username</label>
-          <input type="text" value={userData.username || ""} disabled />
-        </div>
+        {/* Profile Form */}
+        <form onSubmit={handleSave} className="profile-form">
+          {/* Username - disabled */}
+          <div>
+            <label>Username</label>
+            <input type="text" value={userData.username || ""} disabled />
+          </div>
 
-        {/* Email - disabled */}
-        <div className="form-group">
-          <label>Email</label>
-          <input type="email" value={userData.email || ""} disabled />
-        </div>
+          {/* Email - disabled */}
+          <div>
+            <label>Email</label>
+            <input type="email" value={userData.email || ""} disabled />
+          </div>
 
-        {/* Phone Number */}
-        <div className="form-group">
-          <label>Phone Number</label>
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Enter your phone number"
-          />
-        </div>
+          {/* Phone Number */}
+          <div>
+            <label>Phone Number</label>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Enter your phone number"
+            />
+          </div>
 
-        {/* Preferred Running Gear */}
-        <div className="form-group">
-          <label>Preferred Running Gear</label>
-          <input
-            type="text"
-            value={preferredGear}
-            onChange={(e) => setPreferredGear(e.target.value)}
-            placeholder="Enter your preferred running gear"
-          />
-        </div>
+          {/* Preferred Running Gear */}
+          <div>
+            <label>Preferred Running Gear</label>
+            <input
+              type="text"
+              value={preferredGear}
+              onChange={(e) => setPreferredGear(e.target.value)}
+              placeholder="Enter your preferred running gear"
+            />
+          </div>
 
-        {/* Preferred Distance */}
-        <div className="form-group">
-          <label>Preferred Running Distance (e.g., 5K, 10K)</label>
-          <input
-            type="text"
-            value={preferredDistance}
-            onChange={(e) => setPreferredDistance(e.target.value)}
-            placeholder="Enter your preferred distance"
-          />
-        </div>
+          {/* Preferred Distance */}
+          <div>
+            <label>Preferred Running Distance (e.g., 5K, 10K)</label>
+            <input
+              type="text"
+              value={preferredDistance}
+              onChange={(e) => setPreferredDistance(e.target.value)}
+              placeholder="Enter your preferred distance"
+            />
+          </div>
 
-        {/* Save Button */}
-        <button type="submit" className="save-button">Save Changes</button>
-      </form>
+          {/* Save Button */}
+          <button type="submit" className="save-button">Save Changes</button>
+        </form>
+      </div>
     </div>
   );
 };

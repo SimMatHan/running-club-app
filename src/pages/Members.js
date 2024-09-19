@@ -28,21 +28,28 @@ const Members = () => {
   }, []);
 
   return (
-    <div className="members-container">
-      <h1>Members List</h1>
-      {error && <p className="error-message">{error}</p>}
-      {members.length > 0 ? (
-        <ul className="members-list">
-          {members.map(member => (
-            <li key={member.id} className="member-item">
-              <h3>{member.username}</h3>
-              <p>Email: {member.email}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="no-members">No members found.</p>
-      )}
+    <div className="members-page">
+      {/* Title Section */}
+      <div className="members-title">
+        <h1>Members List</h1>
+      </div>
+
+      {/* Main Content Section */}
+      <div className="members-content">
+        {error && <p className="error-message">{error}</p>}
+        {members.length > 0 ? (
+          <ul className="members-list">
+            {members.map(member => (
+              <li key={member.id} className="member-item">
+                <h3>{member.username}</h3>
+                <p>Email: {member.email}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="no-members">No members found.</p>
+        )}
+      </div>
     </div>
   );
 };

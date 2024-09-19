@@ -1,25 +1,99 @@
-/* Feed.css */
-.feed-container {
-    padding: 50px;
+/* Full height and background setup */
+.feed-page {
+  height: calc(100vh - 150px);
+  margin-top: 75px;
+  position: relative;
+  background-color: #2979ff; /* Orange background */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title section with white background and rounded corners */
+.feed-title {
+  color: black;
+  padding: 25px;
+  text-align: left;
+  z-index: 2; /* Ensures it appears above the background */
+  position: relative;
+  height: 100px;
+}
+
+/* Ensure the feed content takes up available space and stays at the bottom */
+.feed-content {
+  padding: 25px 20px;
+  background-color: white;
+  border-radius: 30px 30px 0 0; /* Rounded top corners for continuity */
+  z-index: 1; /* Slightly below the title */
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+  flex-grow: 1; /* This allows it to fill the available space */
+  flex-direction: column;
+  justify-content: space-between; /* Align content to the top and bottom */
+  overflow-y: auto; /* Make the content scrollable if needed */
+}
+
+/* Styling for h1 and subtitle */
+.feed-title h1 {
+  margin: 0;
+  font-size: 36px;
+  color: white;
+}
+
+/* Upcoming Events and Messages */
+h2 {
+  font-size: 24px;
+  color: #2979ff;
+}
+
+/* Event list and message list container with padding and border-radius */
+.event-list,
+.message-list {
+  flex-grow: 1; /* Allow the content to grow inside the available space */
+}
+
+/* Event list styling */
+.event-list ul {
+  padding: 0;
+  list-style: none;
+  margin-top: 20px;
+}
+
+/* Event item styling */
+.event-item {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Message item styling */
+.message-item {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Divider styling */
+hr {
+  margin: 40px 0;
+  border: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .feed-content {
   }
-  
-  .feed-container h2 {
-    font-size: 30px;
-    margin-bottom: 20px;
+
+  h2 {
+    font-size: 20px;
   }
-  
-  .event-list, .message-list {
-    margin-top: 20px;
-  }
-  
-  .event-item, .message-item {
+
+  .event-item,
+  .message-item {
     padding: 10px;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    border-radius: 5px;
   }
-  
-  .event-item h3 {
-    margin: 0 0 10px;
-  }
-  
+}

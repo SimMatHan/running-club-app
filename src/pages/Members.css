@@ -1,15 +1,41 @@
-/* General container for the members page */
-.members-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
+/* Full height and background setup */
+.members-page {
+  height: calc(100vh - 150px); /* Full height minus some padding for navbars */
+  margin-top: 75px;
+  position: relative;
+  background-color: #2979ff; /* Blue background */
+  display: flex;
+  flex-direction: column;
 }
 
-/* Heading style */
-.members-container h1 {
-  margin-bottom: 30px;
-  color: #007bff;
+/* Title section with white background and rounded corners */
+.members-title {
+  color: black;
+  padding: 25px;
+  text-align: left;
+  z-index: 2; /* Ensures it appears above the background */
+  position: relative;
+  height: 100px;
+}
+
+/* Ensure the members content takes up available space and stays at the bottom */
+.members-content {
+  padding: 25px 20px;
+  background-color: white;
+  border-radius: 30px 30px 0 0; /* Rounded top corners for continuity */
+  z-index: 1; /* Slightly below the title */
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+  flex-grow: 1; /* This allows it to fill the available space */
+  flex-direction: column;
+  justify-content: space-between; /* Align content to the top and bottom */
+  overflow-y: auto; /* Make the content scrollable if needed */
+}
+
+/* Styling for h1 and subtitle */
+.members-title h1 {
+  margin: 0;
+  font-size: 36px;
+  color: white;
 }
 
 /* Error message styling */
@@ -29,15 +55,16 @@
 .members-list {
   list-style-type: none;
   padding: 0;
+  margin-top: 20px;
 }
 
+/* Individual member styling */
 .member-item {
-  background-color: #f8f9fa;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background-color: white;
   padding: 15px;
+  border-radius: 8px;
   margin-bottom: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: left;
   transition: box-shadow 0.3s ease;
 }
@@ -54,4 +81,28 @@
 .member-item p {
   margin: 5px 0;
   color: #555;
+}
+
+/* Divider styling */
+hr {
+  margin: 40px 0;
+  border: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .members-content {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .member-item {
+    padding: 10px;
+  }
 }

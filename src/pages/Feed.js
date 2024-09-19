@@ -33,42 +33,50 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="feed-container">
-      {/* Section for Upcoming Events */}
-      <section className="event-list">
-        <h2>Upcoming Events</h2>
-        {error && <p className="error-message">{error}</p>}
-        {upcomingEvents.length > 0 ? (
-          <ul>
-            {upcomingEvents.map(event => (
-              <li key={event.id} className="event-item">
-                <h3>{event.title}</h3>
-                <p>Date: {event.date}</p>
-                <p>Distance: {event.distance}</p>
-                <p>Location: {event.location}</p>
-              </li>
+    <div className="feed-page">
+      {/* Title Section */}
+      <div className="feed-title">
+        <h1>Feed</h1>
+      </div>
+
+      {/* Main Content Section */}
+      <div className="feed-content">
+        {/* Section for Upcoming Events */}
+        <section className="event-list">
+          <h2>Upcoming Events</h2>
+          {error && <p className="error-message">{error}</p>}
+          {upcomingEvents.length > 0 ? (
+            <ul>
+              {upcomingEvents.map(event => (
+                <li key={event.id} className="event-item">
+                  <h3>{event.title}</h3>
+                  <p>Date: {event.date}</p>
+                  <p>Distance: {event.distance}</p>
+                  <p>Location: {event.location}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="no-events">No upcoming events found.</p>
+          )}
+        </section>
+
+        {/* Divider */}
+        <hr />
+
+        {/* Section for Messages */}
+        <section className="message-list">
+          <h2>Messages</h2>
+          <div>
+            {messages.map(message => (
+              <div key={message.id} className="message-item">
+                <strong>{message.user}:</strong>
+                <p>{message.text}</p>
+              </div>
             ))}
-          </ul>
-        ) : (
-          <p className="no-events">No upcoming events found.</p>
-        )}
-      </section>
-
-      {/* Divider */}
-      <hr />
-
-      {/* Section for Messages */}
-      <section className="message-list">
-        <h2>Messages</h2>
-        <div>
-          {messages.map(message => (
-            <div key={message.id} className="message-item">
-              <strong>{message.user}:</strong>
-              <p>{message.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };
