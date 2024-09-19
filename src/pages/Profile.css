@@ -82,7 +82,7 @@
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  width: 100%;
+  width: 150px;
 }
 
 .profile-form button:hover {
@@ -94,13 +94,14 @@
   margin-top: 20px;
   font-weight: bold;
   color: green;
+  text-align: center;
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .profile-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 
   .profile-form div {

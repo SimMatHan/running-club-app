@@ -47,6 +47,16 @@ const Profile = () => {
     }
   };
 
+  // Set timeout to clear the message after 7 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 7000);  // 7 seconds delay
+      return () => clearTimeout(timer); // Clean up the timer on unmount
+    }
+  }, [message]);
+
   // Fetch user data when the component mounts
   useEffect(() => {
     if (user) {
@@ -67,9 +77,6 @@ const Profile = () => {
 
       {/* Main Content Section */}
       <div className="profile-content">
-        {/* Success/Error Message */}
-        {message && <p className="message">{message}</p>}
-
         {/* Profile Form */}
         <form onSubmit={handleSave} className="profile-form">
           {/* Username - disabled */}
@@ -119,6 +126,9 @@ const Profile = () => {
 
           {/* Save Button */}
           <button type="submit" className="save-button">Save Changes</button>
+
+          {/* Success/Error Message below the button */}
+          {message && <p className="message">{message}</p>}
         </form>
       </div>
     </div>
