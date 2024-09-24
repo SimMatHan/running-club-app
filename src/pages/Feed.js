@@ -12,15 +12,21 @@ const Feed = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]); // State to store fetched events
   const [error, setError] = useState("");  // Error handling state
 
-  // Function to fetch upcoming events from Firestore
+  // Function to fetch upcoming events from Firestore and sort by date
   const fetchUpcomingEvents = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "arrangements"));  // Fetch data from the 'arrangements' collection
-      const fetchedEvents = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setUpcomingEvents(fetchedEvents);  // Set the fetched events in the state
+      const currentDate = new Date(); // Get current date
+
+      const fetchedEvents = querySnapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        .filter(event => new Date(event.date) >= currentDate) // Filter out past events
+        .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort the events based on the closest upcoming date
+
+      setUpcomingEvents(fetchedEvents);  // Set the filtered and sorted events in the state
     } catch (err) {
       console.error("Error fetching events: ", err);
       setError("Failed to load events. Please try again later.");
@@ -43,20 +49,22 @@ const Feed = () => {
       <div className="feed-content">
         {/* Section for Upcoming Events */}
         <section className="event-list">
-          <h2>Upcoming Events</h2>
+          <h2>Upcoming Runs</h2>
           {error && <p className="error-message">{error}</p>}
           {upcomingEvents.length > 0 ? (
-            <ul>
-              {upcomingEvents.map(event => (
-                <li key={event.id} className="event-item">
-                  <h3>{event.title}</h3>
-                  <p>Date: {event.date}</p>
-                  <p>Distance: {event.distance}</p>
-                  <p>Location: {event.location}</p>
-                  <p>Organizer: {event.createdBy}</p>
-                </li>
-              ))}
-            </ul>
+            <div className="scroll-container">
+              <ul>
+                {upcomingEvents.map(event => (
+                  <li key={event.id} className="event-item">
+                    <h3>{event.title}</h3>
+                    <p>Date: {event.date}</p>
+                    <p>Distance: {event.distance}</p>
+                    <p>Location: {event.location}</p>
+                    <p>Organizer: {event.createdBy}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ) : (
             <p className="no-events">No upcoming events found.</p>
           )}

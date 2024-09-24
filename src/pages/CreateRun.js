@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebaseConfig";  // Firestore and Firebase Auth
 import { collection, addDoc, getDocs, doc, getDoc, updateDoc, query, where } from "firebase/firestore";  // Firestore methods
 import { onAuthStateChanged } from "firebase/auth";  // Firebase Auth methods
-import './Calendar.css';
+import './CreateRun.css';
 
-const Calendar = () => {
+const CreateRun = () => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -17,13 +17,15 @@ const Calendar = () => {
   const [user, setUser] = useState(null);  // To store the logged-in user
   const [username, setUsername] = useState("");  // To store the username
   const [editingId, setEditingId] = useState(null);  // Track which arrangement is being edited
+  const [isEditing, setIsEditing] = useState(false); // Toggle to show or hide edit panel
+  const [isClosing, setIsClosing] = useState(false); // Track whether the panel is closing
 
   // Fetch the current logged-in user and retrieve their username
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        
+
         // Fetch the user's username from Firestore using the user's UID
         const userDocRef = doc(db, "users", currentUser.uid);
         const userDocSnap = await getDoc(userDocRef);
@@ -64,7 +66,8 @@ const Calendar = () => {
           distance,
           description,
         });
-        setMessage("Arrangement successfully updated!");
+        setMessage("Run successfully updated!");
+        closeEditPanel();  // Close edit panel after submission
       } else {
         // Add new arrangement
         await addDoc(collection(db, "arrangements"), {
@@ -78,7 +81,7 @@ const Calendar = () => {
           createdBy: username,  // Use the username fetched from Firestore
           userId: user.uid,  // Store the user's unique ID for reference
         });
-        setMessage("Arrangement successfully created!");
+        setMessage("Run successfully created!");
       }
 
       // Reset form
@@ -92,22 +95,31 @@ const Calendar = () => {
 
       fetchArrangements();
     } catch (err) {
-      console.error("Error creating arrangement: ", err);
-      setError("Failed to create arrangement. Please try again.");
+      console.error("Error creating run: ", err);
+      setError("Failed to create run. Please try again.");
     }
   };
 
   const fetchArrangements = async () => {
     if (!user) return;
-
+  
     try {
       // Fetch arrangements only for the logged-in user
       const q = query(collection(db, "arrangements"), where("userId", "==", user.uid));
       const querySnapshot = await getDocs(q);
-      const fetchedArrangements = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      
+      // Get the current date
+      const currentDate = new Date();
+  
+      // Filter out past events and sort by the closest upcoming date
+      const fetchedArrangements = querySnapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .filter(arrangement => new Date(arrangement.date) >= currentDate) // Exclude past events
+        .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by closest date
+  
       setArrangements(fetchedArrangements);
     } catch (err) {
       console.error("Error fetching arrangements: ", err);
@@ -129,19 +141,27 @@ const Calendar = () => {
     setLocation(arrangement.location);
     setDistance(arrangement.distance);
     setDescription(arrangement.description || "");
+    setIsEditing(true);  // Show edit panel when editing starts
+    setIsClosing(false);  // Ensure it's not in closing state
+  };
+
+  const closeEditPanel = () => {
+    setIsClosing(true);  // This will trigger the slide-down animation
+    setTimeout(() => {
+      setIsEditing(false);  // Remove the edit panel after the animation completes
+      setEditingId(null);  // Clear the editing state after animation completes
+    }, 500);  // The timeout should match the slide-down animation duration
   };
 
   return (
     <div className="calendar-page">
       {/* Title Section */}
       <div className="calendar-title">
-        <h1>{editingId ? "Edit Run" : "Create a Run"}</h1>
+        <h1>Create a Run</h1>
       </div>
 
       {/* Main Content Section */}
       <div className="calendar-content">
-        {message && <p className="success-message">{message}</p>}
-        {error && <p className="error-message">{error}</p>}
 
         <form onSubmit={handleSubmit} className="arrangement-form">
           <div>
@@ -206,8 +226,11 @@ const Calendar = () => {
             />
           </div>
 
-          <button type="submit">{editingId ? "Update Arrangement" : "Create Arrangement"}</button>
+          <button type="submit">{editingId ? "Update Run" : "Create Run"}</button>
         </form>
+
+        {message && <p className="success-message">{message}</p>}
+        {error && <p className="error-message">{error}</p>}
 
         <h2>Your Upcoming Runs</h2>
         <div className="arrangements-list">
@@ -220,8 +243,6 @@ const Calendar = () => {
                   <strong>Time:</strong> {arrangement.time}<br />
                   <strong>Location:</strong> {arrangement.location}<br />
                   <strong>Distance:</strong> {arrangement.distance}<br />
-                  {arrangement.description && <p><strong>Description:</strong> {arrangement.description}</p>}
-                  <p><strong>Created by:</strong> {arrangement.createdBy}</p>
                   {/* Edit Pen Icon */}
                   <span className="edit-icon" onClick={() => startEditing(arrangement)}>
                     🖉
@@ -234,8 +255,82 @@ const Calendar = () => {
           )}
         </div>
       </div>
+
+      {/* Show edit overlay and panel when editing */}
+      {isEditing && <div className={`edit-overlay ${isClosing ? "overlay-hide" : ""}`} onClick={closeEditPanel}></div>}
+      {(isEditing || isClosing) && (
+        <div className={`edit-panel ${isClosing ? "slide-down" : "slide-up"}`}>
+          <button className="close-button" onClick={closeEditPanel}>✕</button>
+          <h2>Edit Your Run</h2>
+          <form onSubmit={handleSubmit} className="arrangement-form">
+            <div>
+              <label>Event Title</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                placeholder="Enter the title of the event"
+              />
+            </div>
+
+            <div>
+              <label>Date</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Time</label>
+              <input
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Location</label>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                required
+                placeholder="Enter the location of the event"
+              />
+            </div>
+
+            <div>
+              <label>Distance (e.g., 5K, 10K)</label>
+              <input
+                type="text"
+                value={distance}
+                onChange={(e) => setDistance(e.target.value)}
+                required
+                placeholder="Enter the distance of the run"
+              />
+            </div>
+
+            <div>
+              <label>Description</label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Any additional information or notes"
+              />
+            </div>
+
+            <button type="submit">Update Arrangement</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Calendar;
+export default CreateRun;

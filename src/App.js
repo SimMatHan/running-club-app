@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Profile from "./pages/Profile";
 import Feed from "./pages/Feed";
-import Calendar from "./pages/Calendar";
+import CreateRun from "./pages/CreateRun";
 import Members from "./pages/Members";
 import Login from "./pages/Login";  // Import the Login page
 import Navbar from "./components/Navbar";
@@ -28,7 +28,7 @@ function App() {
         <Route path="/" element={user ? <Feed /> : <Navigate to="/login" />} />
         <Route path="/feed" element={user ? <Feed /> : <Navigate to="/login" />} />
         <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
-        <Route path="/calendar" element={user ? <Calendar /> : <Navigate to="/login" />} />
+        <Route path="/createrun" element={user ? <CreateRun /> : <Navigate to="/login" />} />
         <Route path="/members" element={user ? <Members /> : <Navigate to="/login" />} />
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />  {/* If already logged in, redirect to Feed */}
       </Routes>

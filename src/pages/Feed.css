@@ -38,6 +38,60 @@
   color: white;
 }
 
+/* Upcoming Events Section - Horizontal Scroll */
+.scroll-container {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding-bottom: 10px; /* Space below the scrolling content */
+  scrollbar-width: thin; /* Thinner scrollbar */
+}
+
+.scroll-container ul {
+  display: flex; /* Align items in a row */
+  flex-direction: row; /* Ensure horizontal arrangement */
+  gap: 20px; /* Space between each event card */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* Event item styling for horizontal display */
+.event-item {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 250px; /* Set minimum width for each event item */
+  flex-shrink: 0; /* Prevent shrinking */
+  transition: box-shadow 0.3s ease;
+}
+
+.event-item:hover {
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slight elevation on hover */
+}
+
+/* Style the scrollbar */
+.scroll-container::-webkit-scrollbar {
+  height: 8px; /* Set scrollbar height for horizontal scrolling */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* No events styling */
+.no-events {
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 20px;
+  text-align: center;
+}
+
 /* Upcoming Events and Messages */
 h2 {
   font-size: 24px;
@@ -85,9 +139,6 @@ hr {
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
-  .feed-content {
-  }
-
   h2 {
     font-size: 20px;
   }
