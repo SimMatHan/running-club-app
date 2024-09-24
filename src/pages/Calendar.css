@@ -1,0 +1,121 @@
+/* Full height and background setup */
+.calendar-page {
+    height: calc(100vh - 150px);
+    margin-top: 75px;
+    position: relative;
+    background-color: #2979ff; /* Blue background */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Title section with white background and rounded corners */
+  .calendar-title {
+    color: black;
+    padding: 25px;
+    text-align: left;
+    z-index: 2;
+    position: relative;
+    height: 100px;
+  }
+  
+  /* Ensure the calendar content takes up available space */
+  .calendar-content {
+    padding: 25px 20px;
+    background-color: white;
+    border-radius: 30px 30px 0 0; /* Rounded top corners */
+    z-index: 1;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+    flex-grow: 1; /* Fill the available space */
+    overflow-y: auto; /* Make the content scrollable if needed */
+  }
+  
+  /* Styling for h1 in the title */
+  .calendar-title h1 {
+    margin: 0;
+    font-size: 36px;
+    color: white;
+  }
+  
+  /* Styling for the section header */
+  .calendar-content h2 {
+    font-size: 24px;
+    color: #2979ff;
+    margin-top: 0;
+  }
+  
+  /* Arrangement list styles */
+  .run-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between each arrangement */
+  }
+  
+  /* Arrangement item styling */
+  .run-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    position: relative;
+  }
+  
+  /* Arrangement item hover effect */
+  .run-item:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Styling for no arrangements message */
+  .no-arrangements {
+    color: #6c757d;
+    font-style: italic;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: red;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Date, Time, Location, Distance styles inside the arrangement item */
+  .run-item p {
+    margin: 5px 0;
+    color: #333;
+    font-size: 16px;
+  }
+
+    /* Styles for See All Events Button */
+  .see-all-events-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .see-all-events-btn:hover {
+    background-color: #005bb5;
+  }
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .calendar-title h1 {
+      font-size: 28px;
+    }
+  
+    .calendar-content h2 {
+      font-size: 20px;
+    }
+  
+    .run-item {
+      padding: 10px;
+    }
+  }
+  

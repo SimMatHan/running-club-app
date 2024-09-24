@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";  // Ensure you import useNavigate
 import { db } from "../firebaseConfig";  // Firestore
 import { collection, getDocs } from "firebase/firestore";  // Firestore methods
 import './Feed.css';
@@ -11,6 +12,7 @@ const messages = [
 const Feed = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]); // State to store fetched events
   const [error, setError] = useState("");  // Error handling state
+  const navigate = useNavigate();  // Create a navigate function to use for routing
 
   // Function to fetch upcoming events from Firestore and sort by date
   const fetchUpcomingEvents = async () => {
@@ -37,6 +39,11 @@ const Feed = () => {
   useEffect(() => {
     fetchUpcomingEvents();
   }, []);
+
+  // Function to handle button click to navigate to the Calendar page
+  const goToCalendar = () => {
+    navigate("/calendar");  // Navigate to the calendar page
+  };
 
   return (
     <div className="feed-page">
@@ -69,6 +76,11 @@ const Feed = () => {
             <p className="no-events">No upcoming events found.</p>
           )}
         </section>
+
+        {/* See All Events Button */}
+        <button className="see-all-events-btn" onClick={goToCalendar}>
+          See All Events
+        </button>
 
         {/* Divider */}
         <hr />

@@ -154,14 +154,14 @@ const CreateRun = () => {
   };
 
   return (
-    <div className="calendar-page">
+    <div className="createrun-page">
       {/* Title Section */}
-      <div className="calendar-title">
+      <div className="createrun-title">
         <h1>Create a Run</h1>
       </div>
 
       {/* Main Content Section */}
-      <div className="calendar-content">
+      <div className="createrun-content">
 
         <form onSubmit={handleSubmit} className="arrangement-form">
           <div>

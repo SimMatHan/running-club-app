@@ -1,5 +1,5 @@
 /* Full height and background setup */
-.calendar-page {
+.createrun-page {
   height: calc(100vh - 150px); /* Full height minus some padding for navbar and topbar */
   margin-top: 75px;
   position: relative;
@@ -9,7 +9,7 @@
 }
 
 /* Title section with white background and rounded corners */
-.calendar-title {
+.createrun-title {
   color: black;
   padding: 25px;
   text-align: left;
@@ -18,8 +18,8 @@
   height: 100px;
 }
 
-/* Ensure the calendar content takes up available space and stays at the bottom */
-.calendar-content {
+/* Ensure the createrun content takes up available space and stays at the bottom */
+.createrun-content {
   padding: 25px 20px;
   background-color: white;
   border-radius: 30px 30px 0 0; /* Rounded top corners for continuity */
@@ -32,7 +32,7 @@
 }
 
 /* Styling for h1 */
-.calendar-title h1 {
+.createrun-title h1 {
   margin: 0;
   font-size: 36px;
   color: white;
@@ -286,7 +286,7 @@
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
-  .calendar-content {
+  .createrun-content {
     padding-left: 25px;
     padding-right: 25px;
   }
