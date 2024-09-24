@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebaseConfig";  // Firestore
-import { collection, addDoc, getDocs } from "firebase/firestore";  // Firestore methods
+import { db, auth } from "../firebaseConfig";  // Firestore and Firebase Auth
+import { collection, addDoc, getDocs, doc, getDoc, updateDoc, query, where } from "firebase/firestore";  // Firestore methods
+import { onAuthStateChanged } from "firebase/auth";  // Firebase Auth methods
 import './Calendar.css';
 
 const Calendar = () => {
@@ -13,30 +14,81 @@ const Calendar = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [arrangements, setArrangements] = useState([]);
+  const [user, setUser] = useState(null);  // To store the logged-in user
+  const [username, setUsername] = useState("");  // To store the username
+  const [editingId, setEditingId] = useState(null);  // Track which arrangement is being edited
+
+  // Fetch the current logged-in user and retrieve their username
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        
+        // Fetch the user's username from Firestore using the user's UID
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        if (userDocSnap.exists()) {
+          setUsername(userDocSnap.data().username);
+        } else {
+          console.error("No such user document!");
+          setUsername("Anonymous");
+        }
+      } else {
+        setUser(null);
+        setUsername("Anonymous");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setMessage("");
 
-    try {
-      await addDoc(collection(db, "arrangements"), {
-        title,
-        date,
-        time,
-        location,
-        distance,
-        description,
-        createdAt: new Date().toISOString(),
-      });
+    if (!user) {
+      setError("You must be logged in to create an arrangement.");
+      return;
+    }
 
+    try {
+      if (editingId) {
+        // Update existing arrangement
+        const arrangementRef = doc(db, "arrangements", editingId);
+        await updateDoc(arrangementRef, {
+          title,
+          date,
+          time,
+          location,
+          distance,
+          description,
+        });
+        setMessage("Arrangement successfully updated!");
+      } else {
+        // Add new arrangement
+        await addDoc(collection(db, "arrangements"), {
+          title,
+          date,
+          time,
+          location,
+          distance,
+          description,
+          createdAt: new Date().toISOString(),
+          createdBy: username,  // Use the username fetched from Firestore
+          userId: user.uid,  // Store the user's unique ID for reference
+        });
+        setMessage("Arrangement successfully created!");
+      }
+
+      // Reset form
       setTitle("");
       setDate("");
       setTime("");
       setLocation("");
       setDistance("");
       setDescription("");
-      setMessage("Arrangement successfully created!");
+      setEditingId(null);
 
       fetchArrangements();
     } catch (err) {
@@ -46,8 +98,12 @@ const Calendar = () => {
   };
 
   const fetchArrangements = async () => {
+    if (!user) return;
+
     try {
-      const querySnapshot = await getDocs(collection(db, "arrangements"));
+      // Fetch arrangements only for the logged-in user
+      const q = query(collection(db, "arrangements"), where("userId", "==", user.uid));
+      const querySnapshot = await getDocs(q);
       const fetchedArrangements = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
@@ -59,15 +115,27 @@ const Calendar = () => {
     }
   };
 
+  // Load arrangements when user is set
   useEffect(() => {
     fetchArrangements();
-  }, []);
+  }, [user]);
+
+  // Start editing an arrangement
+  const startEditing = (arrangement) => {
+    setEditingId(arrangement.id);
+    setTitle(arrangement.title);
+    setDate(arrangement.date);
+    setTime(arrangement.time);
+    setLocation(arrangement.location);
+    setDistance(arrangement.distance);
+    setDescription(arrangement.description || "");
+  };
 
   return (
     <div className="calendar-page">
       {/* Title Section */}
       <div className="calendar-title">
-        <h1>Create a Run</h1>
+        <h1>{editingId ? "Edit Run" : "Create a Run"}</h1>
       </div>
 
       {/* Main Content Section */}
@@ -138,10 +206,10 @@ const Calendar = () => {
             />
           </div>
 
-          <button type="submit">Create Arrangement</button>
+          <button type="submit">{editingId ? "Update Arrangement" : "Create Arrangement"}</button>
         </form>
 
-        <h2>Upcoming Arrangements</h2>
+        <h2>Your Upcoming Runs</h2>
         <div className="arrangements-list">
           {arrangements.length > 0 ? (
             arrangements.map((arrangement) => (
@@ -153,6 +221,11 @@ const Calendar = () => {
                   <strong>Location:</strong> {arrangement.location}<br />
                   <strong>Distance:</strong> {arrangement.distance}<br />
                   {arrangement.description && <p><strong>Description:</strong> {arrangement.description}</p>}
+                  <p><strong>Created by:</strong> {arrangement.createdBy}</p>
+                  {/* Edit Pen Icon */}
+                  <span className="edit-icon" onClick={() => startEditing(arrangement)}>
+                    🖉
+                  </span>
                 </p>
               </div>
             ))

@@ -53,6 +53,7 @@ const Feed = () => {
                   <p>Date: {event.date}</p>
                   <p>Distance: {event.distance}</p>
                   <p>Location: {event.location}</p>
+                  <p>Organizer: {event.createdBy}</p>
                 </li>
               ))}
             </ul>
