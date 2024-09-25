@@ -1,35 +1,73 @@
 /* Navbar.css */
 nav {
-    background-color: #f8f8f8;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    text-align: center;
-    border-top: 1px solid #ddd;
-    height: 75px;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  nav ul li {
-    display: inline;
-  }
-  
-  nav ul li a {
-    text-decoration: none;
-    color: #333;
-    padding: 10px 20px;
-  }
-  
-  nav ul li a:hover {
-    background-color: #ddd;
-  }
-  
+  background-color: #f8f8f8;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  height: 75px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  height: 100%;  /* Ensure nav items take up full height */
+}
+
+nav ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;  /* Each button will take up equal width */
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Full width of li */
+  height: 100%; /* Full height of the navbar */
+  font-size: 16px; /* Default font size */
+}
+
+nav ul li a:hover {
+  background-color: #ddd;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 5px;
+}
+
+/* Media query for smaller screens (like mobile devices) */
+@media (max-width: 768px) {
+nav ul li a {
+  font-size: 14px; /* Smaller font size on mobile */
+}
+
+.nav-icon {
+  width: 22px;  /* Smaller icon size on mobile */
+  height: 22px;
+}
+}
+
+@media (max-width: 480px) {
+nav ul li a {
+  font-size: 12px; /* Even smaller font size on very small mobile screens */
+}
+
+.nav-icon {
+  width: 20px;  /* Even smaller icon size on very small screens */
+  height: 20px;
+}
+}

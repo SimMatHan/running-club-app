@@ -1,41 +1,56 @@
 /* Top Navbar container */
 .top-navbar {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between; /* Align items to the left and right */
-    align-items: center;
-    padding: 10px 20px;
-    height: 75px;
-    background-color: #2979ff;
-  }
-  
-  /* Logo Placeholder styling */
-  .logo-placeholder h1 {
-    font-size: 16px;
-    color: #333;
-  }
-  
-  /* Profile link styling */
-  .top-navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .top-navbar ul li {
-    display: inline;
-  }
-  
-  .top-navbar ul li a {
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 16px;
-    padding: 10px;
-  }
-  
-  .top-navbar ul li a:hover {
-    color: #e4e4e4;
-  }
-  
+  position: absolute;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Align items to the left and right */
+  align-items: center;
+  padding: 10px 20px;
+  height: 75px;
+  background-color: #2979ff;
+}
+
+/* Logo Placeholder styling */
+.logo-placeholder h1 {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Profile link styling */
+.top-navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.top-navbar ul li {
+  display: inline;
+}
+
+.top-navbar ul li a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;    /* Center align items */
+}
+
+.top-navbar ul li a:hover {
+  color: #e4e4e4;
+}
+
+/* Profile picture styling */
+.profile-pic {
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Adjust the size as needed */
+}
+
+/* Profile text styling */
+.profile-text {
+  font-size: 12px; /* Smaller text below the image */
+  margin-top: 5px; /* Small margin between the image and text */
+  color: #ffffff;
+}

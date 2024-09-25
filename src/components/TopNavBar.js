@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ProfilePic from '../assets/Profile.svg'; // Import the SVG file
 import './TopNavBar.css';
 
 const TopNavBar = () => {
@@ -9,7 +10,13 @@ const TopNavBar = () => {
         <h1>Logo Placeholder</h1>
       </div>
       <ul>
-        <li><Link to="/profile">Profile</Link></li>
+        <li>
+          <Link to="/profile" className="profile-link">
+            {/* Render the SVG image */}
+            <img src={ProfilePic} alt="Profile" className="profile-pic" />
+            <span className="profile-text">Profile</span>
+          </Link>
+        </li>
       </ul>
     </div>
   );
