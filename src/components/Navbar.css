@@ -24,12 +24,13 @@ nav ul li {
   justify-content: center;
   align-items: center;
   flex: 1;  /* Each button will take up equal width */
+  position: relative; /* Ensure the rectangle is positioned relative to the li */
 }
 
 nav ul li a {
   text-decoration: none;
   color: #333;
-  padding: 10px;
+  padding: 10px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,25 +50,38 @@ nav ul li a:hover {
   margin-bottom: 5px;
 }
 
-/* Media query for smaller screens (like mobile devices) */
-@media (max-width: 768px) {
-nav ul li a {
-  font-size: 14px; /* Smaller font size on mobile */
+/* Active state styling: rectangle above active item */
+nav ul li.active::before {
+  content: "";
+  position: absolute;
+  top: -5px; /* Position the rectangle above the list item */
+  left: 0;
+  right: 0;
+  height: 5px; /* Height of the rectangle */
+  width: 50%;
+  background-color: #2979ff; /* Color of the rectangle */
+  border-radius: 2px 2px 0 0; /* Optional: rounded corners */
 }
 
-.nav-icon {
-  width: 22px;  /* Smaller icon size on mobile */
-  height: 22px;
-}
+/* Media query for smaller screens (like mobile devices) */
+@media (max-width: 768px) {
+  nav ul li a {
+    font-size: 14px; /* Smaller font size on mobile */
+  }
+
+  .nav-icon {
+    width: 22px;  /* Smaller icon size on mobile */
+    height: 22px;
+  }
 }
 
 @media (max-width: 480px) {
-nav ul li a {
-  font-size: 12px; /* Even smaller font size on very small mobile screens */
-}
+  nav ul li a {
+    font-size: 12px; /* Even smaller font size on very small mobile screens */
+  }
 
-.nav-icon {
-  width: 20px;  /* Even smaller icon size on very small screens */
-  height: 20px;
-}
+  .nav-icon {
+    width: 20px;  /* Even smaller icon size on very small screens */
+    height: 20px;
+  }
 }

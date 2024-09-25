@@ -6,8 +6,8 @@
   display: flex;
   justify-content: space-between; /* Align items to the left and right */
   align-items: center;
-  padding: 10px 20px;
-  height: 75px;
+  padding: 10px 25px;
+  height: 76px;
   background-color: #2979ff;
 }
 
@@ -25,7 +25,10 @@
 }
 
 .top-navbar ul li {
-  display: inline;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .top-navbar ul li a {
@@ -44,8 +47,8 @@
 
 /* Profile picture styling */
 .profile-pic {
-  width: 40px; /* Adjust the size as needed */
-  height: 40px; /* Adjust the size as needed */
+  width: 40px; /* Default size for larger screens */
+  height: 40px; 
 }
 
 /* Profile text styling */
@@ -53,4 +56,37 @@
   font-size: 12px; /* Smaller text below the image */
   margin-top: 5px; /* Small margin between the image and text */
   color: #ffffff;
+}
+
+/* Media query for tablets and smaller screens */
+@media (max-width: 768px) {
+  .profile-pic {
+    width: 30px; /* Slightly smaller on tablets */
+    height: 30px;
+  }
+  
+  .profile-text {
+    font-size: 12px; /* Smaller text on tablets */
+  }
+  
+  .logo-placeholder h1 {
+    font-size: 16px; /* Smaller logo font */
+  }
+}
+
+/* Media query for mobile screens */
+@media (max-width: 480px) {
+  .profile-pic {
+    width: 24px; /* Smaller on mobile phones */
+    height: 24px;
+  }
+  
+  .profile-text {
+    font-size: 12px; /* Small text on mobile */
+  }
+  
+  .logo-placeholder h1 {
+    font-size: 16px; /* Even smaller logo font on mobile */
+  }
+
 }

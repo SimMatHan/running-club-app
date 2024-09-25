@@ -18,7 +18,7 @@ const Navbar = () => {
   return (
     <nav>
       <ul>
-        <li>
+        <li className={location.pathname === '/feed' ? 'active' : ''}>
           <Link to="/feed">
             <img 
               src={location.pathname === '/feed' ? FeedFilled : FeedNotFilled} 
@@ -28,7 +28,7 @@ const Navbar = () => {
             <span>Feed</span>
           </Link>
         </li>
-        <li>
+        <li className={location.pathname === '/calendar' ? 'active' : ''}>
           <Link to="/calendar">
             <img 
               src={location.pathname === '/calendar' ? CalendarFilled : CalendarNotFilled} 
@@ -38,7 +38,7 @@ const Navbar = () => {
             <span>Calendar</span>
           </Link>
         </li>
-        <li>
+        <li className={location.pathname === '/createrun' ? 'active' : ''}>
           <Link to="/createrun">
             <img 
               src={location.pathname === '/createrun' ? CreateRunFilled : CreateRunNotFilled} 
@@ -48,7 +48,7 @@ const Navbar = () => {
             <span>Create Run</span>
           </Link>
         </li>
-        <li>
+        <li className={location.pathname === '/members' ? 'active' : ''}>
           <Link to="/members">
             <img 
               src={location.pathname === '/members' ? MembersFilled : MembersNotFilled} 
