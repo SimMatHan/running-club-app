@@ -40,10 +40,6 @@ nav ul li a {
   font-size: 16px; /* Default font size */
 }
 
-nav ul li a:hover {
-  background-color: #ddd;
-}
-
 .nav-icon {
   width: 24px;
   height: 24px;
@@ -55,10 +51,10 @@ nav ul li.active::before {
   content: "";
   position: absolute;
   top: -5px; /* Position the rectangle above the list item */
-  left: 0;
-  right: 0;
-  height: 5px; /* Height of the rectangle */
-  width: 50%;
+  left: 50%; /* Start the rectangle from the middle */
+  transform: translateX(-50%); /* Move the rectangle to the center */
+  width: 50%; /* Rectangle takes 50% of the li's width */
+  height: 6px; /* Height of the rectangle */
   background-color: #2979ff; /* Color of the rectangle */
   border-radius: 2px 2px 0 0; /* Optional: rounded corners */
 }
