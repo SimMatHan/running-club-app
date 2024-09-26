@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { db, auth } from "../firebaseConfig";  // Firestore and Firebase Auth
 import { collection, addDoc, getDocs, doc, getDoc, updateDoc, query, where } from "firebase/firestore";  // Firestore methods
 import { onAuthStateChanged } from "firebase/auth";  // Firebase Auth methods
@@ -16,7 +16,7 @@ const CreateRun = () => {
   const [error, setError] = useState("");
   const [arrangements, setArrangements] = useState([]);
   const [user, setUser] = useState(null);  // To store the logged-in user
-  const [username, setUsername] = useState("");  // To store the username (this was missing)
+  const [username, setUsername] = useState("");  // To store the username
   const [editingId, setEditingId] = useState(null);  // Track which arrangement is being edited
   const [isEditing, setIsEditing] = useState(false); // Toggle to show or hide edit panel
   const [isClosing, setIsClosing] = useState(false); // Track whether the panel is closing
@@ -101,7 +101,8 @@ const CreateRun = () => {
     }
   };
 
-  const fetchArrangements = async () => {
+  // Memoize fetchArrangements function to avoid re-renders
+  const fetchArrangements = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -126,12 +127,12 @@ const CreateRun = () => {
       console.error("Error fetching arrangements: ", err);
       setError("Failed to fetch arrangements.");
     }
-  };
+  }, [user]);  // Add 'user' as a dependency since it is used inside the function
 
-  // Load arrangements when user is set
+  // Use effect to fetch events when the user is set
   useEffect(() => {
     fetchArrangements();
-  }, [user]);
+  }, [fetchArrangements]);
 
   // Start editing an arrangement
   const startEditing = (arrangement) => {
