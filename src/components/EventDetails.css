@@ -1,84 +1,161 @@
 /* Event details panel */
 .event-details-panel {
-    position: fixed;
-    bottom: 75px;  /* Stop the panel 75px from the bottom */
-    left: 0;
-    right: 0;
-    height: calc(75% - 75px); /* Adjust height so that the panel does not overlap the navigation */
-    background-color: white;
-    border-radius: 30px 30px 0 0;
-    padding: 20px;
-    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 3;
-    overflow-y: auto;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
+  position: fixed;
+  bottom: 75px;  /* Stop the panel 75px from the bottom */
+  left: 0;
+  right: 0;
+  height: calc(75% - 75px); /* Adjust height so that the panel does not overlap the navigation */
+  background-color: white;
+  border-radius: 30px 30px 0 0;
+  padding: 20px;
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 3;
+  overflow-y: auto;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Push buttons to the bottom */
+}
+
+/* Slide up animation for opening the details panel */
+.slide-up {
+  animation-name: slideUp;
+}
+
+/* Slide down animation for closing the details panel */
+.slide-down {
+  animation-name: slideDown;
+}
+
+/* Animation for sliding the panel up */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
   }
-  
-  /* Slide up animation for opening the details panel */
-  .slide-up {
-    animation-name: slideUp;
+  to {
+    transform: translateY(0);
   }
-  
-  /* Slide down animation for closing the details panel */
-  .slide-down {
-    animation-name: slideDown;
+}
+
+/* Animation for sliding the panel down */
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
   }
-  
-  /* Animation for sliding the panel up */
-  @keyframes slideUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
+  to {
+    transform: translateY(100%);
   }
-  
-  /* Animation for sliding the panel down */
-  @keyframes slideDown {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(100%);
-    }
-  }
-  
-  /* Close button in the top-right corner of the details panel */
-  .close-button {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    font-weight: bold;
-    z-index: 10;
-    transition: color 0.3s ease;
-  }
-  
-  .close-button:hover {
-    color: #f44336;
-  }
-  
-  /* Overlay to darken background */
-  .event-details-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 75px;  /* Match the bottom of the overlay to the navigation bar */
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 2;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-  }
-  
-  .overlay-hide {
-    opacity: 0;
-    pointer-events: none; /* Prevent interactions after hiding */
-  }
-  
+}
+
+/* Close button in the top-right corner of the details panel */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  z-index: 10;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #f44336;
+}
+
+/* Overlay to darken background */
+.event-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 75px;  /* Match the bottom of the overlay to the navigation bar */
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.overlay-hide {
+  opacity: 0;
+  pointer-events: none; /* Prevent interactions after hiding */
+}
+
+/* Individual event detail styling */
+.event-title, .event-date, .event-time, .event-location, .event-distance, .event-description, .event-organizer {
+  margin-bottom: 15px;
+}
+
+/* Font sizes and colors */
+.event-title h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.event-date p, .event-time p, .event-location p, .event-distance p, .event-description p, .event-organizer p {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Attendees section */
+.attendees-section {
+  margin-top: 20px;
+}
+
+.attendees-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.attendees-section li {
+  margin-bottom: 5px;
+}
+
+/* Event buttons placed at the bottom */
+.event-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 100%;
+  padding-bottom: 20px; /* Add some padding to push them up slightly */
+}
+
+/* Register and unregister buttons */
+.register-button, .unregister-button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+  width: 45%;
+}
+
+/* Register button (primary) */
+.register-button {
+  background-color: #2979ff;
+  color: white;
+}
+
+.register-button:hover {
+  background-color: #005bb5;
+}
+
+.register-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Unregister button (secondary, cancel) */
+.unregister-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.unregister-button:hover {
+  background-color: #d32f2f;
+}

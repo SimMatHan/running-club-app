@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { db, auth } from "../firebaseConfig";  // Firestore and Firebase Auth
-import { collection, addDoc, getDocs, doc, getDoc, updateDoc, query, where } from "firebase/firestore";  // Firestore methods
-import { onAuthStateChanged } from "firebase/auth";  // Firebase Auth methods
+import { db, auth } from "../firebaseConfig"; // Firestore and Firebase Auth
+import { collection, addDoc, getDocs, doc, getDoc, query, where } from "firebase/firestore"; // Firestore methods
+import { onAuthStateChanged } from "firebase/auth"; // Firebase Auth methods
 import './CreateRun.css';
-import EventEdit from '../components/EventEdit';  // Import the EventEdit component
+import EventEdit from '../components/EventEdit'; // Import the EventEdit component
 
 const CreateRun = () => {
+  // State for creating a new run
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -15,11 +16,12 @@ const CreateRun = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [arrangements, setArrangements] = useState([]);
-  const [user, setUser] = useState(null);  // To store the logged-in user
-  const [username, setUsername] = useState("");  // To store the username
-  const [editingId, setEditingId] = useState(null);  // Track which arrangement is being edited
-  const [isEditing, setIsEditing] = useState(false); // Toggle to show or hide edit panel
-  const [isClosing, setIsClosing] = useState(false); // Track whether the panel is closing
+  const [user, setUser] = useState(null); // To store the logged-in user
+  const [username, setUsername] = useState(""); // To store the username
+
+  // State for editing an event
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null); // Store the event object being edited
 
   // Fetch the current logged-in user and retrieve their username
   useEffect(() => {
@@ -56,34 +58,19 @@ const CreateRun = () => {
     }
 
     try {
-      if (editingId) {
-        // Update existing arrangement
-        const arrangementRef = doc(db, "arrangements", editingId);
-        await updateDoc(arrangementRef, {
-          title,
-          date,
-          time,
-          location,
-          distance,
-          description,
-        });
-        setMessage("Run successfully updated!");
-        closeEditPanel();  // Close edit panel after submission
-      } else {
-        // Add new arrangement
-        await addDoc(collection(db, "arrangements"), {
-          title,
-          date,
-          time,
-          location,
-          distance,
-          description,
-          createdAt: new Date().toISOString(),
-          createdBy: username,  // Use the username fetched from Firestore
-          userId: user.uid,  // Store the user's unique ID for reference
-        });
-        setMessage("Run successfully created!");
-      }
+      // Add new arrangement logic only
+      await addDoc(collection(db, "arrangements"), {
+        title,
+        date,
+        time,
+        location,
+        distance,
+        description,
+        createdAt: new Date().toISOString(),
+        createdBy: username, // Use the username fetched from Firestore
+        userId: user.uid, // Store the user's unique ID for reference
+      });
+      setMessage("Run successfully created!");
 
       // Reset form
       setTitle("");
@@ -92,7 +79,6 @@ const CreateRun = () => {
       setLocation("");
       setDistance("");
       setDescription("");
-      setEditingId(null);
 
       fetchArrangements();
     } catch (err) {
@@ -127,7 +113,7 @@ const CreateRun = () => {
       console.error("Error fetching arrangements: ", err);
       setError("Failed to fetch arrangements.");
     }
-  }, [user]);  // Add 'user' as a dependency since it is used inside the function
+  }, [user]);
 
   // Use effect to fetch events when the user is set
   useEffect(() => {
@@ -136,23 +122,13 @@ const CreateRun = () => {
 
   // Start editing an arrangement
   const startEditing = (arrangement) => {
-    setEditingId(arrangement.id);
-    setTitle(arrangement.title);
-    setDate(arrangement.date);
-    setTime(arrangement.time);
-    setLocation(arrangement.location);
-    setDistance(arrangement.distance);
-    setDescription(arrangement.description || "");
-    setIsEditing(true);  // Show edit panel when editing starts
-    setIsClosing(false);  // Ensure it's not in closing state
+    setEditingEvent(arrangement); // Set the event object for editing
+    setIsEditing(true); // Show the edit panel
   };
 
   const closeEditPanel = () => {
-    setIsClosing(true);  // This will trigger the slide-down animation
-    setTimeout(() => {
-      setIsEditing(false);  // Remove the edit panel after the animation completes
-      setEditingId(null);  // Clear the editing state after animation completes
-    }, 500);  // The timeout should match the slide-down animation duration
+    setIsEditing(false); // Hide the edit panel
+    setEditingEvent(null); // Clear the editing event
   };
 
   return (
@@ -228,7 +204,7 @@ const CreateRun = () => {
             />
           </div>
 
-          <button type="submit">{editingId ? "Update Run" : "Create Run"}</button>
+          <button type="submit">Create Run</button>
         </form>
 
         {message && <p className="success-message">{message}</p>}
@@ -259,24 +235,11 @@ const CreateRun = () => {
       </div>
 
       {/* Render EventEdit component when editing */}
-      {isEditing && (
+      {isEditing && editingEvent && (
         <EventEdit
-          event={editingId}
-          title={title}
-          date={date}
-          time={time}
-          location={location}
-          distance={distance}
-          description={description}
-          onTitleChange={(e) => setTitle(e.target.value)}
-          onDateChange={(e) => setDate(e.target.value)}
-          onTimeChange={(e) => setTime(e.target.value)}
-          onLocationChange={(e) => setLocation(e.target.value)}
-          onDistanceChange={(e) => setDistance(e.target.value)}
-          onDescriptionChange={(e) => setDescription(e.target.value)}
-          handleSubmit={handleSubmit}
+          event={editingEvent}
           onClose={closeEditPanel}
-          isClosing={isClosing}
+          refreshEvents={fetchArrangements} // To fetch updated events list after editing
         />
       )}
     </div>
