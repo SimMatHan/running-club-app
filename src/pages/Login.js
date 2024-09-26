@@ -113,12 +113,20 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h1>{isRegistering ? "Register" : "Login"}</h1>
-
+      {/* Welcome text */}
+      <h1>
+      Welcome to Club Send IT!
+      </h1>
+      <div className="welcome-text">
+        Manage your running records, connect with others, and stay updated with the latest events.
+      </div>
+      
+      <h2>{isRegistering ? "Register" : "Login"}</h2>
+  
       {/* Display feedback message */}
       {message && <p className="success-message">{message}</p>}
       {error && <p className="error-message">{error}</p>}
-
+  
       <form onSubmit={isRegistering ? handleRegister : handleLogin}>
         {isRegistering && (
           <input
@@ -145,10 +153,12 @@ const Login = () => {
         />
         <button type="submit">{isRegistering ? "Register" : "Login"}</button>
       </form>
-
+  
       <p>
         {isRegistering ? "Already have an account?" : "Don't have an account?"}
-        <button onClick={() => setIsRegistering(!isRegistering)}>
+      </p>
+      <p>
+        <button type="register" onClick={() => setIsRegistering(!isRegistering)}>
           {isRegistering ? "Login" : "Register"}
         </button>
       </p>
