@@ -7,7 +7,7 @@ const TopNavBar = () => {
   return (
     <div className="top-navbar">
       <div className="logo-placeholder">
-        <h1>Logo Placeholder</h1>
+        <h1>Club Send IT</h1>
       </div>
       <ul>
         <li>
