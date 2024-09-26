@@ -3,6 +3,7 @@ import { db, auth } from "../firebaseConfig";  // Firestore and Firebase Auth
 import { collection, addDoc, getDocs, doc, getDoc, updateDoc, query, where } from "firebase/firestore";  // Firestore methods
 import { onAuthStateChanged } from "firebase/auth";  // Firebase Auth methods
 import './CreateRun.css';
+import EventEdit from '../components/EventEdit';  // Import the EventEdit component
 
 const CreateRun = () => {
   const [title, setTitle] = useState("");
@@ -15,7 +16,7 @@ const CreateRun = () => {
   const [error, setError] = useState("");
   const [arrangements, setArrangements] = useState([]);
   const [user, setUser] = useState(null);  // To store the logged-in user
-  const [username, setUsername] = useState("");  // To store the username
+  const [username, setUsername] = useState("");  // To store the username (this was missing)
   const [editingId, setEditingId] = useState(null);  // Track which arrangement is being edited
   const [isEditing, setIsEditing] = useState(false); // Toggle to show or hide edit panel
   const [isClosing, setIsClosing] = useState(false); // Track whether the panel is closing
@@ -102,15 +103,15 @@ const CreateRun = () => {
 
   const fetchArrangements = async () => {
     if (!user) return;
-  
+
     try {
       // Fetch arrangements only for the logged-in user
       const q = query(collection(db, "arrangements"), where("userId", "==", user.uid));
       const querySnapshot = await getDocs(q);
-      
+
       // Get the current date
       const currentDate = new Date();
-  
+
       // Filter out past events and sort by the closest upcoming date
       const fetchedArrangements = querySnapshot.docs
         .map(doc => ({
@@ -119,7 +120,7 @@ const CreateRun = () => {
         }))
         .filter(arrangement => new Date(arrangement.date) >= currentDate) // Exclude past events
         .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by closest date
-  
+
       setArrangements(fetchedArrangements);
     } catch (err) {
       console.error("Error fetching arrangements: ", err);
@@ -232,21 +233,21 @@ const CreateRun = () => {
         {message && <p className="success-message">{message}</p>}
         {error && <p className="error-message">{error}</p>}
 
-        <h2>Your Upcoming Runs</h2>
+        <h2>Your Created Runs</h2>
         <div className="arrangements-list">
           {arrangements.length > 0 ? (
             arrangements.map((arrangement) => (
-              <div key={arrangement.id} className="arrangement-item">
+              <div
+                key={arrangement.id}
+                className="arrangement-item"
+                onClick={() => startEditing(arrangement)} // Make the item clickable
+              >
                 <h3>{arrangement.title}</h3>
                 <p>
                   <strong>Date:</strong> {arrangement.date}<br />
                   <strong>Time:</strong> {arrangement.time}<br />
                   <strong>Location:</strong> {arrangement.location}<br />
                   <strong>Distance:</strong> {arrangement.distance}<br />
-                  {/* Edit Pen Icon */}
-                  <span className="edit-icon" onClick={() => startEditing(arrangement)}>
-                    🖉
-                  </span>
                 </p>
               </div>
             ))
@@ -256,78 +257,26 @@ const CreateRun = () => {
         </div>
       </div>
 
-      {/* Show edit overlay and panel when editing */}
-      {isEditing && <div className={`edit-overlay ${isClosing ? "overlay-hide" : ""}`} onClick={closeEditPanel}></div>}
-      {(isEditing || isClosing) && (
-        <div className={`edit-panel ${isClosing ? "slide-down" : "slide-up"}`}>
-          <button className="close-button" onClick={closeEditPanel}>✕</button>
-          <h2>Edit Your Run</h2>
-          <form onSubmit={handleSubmit} className="arrangement-form">
-            <div>
-              <label>Event Title</label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                placeholder="Enter the title of the event"
-              />
-            </div>
-
-            <div>
-              <label>Date</label>
-              <input
-                type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                required
-              />
-            </div>
-
-            <div>
-              <label>Time</label>
-              <input
-                type="time"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                required
-              />
-            </div>
-
-            <div>
-              <label>Location</label>
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                required
-                placeholder="Enter the location of the event"
-              />
-            </div>
-
-            <div>
-              <label>Distance (e.g., 5K, 10K)</label>
-              <input
-                type="text"
-                value={distance}
-                onChange={(e) => setDistance(e.target.value)}
-                required
-                placeholder="Enter the distance of the run"
-              />
-            </div>
-
-            <div>
-              <label>Description</label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Any additional information or notes"
-              />
-            </div>
-
-            <button type="submit">Update Arrangement</button>
-          </form>
-        </div>
+      {/* Render EventEdit component when editing */}
+      {isEditing && (
+        <EventEdit
+          event={editingId}
+          title={title}
+          date={date}
+          time={time}
+          location={location}
+          distance={distance}
+          description={description}
+          onTitleChange={(e) => setTitle(e.target.value)}
+          onDateChange={(e) => setDate(e.target.value)}
+          onTimeChange={(e) => setTime(e.target.value)}
+          onLocationChange={(e) => setLocation(e.target.value)}
+          onDistanceChange={(e) => setDistance(e.target.value)}
+          onDescriptionChange={(e) => setDescription(e.target.value)}
+          handleSubmit={handleSubmit}
+          onClose={closeEditPanel}
+          isClosing={isClosing}
+        />
       )}
     </div>
   );

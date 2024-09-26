@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";  // Ensure you import useNavigate
-import { db } from "../firebaseConfig";  // Firestore
-import { collection, getDocs } from "firebase/firestore";  // Firestore methods
+import { useNavigate } from "react-router-dom";
+import { db } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 import './Feed.css';
+import EventDetails from "../components/EventDetails";  // Import the new component
 
 const messages = [
   { id: 1, user: "John", text: "Who's joining the marathon this weekend?" },
@@ -10,51 +11,51 @@ const messages = [
 ];
 
 const Feed = () => {
-  const [upcomingEvents, setUpcomingEvents] = useState([]); // State to store fetched events
-  const [error, setError] = useState("");  // Error handling state
-  const navigate = useNavigate();  // Create a navigate function to use for routing
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null); // State to store the selected event for viewing
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  // Function to fetch upcoming events from Firestore and sort by date
   const fetchUpcomingEvents = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, "arrangements"));  // Fetch data from the 'arrangements' collection
-      const currentDate = new Date(); // Get current date
+      const querySnapshot = await getDocs(collection(db, "arrangements"));
+      const currentDate = new Date();
 
       const fetchedEvents = querySnapshot.docs
         .map(doc => ({
           id: doc.id,
           ...doc.data()
         }))
-        .filter(event => new Date(event.date) >= currentDate) // Filter out past events
-        .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort the events based on the closest upcoming date
+        .filter(event => new Date(event.date) >= currentDate)
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-      setUpcomingEvents(fetchedEvents);  // Set the filtered and sorted events in the state
+      setUpcomingEvents(fetchedEvents);
     } catch (err) {
       console.error("Error fetching events: ", err);
       setError("Failed to load events. Please try again later.");
     }
   };
 
-  // Use effect to fetch events on component mount
   useEffect(() => {
     fetchUpcomingEvents();
   }, []);
 
-  // Function to handle button click to navigate to the Calendar page
   const goToCalendar = () => {
-    navigate("/calendar");  // Navigate to the calendar page
+    navigate("/calendar");
+  };
+
+  // Function to handle closing the event details
+  const closeEventDetails = () => {
+    setSelectedEvent(null);  // Set selectedEvent to null to close the panel
   };
 
   return (
     <div className="feed-page">
-      {/* Title Section */}
       <div className="feed-title">
         <h1>Feed</h1>
       </div>
 
-      {/* Main Content Section */}
       <div className="feed-content">
-        {/* Section for Upcoming Events */}
         <section className="event-list">
           <h2>Upcoming Runs</h2>
           {error && <p className="error-message">{error}</p>}
@@ -62,7 +63,11 @@ const Feed = () => {
             <div className="scroll-container">
               <ul>
                 {upcomingEvents.map(event => (
-                  <li key={event.id} className="event-item">
+                  <li
+                    key={event.id}
+                    className="event-item"
+                    onClick={() => setSelectedEvent(event)}  // Set the selected event on click
+                  >
                     <h3>{event.title}</h3>
                     <p>Date: {event.date}</p>
                     <p>Distance: {event.distance}</p>
@@ -77,15 +82,12 @@ const Feed = () => {
           )}
         </section>
 
-        {/* See All Events Button */}
         <button className="see-all-events-btn" onClick={goToCalendar}>
           See All Events
         </button>
 
-        {/* Divider */}
         <hr />
 
-        {/* Section for Messages */}
         <section className="message-list">
           <h2>Messages</h2>
           <div>
@@ -98,6 +100,11 @@ const Feed = () => {
           </div>
         </section>
       </div>
+
+      {/* Render the EventDetails component when an event is selected */}
+      {selectedEvent && (
+        <EventDetails event={selectedEvent} onClose={closeEventDetails} />
+      )}
     </div>
   );
 };

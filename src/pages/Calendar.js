@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";  // Firestore
 import { collection, getDocs } from "firebase/firestore";  // Firestore methods
 import './Calendar.css';  // Reuse the CreateRun CSS for the same styling
+import EventDetails from '../components/EventDetails';  // Import the EventDetails component
 
 const Calendar = () => {
-  const [arrangements, setArrangements] = useState([]); // Store all upcoming events
+  const [arrangements, setArrangements] = useState([]);  // Store all upcoming events
+  const [selectedEvent, setSelectedEvent] = useState(null);  // Track selected event for details view
   const [error, setError] = useState("");  // Error handling state
 
   // Function to fetch all upcoming events from Firestore and sort by date
@@ -35,7 +37,17 @@ const Calendar = () => {
   useEffect(() => {
     fetchArrangements();
   }, []);
-  
+
+  // Function to handle opening event details
+  const openEventDetails = (arrangement) => {
+    setSelectedEvent(arrangement);
+  };
+
+  // Function to handle closing event details
+  const closeEventDetails = () => {
+    setSelectedEvent(null);  // Close the event details
+  };
+
   return (
     <div className="calendar-page">
       {/* Title Section */}
@@ -49,7 +61,11 @@ const Calendar = () => {
         <div className="run-list">
           {arrangements.length > 0 ? (
             arrangements.map((arrangement) => (
-              <div key={arrangement.id} className="run-item">
+              <div
+                key={arrangement.id}
+                className="run-item"
+                onClick={() => openEventDetails(arrangement)}  // Open event details on click
+              >
                 <h3>{arrangement.title}</h3>
                 <p>
                   <strong>Date:</strong> {arrangement.date}<br />
@@ -65,6 +81,11 @@ const Calendar = () => {
           )}
         </div>
       </div>
+
+      {/* Render EventDetails component when an event is selected */}
+      {selectedEvent && (
+        <EventDetails event={selectedEvent} onClose={closeEventDetails} />
+      )}
     </div>
   );
 };
