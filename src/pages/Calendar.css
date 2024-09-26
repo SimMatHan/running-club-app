@@ -10,7 +10,7 @@
 
 /* Title section with white background and rounded corners */
 .calendar-title {
-  color: black;
+  color: white;
   padding: 25px;
   text-align: left;
   z-index: 2;
