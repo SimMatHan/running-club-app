@@ -30,21 +30,22 @@ const Login = () => {
     e.preventDefault();
     setError("");  // Clear previous errors
     setMessage("");  // Clear previous messages
-
+  
     try {
       // Check if the username is already taken
       const q = query(collection(db, "users"), where("username", "==", username));
       const querySnapshot = await getDocs(q);
-
+  
       if (!querySnapshot.empty) {
         setError("This username is already taken. Please choose a different username.");
         return;  // Stop registration if username exists
       }
-
+  
       // If username is unique, proceed with Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
+      console.log("Authenticated user:", user); // Debugging
+  
       // Store additional user info in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
@@ -53,11 +54,14 @@ const Login = () => {
         createdAt: new Date().toISOString(),
       });
 
+  
+      console.log("User data successfully written to Firestore"); // Debugging
+  
       setMessage("Registration successful!");
       setTimeout(() => navigate("/"), 2000);  // Redirect to home page after successful registration
     } catch (error) {
       console.error("Registration error", error);
-
+  
       // Handle Firebase errors
       switch (error.code) {
         case "auth/email-already-in-use":
@@ -76,7 +80,7 @@ const Login = () => {
           setError("Registration failed. Please try again later.");
       }
     }
-  };
+  };  
 
   // Function to handle user login
   const handleLogin = async (e) => {

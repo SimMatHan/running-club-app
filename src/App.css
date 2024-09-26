@@ -19,6 +19,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow: hidden; /* Prevent scrolling inside the app container */
   background-color: #fff;
 }
 
@@ -26,6 +27,12 @@ body {
 .content {
   flex: 1;
   padding: 20px;
+}
+
+* {
+  touch-action: manipulation; /* Disable pinch-zoom */
+  -ms-touch-action: manipulation; /* For older versions of IE */
+  -webkit-text-size-adjust: 100%; /* Prevent font-size adjustments on iOS */
 }
 
 
