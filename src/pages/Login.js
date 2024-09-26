@@ -15,7 +15,7 @@ const Login = () => {
   const [message, setMessage] = useState("");    // State for feedback messages
   const [error, setError] = useState("");        // State for error messages
 
-  const [user, loading] = useAuthState(auth); // Track authentication state
+  const [user] = useAuthState(auth); // Track authentication state
   const navigate = useNavigate();  // For redirection
 
   // Redirect authenticated users to the home page

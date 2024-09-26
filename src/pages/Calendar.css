@@ -1,121 +1,220 @@
 /* Full height and background setup */
 .calendar-page {
-    height: calc(100vh - 150px);
-    margin-top: 75px;
-    position: relative;
-    background-color: #2979ff; /* Blue background */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Title section with white background and rounded corners */
-  .calendar-title {
-    color: black;
-    padding: 25px;
-    text-align: left;
-    z-index: 2;
-    position: relative;
-    height: 100px;
-  }
-  
-  /* Ensure the calendar content takes up available space */
-  .calendar-content {
-    padding: 25px 20px;
-    background-color: white;
-    border-radius: 30px 30px 0 0; /* Rounded top corners */
-    z-index: 1;
-    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-    flex-grow: 1; /* Fill the available space */
-    overflow-y: auto; /* Make the content scrollable if needed */
-  }
-  
-  /* Styling for h1 in the title */
-  .calendar-title h1 {
-    margin: 0;
-    font-size: 36px;
-    color: white;
-  }
-  
-  /* Styling for the section header */
-  .calendar-content h2 {
-    font-size: 24px;
-    color: #2979ff;
-    margin-top: 0;
-  }
-  
-  /* Arrangement list styles */
-  .run-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Space between each arrangement */
-  }
-  
-  /* Arrangement item styling */
-  .run-item {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-    position: relative;
-  }
-  
-  /* Arrangement item hover effect */
-  .run-item:hover {
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Styling for no arrangements message */
-  .no-arrangements {
-    color: #6c757d;
-    font-style: italic;
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  /* Error message styling */
-  .error-message {
-    color: red;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Date, Time, Location, Distance styles inside the arrangement item */
-  .run-item p {
-    margin: 5px 0;
-    color: #333;
-    font-size: 16px;
-  }
+  height: calc(100vh - 150px);
+  margin-top: 75px;
+  position: relative;
+  background-color: #2979ff; /* Blue background */
+  display: flex;
+  flex-direction: column;
+}
 
-    /* Styles for See All Events Button */
-  .see-all-events-btn {
-    display: block;
-    margin: 20px auto;
-    padding: 12px 20px;
-    color: black;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .see-all-events-btn:hover {
-    background-color: #005bb5;
-  }
-  
-  
-  /* Responsive adjustments */
-  @media (max-width: 600px) {
-    .calendar-title h1 {
-      font-size: 28px;
-    }
-  
-    .calendar-content h2 {
-      font-size: 20px;
-    }
-  
-    .run-item {
-      padding: 10px;
-    }
-  }
-  
+/* Title section with white background and rounded corners */
+.calendar-title {
+  color: black;
+  padding: 25px;
+  text-align: left;
+  z-index: 2;
+  position: relative;
+  height: 100px;
+}
+
+/* Ensure the calendar content takes up available space */
+.calendar-content {
+  padding: 25px 20px;
+  background-color: white;
+  border-radius: 30px 30px 0 0; /* Rounded top corners */
+  z-index: 1;
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+  flex-grow: 1; /* Fill the available space */
+  overflow-y: auto; /* Make the content scrollable if needed */
+}
+
+/* Calendar controls (toggle switch and month selector) */
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Calendar toggle section */
+.calendar-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+label.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+
+label.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+span.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+span.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2979ff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+/* Run-item clickable card style */
+.run-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Card shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for hover */
+  cursor: pointer;  /* Pointer cursor to indicate it's clickable */
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.run-item h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.run-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Hover effect to elevate the card */
+.run-item:hover {
+  transform: translateY(-5px);  /* Slight lift when hovered */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
+  background-color: #f9f9f9; /* Light background change on hover */
+}
+
+/* Month selector styling */
+.month-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.month-selector button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.month-selector span {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.month-arrow-btn img {
+  width: 24px;  /* Adjust width of arrow SVGs */
+  height: 24px;
+}
+
+.month-arrow-btn:hover img {
+  filter: brightness(0.8);  /* Optional hover effect */
+}
+
+/* Calendar grid layout */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days of the week */
+  gap: 5px;
+  margin-top: 15px;
+}
+
+/* Calendar header for day abbreviations */
+.calendar-header {
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+/* Individual day cell */
+.calendar-day {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.calendar-day span {
+  font-size: 14px;
+}
+
+/* Current day styling with blue fill and white text */
+.calendar-day.current-day {
+  background-color: #2979ff;
+  color: white;
+  border-radius: 50%;
+}
+
+.calendar-day.past-day {
+  color: #a8a8a8;
+  pointer-events: none; /* Disable click on past days */
+}
+
+.calendar-day.has-event .event-marker {
+  width: 6px;
+  height: 6px;
+  background-color: #ffeb3b;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Styling for no arrangements message */
+.no-arrangements {
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  margin-bottom: 20px;
+  text-align: center;
+}
