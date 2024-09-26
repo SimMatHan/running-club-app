@@ -1,91 +1,77 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // For redirection
-import { auth } from "../firebaseConfig";  // Firebase Authentication
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebaseConfig";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { db } from "../firebaseConfig";  // Firestore
-import { doc, setDoc, getDocs, collection, query, where } from "firebase/firestore";  // Firestore methods
-import { useAuthState } from "react-firebase-hooks/auth"; // Firebase hook for auth state
+import { db } from "../firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");  // New username field
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [message, setMessage] = useState("");    // State for feedback messages
-  const [error, setError] = useState("");        // State for error messages
+  const [username, setUsername] = useState("");  // Only required for registration
+  const [isRegistering, setIsRegistering] = useState(false);  // Toggle between login and register
+  const [error, setError] = useState("");  // Error messages
+  const [message, setMessage] = useState("");  // Success message
 
-  const [user] = useAuthState(auth); // Track authentication state
-  const navigate = useNavigate();  // For redirection
+  const [user] = useAuthState(auth);  // Check if the user is already logged in
+  const navigate = useNavigate();  // For navigation
 
   // Redirect authenticated users to the home page
   useEffect(() => {
     if (user) {
-      navigate("/"); // Redirect to the home page if the user is logged in
+      navigate("/");  // Redirect to home page if the user is logged in
     }
   }, [user, navigate]);
 
-  // Function to handle user registration
+  // Simplified user registration
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");  // Clear previous errors
-    setMessage("");  // Clear previous messages
-  
+    setMessage("");
+
+    if (password.length < 6) {
+      setError("Password should be at least 6 characters.");
+      return;
+    }
+
     try {
-      console.log("Starting registration...");
-  
-      // Check if the username is already taken
-      const q = query(collection(db, "users"), where("username", "==", username));
-      const querySnapshot = await getDocs(q);
-  
-      if (!querySnapshot.empty) {
-        setError("This username is already taken. Please choose a different username.");
-        return;
-      }
-  
-      console.log("Username is available, creating user in Firebase Auth...");
-  
       // Create user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-  
-      // Log the user UID for debugging
-      console.log("User created with UID:", user.uid);
-  
-      console.log("User created in Firebase Auth, saving user info to Firestore...");
-  
-      // Save additional user data to Firestore
+
+      // Save user data to Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         username: username,
         uid: user.uid,
         createdAt: new Date().toISOString(),
+        showGuide: true  // Default value, can be updated later
       });
-  
-      console.log("User saved in Firestore. Registration successful!");
-  
+
       setMessage("Registration successful!");
-      setTimeout(() => navigate("/"), 2000);  // Redirect to home page after successful registration
+      navigate("/");  // Redirect to home page after successful registration
     } catch (error) {
       console.error("Registration error:", error);
-      setError("An error occurred during registration. Please try again later.");
+      setError("An error occurred during registration. Please try again.");
     }
   };
 
-  // Function to handle user login
+  // Simplified user login
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");  // Clear previous errors
-    setMessage("");  // Clear previous messages
+    setMessage("");
 
     try {
+      // Login with Firebase Authentication
       await signInWithEmailAndPassword(auth, email, password);
-      setMessage("Login successful!");
-      setTimeout(() => navigate("/"), 2000);  // Redirect to home page after successful login
+      navigate("/");  // Redirect to home page after successful login
     } catch (error) {
-      console.error("Login error", error);
+      console.error("Login error:", error);
 
-      // Handle Firebase errors
+      // Handle Firebase login errors
       switch (error.code) {
         case "auth/wrong-password":
           setError("Incorrect password. Please try again.");
@@ -96,9 +82,6 @@ const Login = () => {
         case "auth/invalid-email":
           setError("Invalid email format. Please enter a valid email.");
           break;
-        case "auth/network-request-failed":
-          setError("Network error. Please check your internet connection and try again.");
-          break;
         default:
           setError("Login failed. Please try again later.");
       }
@@ -107,20 +90,18 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      {/* Welcome text */}
-      <h1>
-      Welcome to Club Send IT!
-      </h1>
+      <h1>Welcome to Club Send IT!</h1>
       <div className="welcome-text">
         Manage your running records, connect with others, and stay updated with the latest events.
       </div>
       
       <h2>{isRegistering ? "Register" : "Login"}</h2>
-  
-      {/* Display feedback message */}
+
+      {/* Display feedback messages */}
       {message && <p className="success-message">{message}</p>}
       {error && <p className="error-message">{error}</p>}
-  
+
+      {/* Login/Register form */}
       <form onSubmit={isRegistering ? handleRegister : handleLogin}>
         {isRegistering && (
           <input
@@ -147,12 +128,11 @@ const Login = () => {
         />
         <button type="submit">{isRegistering ? "Register" : "Login"}</button>
       </form>
-  
+
+      {/* Toggle between Register and Login */}
+      <p>{isRegistering ? "Already have an account?" : "Don't have an account?"}</p>
       <p>
-        {isRegistering ? "Already have an account?" : "Don't have an account?"}
-      </p>
-      <p>
-        <button type="register" onClick={() => setIsRegistering(!isRegistering)}>
+        <button onClick={() => setIsRegistering(!isRegistering)}>
           {isRegistering ? "Login" : "Register"}
         </button>
       </p>
