@@ -1,26 +1,58 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { auth, db } from "../firebaseConfig";
+import { collection, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
+import GuidePopup from "../components/GuidePopup";
 import './Feed.css';
-import EventDetails from "../components/EventDetails";  // Import the new component
-
-const messages = [
-  { id: 1, user: "John", text: "Who's joining the marathon this weekend?" },
-  { id: 2, user: "Sara", text: "Great trail run yesterday!" },
-];
+import EventDetails from "../components/EventDetails"; 
 
 const Feed = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null); // State to store the selected event for viewing
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [error, setError] = useState("");
+  const [showGuidePopup, setShowGuidePopup] = useState(false);  // For controlling popup visibility
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState({});  // Store user data from Firebase
+
   const navigate = useNavigate();
+  const user = auth.currentUser;  // Get the currently logged-in user
+
+  // Function to fetch user data, including the showGuide field
+  const fetchUserData = useCallback(async () => {
+    if (user) {
+      try {
+        const userDoc = await getDoc(doc(db, "users", user.uid));  // Fetch user document using logged-in user's UID
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          console.log("Fetched user data:", data);  // Debug: Check fetched data
+          setUserData(data);  // Store fetched user data
+          
+          if (data.showGuide !== false) {
+            setShowGuidePopup(true);  // Show popup if showGuide is true or undefined
+            console.log("Setting showGuidePopup to true");
+          } else {
+            console.log("Guide popup is disabled for this user.");
+          }
+        } else {
+          console.log("No such document!");
+        }
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+      } finally {
+        setLoading(false);  // Stop loading when data is fetched
+      }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    fetchUserData();  // Fetch user data on component mount
+    fetchUpcomingEvents();  // Fetch events
+  }, [fetchUserData]);
 
   const fetchUpcomingEvents = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "arrangements"));
       const currentDate = new Date();
-
       const fetchedEvents = querySnapshot.docs
         .map(doc => ({
           id: doc.id,
@@ -28,7 +60,6 @@ const Feed = () => {
         }))
         .filter(event => new Date(event.date) >= currentDate)
         .sort((a, b) => new Date(a.date) - new Date(b.date));
-
       setUpcomingEvents(fetchedEvents);
     } catch (err) {
       console.error("Error fetching events: ", err);
@@ -36,21 +67,43 @@ const Feed = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUpcomingEvents();
-  }, []);
+  const closeGuidePopup = () => {
+    setShowGuidePopup(false);
+  };
+
+  const disableGuidePopup = async () => {
+    if (user) {
+      try {
+        await updateDoc(doc(db, "users", user.uid), {
+          showGuide: false,
+        });
+        console.log("Guide popup preference updated!");
+        setShowGuidePopup(false);
+      } catch (error) {
+        console.error("Error updating preference:", error);
+      }
+    }
+  };
 
   const goToCalendar = () => {
     navigate("/calendar");
   };
 
-  // Function to handle closing the event details
   const closeEventDetails = () => {
-    setSelectedEvent(null);  // Set selectedEvent to null to close the panel
+    setSelectedEvent(null);
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="feed-page">
+      {/* Render GuidePopup if showGuidePopup is true */}
+      {showGuidePopup && (
+        <GuidePopup onClose={closeGuidePopup} onDoNotShowAgain={disableGuidePopup} />
+      )}
+
       <div className="feed-title">
         <h1>Feed</h1>
       </div>
@@ -66,7 +119,7 @@ const Feed = () => {
                   <li
                     key={event.id}
                     className="event-item"
-                    onClick={() => setSelectedEvent(event)}  // Set the selected event on click
+                    onClick={() => setSelectedEvent(event)}
                   >
                     <h3>{event.title}</h3>
                     <p>Date: {event.date}</p>
@@ -91,17 +144,18 @@ const Feed = () => {
         <section className="message-list">
           <h2>Messages</h2>
           <div>
-            {messages.map(message => (
-              <div key={message.id} className="message-item">
-                <strong>{message.user}:</strong>
-                <p>{message.text}</p>
-              </div>
-            ))}
+            <div className="message-item">
+              <strong>John:</strong>
+              <p>Who's joining the marathon this weekend?</p>
+            </div>
+            <div className="message-item">
+              <strong>Sara:</strong>
+              <p>Great trail run yesterday!</p>
+            </div>
           </div>
         </section>
       </div>
 
-      {/* Render the EventDetails component when an event is selected */}
       {selectedEvent && (
         <EventDetails event={selectedEvent} onClose={closeEventDetails} />
       )}

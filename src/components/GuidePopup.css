@@ -1,0 +1,103 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.popup-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.popup-content p {
+    font-size: 16px;
+    padding: 10px;
+}
+
+/* Style for the browser toggle buttons */
+.browser-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.browser-toggle button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: 2px solid #2979ff;
+    border-radius: 5px;
+    background-color: white;
+    color: #2979ff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.browser-toggle button.active {
+    background-color: #2979ff;
+    color: white;
+}
+
+.browser-toggle button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.guide-content {
+    text-align: left;
+    padding: 10px 10px;
+}
+
+.guide-content h3 {
+    margin-bottom: 10px;
+}
+
+.guide-content li {
+    margin-bottom: 10px;
+}
+
+.guide-content ol {
+    padding-left: 20px;
+    text-align: left;
+}
+
+.popup-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-actions label {
+    font-size: 14px;
+}
+
+.popup-actions button {
+    padding: 8px 16px;
+    background-color: #2979ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup-actions button:hover {
+    background-color: #0056b3;
+}
