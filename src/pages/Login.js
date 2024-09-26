@@ -32,55 +32,45 @@ const Login = () => {
     setMessage("");  // Clear previous messages
   
     try {
+      console.log("Starting registration...");
+  
       // Check if the username is already taken
       const q = query(collection(db, "users"), where("username", "==", username));
       const querySnapshot = await getDocs(q);
   
       if (!querySnapshot.empty) {
         setError("This username is already taken. Please choose a different username.");
-        return;  // Stop registration if username exists
+        return;
       }
   
-      // If username is unique, proceed with Firebase Authentication
+      console.log("Username is available, creating user in Firebase Auth...");
+  
+      // Create user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log("Authenticated user:", user); // Debugging
   
-      // Store additional user info in Firestore
+      // Log the user UID for debugging
+      console.log("User created with UID:", user.uid);
+  
+      console.log("User created in Firebase Auth, saving user info to Firestore...");
+  
+      // Save additional user data to Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
         username: username,
         uid: user.uid,
         createdAt: new Date().toISOString(),
       });
-
   
-      console.log("User data successfully written to Firestore"); // Debugging
+      console.log("User saved in Firestore. Registration successful!");
   
       setMessage("Registration successful!");
       setTimeout(() => navigate("/"), 2000);  // Redirect to home page after successful registration
     } catch (error) {
-      console.error("Registration error", error);
-  
-      // Handle Firebase errors
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          setError("This email address is already in use. Please use a different email.");
-          break;
-        case "auth/weak-password":
-          setError("The password is too weak. Please use a stronger password.");
-          break;
-        case "auth/invalid-email":
-          setError("The email address is not valid. Please enter a valid email.");
-          break;
-        case "auth/network-request-failed":
-          setError("Network error. Please check your internet connection and try again.");
-          break;
-        default:
-          setError("Registration failed. Please try again later.");
-      }
+      console.error("Registration error:", error);
+      setError("An error occurred during registration. Please try again later.");
     }
-  };  
+  };
 
   // Function to handle user login
   const handleLogin = async (e) => {
