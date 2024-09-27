@@ -99,14 +99,12 @@ const Profile = () => {
           <div className="profile-picture-section">
             <div className="upload-container">
               <label>Profile Picture</label>
-              <div className="upload-btn-wrapper">
-                <button className="upload-btn">Upload Image</button>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}  // Image upload handler
-                />
-              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}  // Image upload handler
+                className="upload-input"  // You can style this input to look like a button
+              />
             </div>
             {profileImageUrl ? (
               <img
@@ -143,7 +141,16 @@ const Profile = () => {
               onChange={(e) => setPreferredGear(e.target.value)}
             >
               <option value="" disabled>Select your preferred brand</option>
-              {/* Options here */}
+              <option value="Nike">Nike</option>
+              <option value="Adidas">Adidas</option>
+              <option value="Asics">Asics</option>
+              <option value="Brooks">Brooks</option>
+              <option value="Hoka">Hoka</option>
+              <option value="New Balance">New Balance</option>
+              <option value="Saucony">Saucony</option>
+              <option value="Puma">Puma</option>
+              <option value="Under Armour">Under Armour</option>
+              <option value="Mizuno">Mizuno</option>
             </select>
           </div>
 
@@ -155,7 +162,12 @@ const Profile = () => {
               onChange={(e) => setPreferredDistance(e.target.value)}
             >
               <option value="" disabled>Select your preferred distance</option>
-              {/* Options here */}
+              <option value="5">5 km</option>
+              <option value="10">10 km</option>
+              <option value="15">15 km</option>
+              <option value="21">21 km (Half Marathon)</option>
+              <option value="30">30 km</option>
+              <option value="42">42 km (Marathon)</option>
             </select>
           </div>
 

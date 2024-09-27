@@ -65,6 +65,7 @@
   flex-direction: column;
   justify-content: space-between; /* Ensure label and button stack vertically */
   flex-grow: 1;
+  max-width: 200px;
 }
 
 .profile-picture-section label {
@@ -106,26 +107,55 @@
   opacity: 1; /* Ensure disabled inputs are fully visible */
 }
 
-/* Button to upload image */
-.upload-btn {
-  padding: var(--spacing-small);
+.upload-container {
+  border: none; /* Ensure no border exists */
+  padding: 0; /* Optionally, remove any padding */
+  margin: 0; /* Optionally, remove any margin */
+  background: none; /* Ensure there's no background color */
+}
+
+.upload-container .profile-form input {
+  border: none; /* Ensure no borders on inputs within the upload container */
+}
+
+.upload-input {
+  padding: 8px 16px;
   background-color: var(--color-primary);
   color: white;
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
   cursor: pointer;
-  font-size: var(--font-size-medium);
-  transition: background-color var(--transition-duration), transform var(--transition-duration);
+  font-size: 16px;
 }
 
-.upload-btn:hover {
-  background-color: #005bb5;
-  transform: translateY(-2px);
+.upload-input::-webkit-file-upload-button {
+  visibility: hidden; /* Hide the default file upload button */
 }
 
-.upload-btn-wrapper input[type="file"] {
-  display: none; /* Hide the default file input */
+.upload-input::before {
+  content: 'Upload Image';
+  display: inline-block;
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  padding: 8px 16px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  width: 150px;
 }
+
+.upload-input:hover::before {
+  background-color: #005bb5; /* Darker color on hover */
+}
+
+.upload-input:active::before {
+  background-color: #004085; /* Even darker color on active */
+}
+
 
 /* Profile Image Preview */
 .profile-image-preview {

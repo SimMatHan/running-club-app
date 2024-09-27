@@ -83,10 +83,6 @@
 }
 
 /* Individual member detail styling */
-.member-username, .member-email, .member-brand, .member-distance, .member-goals {
-  margin-bottom: var(--spacing-medium);
-}
-
 /* Font sizes and colors */
 .member-username h2 {
   font-size: var(--font-size-xl);
