@@ -1,17 +1,20 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Users collection: allow authenticated users to write only their own document
+
+    // Users collection: allow authenticated users to write only to their own document
     match /users/{userId} {
       allow read: if request.auth != null;  // Allow authenticated users to read any user document
       allow write: if request.auth != null && request.auth.uid == userId;  // Allow users to write only to their own document
     }
+
     // Arrangements collection: allow authenticated users to read and write
     match /arrangements/{arrangementId} {
       allow read, write: if request.auth != null;  // Only allow authenticated users to read/write
     }
-     match /profilePictures/{userId} {
+
+    // Profile Pictures collection in Firestore (if needed to store metadata)
+    match /profilePictures/{userId} {
       // Users can read and write their own profile pictures
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
