@@ -3,7 +3,7 @@
   height: calc(100vh - 150px); /* Full height minus some padding for navbars */
   margin-top: 75px;
   position: relative;
-  background-color: #2979ff; /* Blue background */
+  background-color: var(--color-primary); /* Use primary color as the background */
   display: flex;
   flex-direction: column;
 }
@@ -11,7 +11,7 @@
 /* Title section with white background and rounded corners */
 .members-title {
   color: black;
-  padding: 25px;
+  padding: var(--spacing-large);
   text-align: left;
   z-index: 2; /* Ensures it appears above the background */
   position: relative;
@@ -20,11 +20,10 @@
 
 /* Ensure the members content takes up available space and stays at the bottom */
 .members-content {
-  padding: 25px 20px;
-  background-color: white;
+  padding: var(--spacing-large) var(--spacing-medium);
+  background-color: var(--color-background);
   border-radius: 30px 30px 0 0; /* Rounded top corners for continuity */
   z-index: 1; /* Slightly below the title */
-  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
   flex-grow: 1; /* This allows it to fill the available space */
   flex-direction: column;
   justify-content: space-between; /* Align content to the top and bottom */
@@ -34,7 +33,7 @@
 /* Styling for h1 */
 .members-title h1 {
   margin: 0;
-  font-size: 36px;
+  font-size: var(--font-size-xxl);
   color: white;
 }
 
@@ -42,12 +41,12 @@
 .error-message {
   color: red;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-large);
 }
 
 /* No members message */
 .no-members {
-  color: #6c757d;
+  color: var(--color-muted-text);
   font-style: italic;
 }
 
@@ -62,16 +61,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f5fbff;
-  padding: 10px 20px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  transition: box-shadow 0.3s ease;
+  background-color: var(--color-run-5k); /* Light background color for the member card */
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius-large);
+  margin-bottom: var(--spacing-small);
+  transition: box-shadow var(--transition-duration) var(--transition-ease);
   min-height: 150px;
+  box-shadow: var(--box-shadow-light);
 }
 
 .member-item:hover {
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--box-shadow-heavy); /* Add shadow on hover */
 }
 
 /* Member Info styling */
@@ -85,29 +85,29 @@
 /* Username styling */
 .member-username {
   margin: 0;
-  font-size: 1.4em;
+  font-size: var(--font-size-large);
   font-weight: bold;
-  color: black;
+  color: var(--color-text);
 }
 
 /* Brand and Distance styling */
 .member-brand {
   margin-bottom: 40px;
-  font-size: 0.9em;
-  color: #333;
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
 }
 
 .member-distance {
-  font-size: 1.5em;
+  font-size: var(--font-size-large);
   font-weight: bold;
-  color: black;
+  color: var(--color-text);
 }
 
 /* Profile Picture Placeholder styling */
 .member-picture {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--profile-image-border-radius);
   overflow: hidden;
 }
 

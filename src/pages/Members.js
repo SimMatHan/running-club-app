@@ -45,7 +45,7 @@ const Members = () => {
     <div className="members-page">
       {/* Title Section */}
       <div className="members-title">
-        <h1>Members List</h1>
+        <h1>Members</h1>
       </div>
 
       {/* Main Content Section */}
