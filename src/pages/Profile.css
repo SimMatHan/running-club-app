@@ -89,6 +89,34 @@
   background-color: #218838;
 }
 
+/* Profile Image Preview */
+.profile-image-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 10px;
+}
+
+/* Style for the textarea */
+.profile-form textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  resize: none;
+}
+
+/* Profile Image Preview */
+.profile-image-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 10px;
+}
+
 /* Success and error messages */
 .message {
   margin-top: 20px;
