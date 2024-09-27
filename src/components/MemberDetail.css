@@ -1,118 +1,114 @@
 /* Member details panel */
 .member-details-panel {
-    position: fixed;
-    bottom: 75px;  /* Stop the panel 75px from the bottom */
-    left: 0;
-    right: 0;
-    height: calc(75% - 75px); /* Adjust height so that the panel does not overlap the navigation */
-    background-color: white;
-    border-radius: 30px 30px 0 0;
-    padding: 20px;
-    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 3;
-    overflow-y: auto;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Push content to the bottom */
+  position: fixed;
+  bottom: 75px;  /* Stop the panel 75px from the bottom */
+  left: 0;
+  right: 0;
+  height: calc(75% - 75px); /* Adjust height so that the panel does not overlap the navigation */
+  background-color: var(--color-background);
+  border-radius: 30px 30px 0 0;
+  padding: var(--spacing-medium);
+  box-shadow: var(--box-shadow-light);
+  z-index: 3;
+  overflow-y: auto;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+/* Slide up animation for opening the member details panel */
+.slide-up {
+  animation-name: slideUp;
+}
+
+/* Slide down animation for closing the member details panel */
+.slide-down {
+  animation-name: slideDown;
+}
+
+/* Animation for sliding the panel up */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
   }
-  
-  /* Slide up animation for opening the member details panel */
-  .slide-up {
-    animation-name: slideUp;
+  to {
+    transform: translateY(0);
   }
-  
-  /* Slide down animation for closing the member details panel */
-  .slide-down {
-    animation-name: slideDown;
+}
+
+/* Animation for sliding the panel down */
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
   }
-  
-  /* Animation for sliding the panel up */
-  @keyframes slideUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
+  to {
+    transform: translateY(100%);
   }
-  
-  /* Animation for sliding the panel down */
-  @keyframes slideDown {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(100%);
-    }
-  }
-  
-  /* Close button in the top-right corner of the member details panel */
-  .close-button {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    font-weight: bold;
-    z-index: 10;
-    transition: color 0.3s ease;
-  }
-  
-  .close-button:hover {
-    color: #f44336;
-  }
-  
-  /* Overlay to darken background */
-  .member-details-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 75px;  /* Match the bottom of the overlay to the navigation bar */
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 2;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-  }
-  
-  .overlay-hide {
-    opacity: 0;
-    pointer-events: none; /* Prevent interactions after hiding */
-  }
-  
-  /* Individual member detail styling */
-  .member-username, .member-email, .member-brand, .member-distance, .member-goals {
-    margin-bottom: 15px;
-  }
-  
-  /* Font sizes and colors */
-  .member-username h2 {
-    font-size: 24px;
-    margin: 0;
-    text-align: center;
-  }
-  
-  .member-email p, .member-brand p, .member-distance p, .member-goals p {
-    font-size: 16px;
-    color: #333;
-  }
-  
-  /* Member picture styling */
-  .memberdetail-picture {
-    display: flex;
-    justify-content: left;
-    margin-bottom: 20px;
-  }
-  
-  .memberdetail-profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
+}
+
+/* Close button in the top-right corner of the member details panel */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: var(--font-size-xl);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+  font-weight: bold;
+  z-index: 10;
+  transition: color var(--transition-duration) var(--transition-ease);
+}
+
+.close-button:hover {
+  color: var(--color-secondary); /* Use a defined hover color */
+}
+
+/* Overlay to darken background */
+.member-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 75px;  /* Match the bottom of the overlay to the navigation bar */
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.overlay-hide {
+  opacity: 0;
+  pointer-events: none; /* Prevent interactions after hiding */
+}
+
+/* Individual member detail styling */
+.member-username, .member-email, .member-brand, .member-distance, .member-goals {
+  margin-bottom: var(--spacing-medium);
+}
+
+/* Font sizes and colors */
+.member-username h2 {
+  font-size: var(--font-size-xl);
+  margin: 0;
+  text-align: center;
+}
+
+.member-email p, .member-brand p, .member-distance p, .member-goals p {
+  font-size: var(--font-size-medium);
+  color: var(--color-text);
+}
+
+/* Member picture styling */
+.memberdetail-picture {
+  display: flex;
+  justify-content: left;
+  margin-bottom: var(--spacing-large);
+}
+
+.memberdetail-profile-image {
+  width: var(--profile-image-size); /* Use standardized profile image size */
+  height: var(--profile-image-size);
+  border-radius: var(--profile-image-border-radius); /* Ensure image is circular */
+  object-fit: cover;
+}

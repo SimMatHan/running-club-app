@@ -13,6 +13,8 @@
   --color-divider: #ddd;  /* Divider line color */
   --color-text: #333;  /* Main text color */
   --color-muted-text: #777;  /* Muted text for secondary information */
+  --color-input-border: #ccc;  /* Border color for input fields */
+  --color-event-marker: #FC5203;  /* Border color for input fields */
 
   /* Colors for running types in similar nuance to #f5fbff */
   --color-run-5k: #f5fbff;  /* Light blue for 5k runs */
@@ -232,4 +234,39 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* === FORM STYLING === */
+
+/* Form label styling */
+.form-label {
+  font-weight: bold;
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  margin-bottom: var(--spacing-small);
+  display: block;
+}
+
+/* Input and textarea styling */
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: var(--spacing-small);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-input-border);
+  font-size: var(--font-size-medium);
+  color: var(--color-text);
+  transition: border-color var(--transition-duration) var(--transition-ease);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* Textarea specific */
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
 }

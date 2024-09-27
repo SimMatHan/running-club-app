@@ -1,35 +1,35 @@
 /* Main login container - centered and responsive */
 .login-container {
   max-width: 400px;
-  width: 90%; /* Ensure responsiveness on mobile */
+  width: 90%;
   margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 15px;
-  background-color: #f9f9f9;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for a modern look */
+  padding: var(--spacing-medium);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius-large);
+  background-color: var(--color-background);
+  box-shadow: var(--box-shadow-light);
   text-align: center;
   margin-top: 50px;
 }
 
 /* Welcome description */
 .login-container .welcome-text {
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 20px;
+  font-size: var(--font-size-medium);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-medium);
   font-weight: 400;
   line-height: 1.5;
 }
 
 .login-container h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: var(--font-size-large);
+  margin-bottom: var(--spacing-medium);
   font-weight: 600;
 }
 
 .login-container h2 {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: var(--font-size-medium);
+  margin-bottom: var(--spacing-medium);
   font-weight: 600;
 }
 
@@ -39,25 +39,25 @@
 }
 
 .login-container input {
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1); /* Slight shadow inside input */
-  transition: border-color 0.3s ease;
+  padding: var(--spacing-medium);
+  margin-bottom: var(--spacing-small);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-divider);
+  font-size: var(--font-size-medium);
+  box-shadow: inset var(--box-shadow-light);
+  transition: border-color var(--transition-duration) var(--transition-ease);
 }
 
 /* Button styling */
 .login-container button {
-  padding: 12px;
-  border-radius: 8px;
-  background-color: #007bff;
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius);
+  background-color: var(--color-primary);
   color: white;
   border: none;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease, transform 0.2s;
+  font-size: var(--font-size-medium);
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
 }
 
 .login-container button:hover {
@@ -67,16 +67,16 @@
 
 /* Link styling */
 .login-container p {
-  margin-top: 20px;
-  font-size: 14px;
+  margin-top: var(--spacing-medium);
+  font-size: var(--font-size-small);
 }
 
 .login-container p button {
   background: none;
   border: none;
-  color: #007bff;
+  color: var(--color-primary);
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--font-size-small);
   padding: 0;
   text-decoration: underline;
 }
@@ -88,22 +88,22 @@
 /* Success message styling */
 .success-message {
   color: green;
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: var(--font-size-small);
+  margin-bottom: var(--spacing-small);
 }
 
 /* Error message styling */
 .error-message {
   color: red;
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: var(--font-size-medium);
+  margin-bottom: var(--spacing-small);
 }
 
 /* Media query for smaller screens */
 @media (max-width: 600px) {
   .login-container {
     width: 90%;
-    padding: 15px;
-    border-radius: 10px;
+    padding: var(--spacing-small);
+    border-radius: var(--border-radius);
   }
 }

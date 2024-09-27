@@ -1,3 +1,4 @@
+/* Popup overlay */
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -11,23 +12,29 @@
     z-index: 999;
 }
 
+/* Popup content container */
 .popup-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+    background: var(--color-background);
+    padding: var(--spacing-medium);
+    border-radius: var(--border-radius-large);
     text-align: center;
     max-width: 400px;
     width: 100%;
+    box-shadow: var(--box-shadow-light);
 }
 
+/* Popup content header */
 .popup-content h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: var(--font-size-large);
+    margin-bottom: var(--spacing-small);
+    color: var(--color-text);
 }
 
+/* Popup content paragraph */
 .popup-content p {
-    font-size: 16px;
-    padding: 10px;
+    font-size: var(--font-size-medium);
+    padding: var(--spacing-small);
+    color: var(--color-text);
 }
 
 /* Style for the browser toggle buttons */
@@ -35,67 +42,76 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-large);
 }
 
 .browser-toggle button {
-    padding: 10px 20px;
-    margin: 0 5px;
-    border: 2px solid #2979ff;
-    border-radius: 5px;
-    background-color: white;
-    color: #2979ff;
-    font-size: 16px;
+    padding: var(--spacing-small) var(--spacing-medium);
+    margin: 0 var(--spacing-small);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--border-radius);
+    background-color: var(--color-background);
+    color: var(--color-primary);
+    font-size: var(--font-size-medium);
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-duration) var(--transition-ease);
 }
 
+/* Active button styling */
 .browser-toggle button.active {
-    background-color: #2979ff;
+    background-color: var(--color-primary);
     color: white;
 }
 
+/* Hover effect for browser toggle buttons */
 .browser-toggle button:hover {
     background-color: #0056b3;
     color: white;
 }
 
+/* Guide content styling */
 .guide-content {
     text-align: left;
-    padding: 10px 10px;
+    padding: var(--spacing-small);
 }
 
 .guide-content h3 {
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-small);
+    color: var(--color-text);
 }
 
 .guide-content li {
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-small);
 }
 
 .guide-content ol {
-    padding-left: 20px;
+    padding-left: var(--spacing-medium);
     text-align: left;
 }
 
+/* Popup action buttons */
 .popup-actions {
-    margin-top: 20px;
+    margin-top: var(--spacing-large);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* Popup actions label */
 .popup-actions label {
-    font-size: 14px;
+    font-size: var(--font-size-small);
+    color: var(--color-text);
 }
 
+/* Action button styling */
 .popup-actions button {
-    padding: 8px 16px;
-    background-color: #2979ff;
+    padding: var(--spacing-small) var(--spacing-medium);
+    background-color: var(--color-primary);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     cursor: pointer;
+    transition: background-color var(--transition-duration) var(--transition-ease);
 }
 
 .popup-actions button:hover {

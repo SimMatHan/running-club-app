@@ -204,7 +204,7 @@ const CreateRun = () => {
             />
           </div>
 
-          <button type="submit">Create Run</button>
+          <button type="submit" className="button-primary">Create Run</button>
         </form>
 
         {message && <p className="success-message">{message}</p>}

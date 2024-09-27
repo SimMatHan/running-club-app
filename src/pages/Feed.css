@@ -3,53 +3,53 @@
   height: calc(100vh - 150px);
   margin-top: 75px;
   position: relative;
-  background-color: #2979ff; /* Orange background */
+  background-color: var(--color-primary);
   display: flex;
   flex-direction: column;
 }
 
 /* Title section with white background and rounded corners */
 .feed-title {
-  color: black;
-  padding: 25px;
+  color: var(--color-background);
+  padding: var(--spacing-medium);
   text-align: left;
-  z-index: 2; /* Ensures it appears above the background */
+  z-index: 2;
   position: relative;
   height: 100px;
 }
 
-/* Ensure the feed content takes up available space and stays at the bottom */
+/* Ensure the feed content takes up available space */
 .feed-content {
-  padding: 25px 20px;
-  background-color: white;
-  border-radius: 30px 30px 0 0; /* Rounded top corners for continuity */
-  z-index: 1; /* Slightly below the title */
-  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-  flex-grow: 1; /* This allows it to fill the available space */
+  padding: var(--spacing-medium);
+  background-color: var(--color-background);
+  border-radius: 30px 30px 0 0;
+  z-index: 1;
+  box-shadow: var(--box-shadow-light);
+  flex-grow: 1;
   flex-direction: column;
-  justify-content: space-between; /* Align content to the top and bottom */
-  overflow-y: auto; /* Make the content scrollable if needed */
+  justify-content: space-between;
+  overflow-y: auto;
 }
 
 /* Styling for h1 and subtitle */
 .feed-title h1 {
   margin: 0;
-  font-size: 36px;
-  color: white;
+  font-size: var(--font-size-xxl);
+  color: var(--color-background);
 }
 
 /* Upcoming Events Section - Horizontal Scroll */
 .scroll-container {
   display: flex;
-  overflow-x: auto; /* Enable horizontal scrolling */
-  padding-bottom: 10px; /* Space below the scrolling content */
-  scrollbar-width: thin; /* Thinner scrollbar */
+  overflow-x: auto;
+  padding-bottom: var(--spacing-small);
+  scrollbar-width: thin;
 }
 
 .scroll-container ul {
-  display: flex; /* Align items in a row */
-  flex-direction: row; /* Ensure horizontal arrangement */
-  gap: 20px; /* Space between each event card */
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-medium);
   padding: 0;
   margin: 0;
   list-style: none;
@@ -57,27 +57,27 @@
 
 /* Event item styling for horizontal display */
 .event-item {
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  min-width: 250px; /* Set minimum width for each event item */
-  flex-shrink: 0; /* Prevent shrinking */
-  transition: box-shadow 0.3s ease;
+  background-color: var(--color-background);
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-light);
+  min-width: 250px;
+  flex-shrink: 0;
+  transition: box-shadow var(--transition-duration) ease;
 }
 
 .event-item:hover {
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slight elevation on hover */
+  box-shadow: var(--box-shadow-heavy);
 }
 
 /* Style the scrollbar */
 .scroll-container::-webkit-scrollbar {
-  height: 8px; /* Set scrollbar height for horizontal scrolling */
+  height: 8px;
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
   background-color: #888;
-  border-radius: 10px;
+  border-radius: var(--border-radius-large);
 }
 
 .scroll-container::-webkit-scrollbar-thumb:hover {
@@ -86,77 +86,77 @@
 
 /* No events styling */
 .no-events {
-  color: #6c757d;
+  color: var(--color-muted-text);
   font-style: italic;
-  margin-top: 20px;
+  margin-top: var(--spacing-large);
   text-align: center;
 }
 
 /* Upcoming Events and Messages */
 h2 {
-  font-size: 24px;
-  color: #2979ff;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
 }
 
-/* Event list and message list container with padding and border-radius */
+/* Event list and message list container */
 .event-list,
 .message-list {
-  flex-grow: 1; /* Allow the content to grow inside the available space */
+  flex-grow: 1;
 }
 
 /* Event list styling */
 .event-list ul {
   padding: 0;
   list-style: none;
-  margin-top: 20px;
+  margin-top: var(--spacing-large);
 }
 
 /* Event item styling */
 .event-item {
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-background);
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-medium);
+  box-shadow: var(--box-shadow-light);
 }
 
 /* Message item styling */
 .message-item {
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-background);
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-medium);
+  box-shadow: var(--box-shadow-light);
 }
 
 .see-all-events-btn {
-  margin-top: 10px;
-  padding: 10px;
-  color: black;
+  margin-top: var(--spacing-small);
+  padding: var(--spacing-small);
+  color: var(--color-text);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  font-size: var(--font-size-medium);
+  transition: background-color var(--transition-duration) var(--transition-ease);
   width: 50%;
 }
 
 /* Divider styling */
 hr {
-  margin: 40px 0;
+  margin: var(--spacing-large) 0;
   border: 0;
   height: 1px;
-  background: #ddd;
+  background: var(--color-divider);
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
   h2 {
-    font-size: 20px;
+    font-size: var(--font-size-large);
   }
 
   .event-item,
   .message-item {
-    padding: 10px;
+    padding: var(--spacing-small);
   }
 }

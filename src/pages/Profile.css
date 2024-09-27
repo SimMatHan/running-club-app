@@ -1,9 +1,9 @@
 /* Full height and background setup */
 .profile-page {
-  height: calc(100vh - 150px); /* Full height minus some padding for navbar and topbar */
+  height: calc(100vh - 150px);
   margin-top: 75px;
   position: relative;
-  background-color: #2979ff; /* Blue background */
+  background-color: var(--color-primary);
   display: flex;
   flex-direction: column;
 }
@@ -11,30 +11,30 @@
 /* Title section with white background and rounded corners */
 .profile-title {
   color: black;
-  padding: 25px;
+  padding: var(--spacing-medium);
   text-align: left;
-  z-index: 2; /* Ensures it appears above the background */
+  z-index: 2;
   position: relative;
   height: 100px;
 }
 
 /* Ensure the profile content takes up available space and stays at the bottom */
 .profile-content {
-  padding: 25px 20px;
-  background-color: white;
-  border-radius: 30px 30px 0 0; /* Rounded top corners for continuity */
-  z-index: 1; /* Slightly below the title */
-  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
-  flex-grow: 1; /* This allows it to fill the available space */
+  padding: var(--spacing-medium);
+  background-color: var(--color-background);
+  border-radius: 30px 30px 0 0;
+  z-index: 1;
+  box-shadow: var(--box-shadow-light);
+  flex-grow: 1;
   flex-direction: column;
-  justify-content: space-between; /* Align content to the top and bottom */
-  overflow-y: auto; /* Make the content scrollable if needed */
+  justify-content: space-between;
+  overflow-y: auto;
 }
 
 /* Styling for h1 */
 .profile-title h1 {
   margin: 0;
-  font-size: 36px;
+  font-size: var(--font-size-xxl);
   color: white;
 }
 
@@ -42,46 +42,46 @@
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-bottom: 30px;
+  gap: var(--spacing-medium);
+  margin-bottom: var(--spacing-large);
 }
 
 .profile-form div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-small);
 }
 
 .profile-form label {
   font-weight: bold;
   flex: 1;
   text-align: left;
-  color: #333;
+  color: var(--color-text);
 }
 
 .profile-form input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: var(--spacing-small);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-medium);
   width: 100%;
 }
 
 .profile-form input[type="text"],
 .profile-form input[type="email"] {
-  flex: 2; /* Ensures inputs take up more space compared to labels */
+  flex: 2;
 }
 
 .profile-form button {
-  padding: 10px;
+  padding: var(--spacing-small);
   background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  font-size: var(--font-size-medium);
+  transition: background-color var(--transition-duration);
   width: 150px;
 }
 
@@ -91,35 +91,26 @@
 
 /* Profile Image Preview */
 .profile-image-preview {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: var(--profile-image-size);
+  height: var(--profile-image-size);
+  border-radius: var(--profile-image-border-radius);
   object-fit: cover;
-  margin-top: 10px;
+  margin-top: var(--spacing-small);
 }
 
 /* Style for the textarea */
 .profile-form textarea {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: var(--spacing-small);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-medium);
   width: 100%;
   resize: none;
 }
 
-/* Profile Image Preview */
-.profile-image-preview {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-top: 10px;
-}
-
 /* Success and error messages */
 .message {
-  margin-top: 20px;
+  margin-top: var(--spacing-medium);
   font-weight: bold;
   color: green;
   text-align: center;
@@ -128,15 +119,15 @@
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .profile-content {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: var(--spacing-medium);
+    padding-right: var(--spacing-medium);
   }
 
   .profile-form div {
-    gap: 10px;
+    gap: var(--spacing-small);
   }
 
   h2 {
-    font-size: 20px;
+    font-size: var(--font-size-large);
   }
 }

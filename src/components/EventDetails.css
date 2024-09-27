@@ -5,13 +5,13 @@
   left: 0;
   right: 0;
   height: calc(75% - 75px); /* Adjust height so that the panel does not overlap the navigation */
-  background-color: white;
+  background-color: var(--color-background);
   border-radius: 30px 30px 0 0;
-  padding: 20px;
-  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-medium);
+  box-shadow: var(--box-shadow-light);
   z-index: 3;
   overflow-y: auto;
-  animation-duration: 0.5s;
+  animation-duration: var(--transition-duration);
   animation-fill-mode: forwards;
   display: flex;
   flex-direction: column;
@@ -53,18 +53,18 @@
   position: absolute;
   top: 15px;
   right: 20px;
-  font-size: 24px;
+  font-size: var(--font-size-large);
   background: none;
   border: none;
   cursor: pointer;
-  color: #333;
+  color: var(--color-text);
   font-weight: bold;
   z-index: 10;
-  transition: color 0.3s ease;
+  transition: color var(--transition-duration) var(--transition-ease);
 }
 
 .close-button:hover {
-  color: #f44336;
+  color: var(--color-secondary); /* Use secondary color for hover */
 }
 
 /* Overlay to darken background */
@@ -77,7 +77,7 @@
   background: rgba(0, 0, 0, 0.4);
   z-index: 2;
   opacity: 1;
-  transition: opacity 0.5s ease;
+  transition: opacity var(--transition-duration) var(--transition-ease);
 }
 
 .overlay-hide {
@@ -87,23 +87,23 @@
 
 /* Individual event detail styling */
 .event-title, .event-date, .event-time, .event-location, .event-distance, .event-description, .event-organizer {
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-medium);
 }
 
 /* Font sizes and colors */
 .event-title h2 {
-  font-size: 24px;
+  font-size: var(--font-size-large);
   margin: 0;
 }
 
 .event-date p, .event-time p, .event-location p, .event-distance p, .event-description p, .event-organizer p {
-  font-size: 16px;
-  color: #333;
+  font-size: var(--font-size-medium);
+  color: var(--color-text);
 }
 
 /* Attendees section */
 .attendees-section {
-  margin-top: 20px;
+  margin-top: var(--spacing-large);
 }
 
 .attendees-section ul {
@@ -112,37 +112,37 @@
 }
 
 .attendees-section li {
-  margin-bottom: 5px;
+  margin-bottom: var(--spacing-small);
 }
 
 /* Event buttons placed at the bottom */
 .event-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: var(--spacing-large);
   width: 100%;
-  padding-bottom: 20px; /* Add some padding to push them up slightly */
+  padding-bottom: var(--spacing-large); /* Add some padding to push them up slightly */
 }
 
 /* Register and unregister buttons */
 .register-button, .unregister-button {
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: var(--spacing-small) var(--spacing-medium);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-medium);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--transition-duration) var(--transition-ease);
   border: none;
   width: 45%;
 }
 
 /* Register button (primary) */
 .register-button {
-  background-color: #2979ff;
+  background-color: var(--color-primary);
   color: white;
 }
 
 .register-button:hover {
-  background-color: #005bb5;
+  background-color: #005bb5; /* Darker shade of primary color for hover */
 }
 
 .register-button:disabled {
@@ -152,10 +152,10 @@
 
 /* Unregister button (secondary, cancel) */
 .unregister-button {
-  background-color: #f44336;
+  background-color: #d32f2f;
   color: white;
 }
 
 .unregister-button:hover {
-  background-color: #d32f2f;
+  background-color: #d32f2f; /* Darker shade of secondary color for hover */
 }

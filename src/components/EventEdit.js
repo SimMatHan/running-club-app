@@ -135,7 +135,7 @@ const EventEdit = ({ event, onClose, refreshEvents }) => {
             />
           </div>
 
-          <button type="submit">Update Run</button>
+          <button type="submit" className="button-primary">Update Run</button>
         </form>
 
         {message && <p className="success-message">{message}</p>}
