@@ -1,14 +1,16 @@
-/* Navbar.css */
+/* Navbar container */
 nav {
-  background-color: #f8f8f8;
+  background-color: var(--color-navbar); /* Use color variable */
   position: fixed;
   width: 100%;
   bottom: 0;
   left: 0;
   text-align: center;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--color-divider); /* Divider color */
   height: 75px;
-  padding-bottom: 15px;
+  font-family: 'Poppins', sans-serif; /* Use Poppins font */
+  padding-bottom: var(--spacing-small);
+  box-shadow: var(--box-shadow-light); /* Light shadow for navbar */
 }
 
 nav ul {
@@ -17,68 +19,74 @@ nav ul {
   padding: 0;
   display: flex;
   justify-content: space-around;
-  height: 100%;  /* Ensure nav items take up full height */
+  height: 100%;
 }
 
 nav ul li {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;  /* Each button will take up equal width */
-  position: relative; /* Ensure the rectangle is positioned relative to the li */
+  flex: 1;
+  position: relative;
 }
 
 nav ul li a {
   text-decoration: none;
-  color: #333;
-  padding: 10px 15px;
+  color: var(--color-text);
+  padding: var(--spacing-small) var(--spacing-medium);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%; /* Full width of li */
-  height: 100%; /* Full height of the navbar */
-  font-size: 16px; /* Default font size */
+  width: 100%;
+  height: 100%;
+  font-size: var(--font-size-medium);
+  transition: color var(--transition-duration), transform var(--transition-duration);
+}
+
+nav ul li a:hover {
+  color: var(--color-primary); /* Hover color */
+  transform: scale(1.05); /* Slight scaling effect on hover */
 }
 
 .nav-icon {
   width: 24px;
   height: 24px;
-  margin-bottom: 5px;
+  margin-bottom: var(--spacing-small);
 }
 
 /* Active state styling: rectangle above active item */
 nav ul li.active::before {
   content: "";
   position: absolute;
-  top: -5px; /* Position the rectangle above the list item */
-  left: 50%; /* Start the rectangle from the middle */
-  transform: translateX(-50%); /* Move the rectangle to the center */
-  width: 50%; /* Rectangle takes 50% of the li's width */
-  height: 6px; /* Height of the rectangle */
-  background-color: #2979ff; /* Color of the rectangle */
-  border-radius: 2px 2px 0 0; /* Optional: rounded corners */
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 6px;
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
 }
 
-/* Media query for smaller screens (like mobile devices) */
+/* Media query for smaller screens */
 @media (max-width: 768px) {
   nav ul li a {
-    font-size: 14px; /* Smaller font size on mobile */
+    font-size: var(--font-size-small); /* Smaller font on smaller screens */
   }
 
   .nav-icon {
-    width: 22px;  /* Smaller icon size on mobile */
+    width: 22px;
     height: 22px;
   }
 }
 
 @media (max-width: 480px) {
   nav ul li a {
-    font-size: 12px; /* Even smaller font size on very small mobile screens */
+    font-size: var(--font-size-small); /* Even smaller font on very small screens */
   }
 
   .nav-icon {
-    width: 20px;  /* Even smaller icon size on very small screens */
+    width: 20px;
     height: 20px;
   }
 }

@@ -131,7 +131,8 @@ const Feed = () => {
                   >
                     <h3>{event.title}</h3>
                     <p>Date: {event.date}</p>
-                    <p>Distance: {event.distance}</p>
+                    <p>Distance: {event.distance}k</p>
+                    <p>Type of Run: {event.typeOfRun}</p>
                     <p>Location: {event.location}</p>
                     <p>Organizer: {event.createdBy}</p>
                   </li>

@@ -54,7 +54,7 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif; /* Use Poppins as default font */
   background-color: var(--color-background);
   color: var(--color-text);
   margin: 0;

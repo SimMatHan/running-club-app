@@ -95,14 +95,19 @@ const Profile = () => {
       <div className="profile-content">
         {/* Profile Form */}
         <form onSubmit={handleSave} className="profile-form">
-          {/* Profile Image */}
-          <div>
-            <label>Profile Picture</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}  // Image upload handler
-            />
+          {/* Profile Picture Section with Upload Button and Image Preview */}
+          <div className="profile-picture-section">
+            <div className="upload-container">
+              <label>Profile Picture</label>
+              <div className="upload-btn-wrapper">
+                <button className="upload-btn">Upload Image</button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}  // Image upload handler
+                />
+              </div>
+            </div>
             {profileImageUrl ? (
               <img
                 src={profileImageUrl}
@@ -118,16 +123,16 @@ const Profile = () => {
             )}
           </div>
 
-          {/* Username - disabled */}
+          {/* Username - visually disabled */}
           <div>
             <label>Username</label>
-            <input type="text" value={userData.username || ""} disabled />
+            <input type="text" value={userData.username || ""} disabled className="disabled-input" />
           </div>
 
-          {/* Email - disabled */}
+          {/* Email - visually disabled */}
           <div>
             <label>Email</label>
-            <input type="email" value={userData.email || ""} disabled />
+            <input type="email" value={userData.email || ""} disabled className="disabled-input" />
           </div>
 
           {/* Preferred Running Brand */}
@@ -138,20 +143,11 @@ const Profile = () => {
               onChange={(e) => setPreferredGear(e.target.value)}
             >
               <option value="" disabled>Select your preferred brand</option>
-              <option value="Nike">Nike</option>
-              <option value="Adidas">Adidas</option>
-              <option value="Asics">Asics</option>
-              <option value="Brooks">Brooks</option>
-              <option value="Hoka">Hoka</option>
-              <option value="New Balance">New Balance</option>
-              <option value="Saucony">Saucony</option>
-              <option value="Puma">Puma</option>
-              <option value="Under Armour">Under Armour</option>
-              <option value="Mizuno">Mizuno</option>
+              {/* Options here */}
             </select>
           </div>
 
-          {/* Preferred Distance */}
+          {/* Preferred Running Distance */}
           <div>
             <label>Preferred Running Distance</label>
             <select
@@ -159,12 +155,7 @@ const Profile = () => {
               onChange={(e) => setPreferredDistance(e.target.value)}
             >
               <option value="" disabled>Select your preferred distance</option>
-              <option value="5">5 km</option>
-              <option value="10">10 km</option>
-              <option value="15">15 km</option>
-              <option value="21">21 km (Half Marathon)</option>
-              <option value="30">30 km</option>
-              <option value="42">42 km (Marathon)</option>
+              {/* Options here */}
             </select>
           </div>
 
@@ -179,12 +170,13 @@ const Profile = () => {
             />
           </div>
 
-          {/* Save Button */}
-          <button type="submit" className="save-button">Save Changes</button>
-
-          {/* Success/Error Message below the button */}
+          <div className="save-btn-wrapper">{/* Save Button */}
+            <button type="submit" className="save-button">Save Changes</button>
+          </div>
+          {/* Success/Error Message */}
           {message && <p className="message">{message}</p>}
         </form>
+
       </div>
     </div>
   );

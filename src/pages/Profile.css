@@ -43,50 +43,88 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-medium);
-  margin-bottom: var(--spacing-large);
-}
-
-.profile-form div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--spacing-small);
+  margin-top: var(--spacing-medium);
 }
 
 .profile-form label {
   font-weight: bold;
-  flex: 1;
-  text-align: left;
   color: var(--color-text);
+  font-size: var(--font-size-medium);
+
 }
 
-.profile-form input {
+/* Adjust profile image and input alignment */
+.profile-form .profile-picture-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Align items in the center vertically */
+}
+
+.profile-picture-section .upload-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure label and button stack vertically */
+  flex-grow: 1;
+}
+
+.profile-picture-section label {
+  font-weight: bold;
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
+  margin-bottom: var(--spacing-small); /* Add space between label and button */
+}
+
+.profile-picture-section .upload-btn-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* Modern input, select, and textarea styling */
+.profile-form input,
+.profile-form select,
+.profile-form textarea {
   padding: var(--spacing-small);
   border: 1px solid var(--color-divider);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-large);
   font-size: var(--font-size-medium);
   width: 100%;
+  background-color: var(--color-background);
+  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+  margin-top: var(--spacing-small);
 }
 
-.profile-form input[type="text"],
-.profile-form input[type="email"] {
-  flex: 2;
+/* Visually disabled fields (Username and Email) */
+.profile-form .disabled-input {
+  background-color: transparent; /* Remove background */
+  color: var(--color-muted-text); /* Use muted text color */
+  cursor: not-allowed; /* Show not-allowed cursor */
+  font-weight: bold; /* Ensure text stands out */
+  background-color: #f0f0f0;
 }
 
-.profile-form button {
+.profile-form .disabled-input:disabled {
+  opacity: 1; /* Ensure disabled inputs are fully visible */
+}
+
+/* Button to upload image */
+.upload-btn {
   padding: var(--spacing-small);
-  background-color: #28a745;
+  background-color: var(--color-primary);
   color: white;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
   font-size: var(--font-size-medium);
-  transition: background-color var(--transition-duration);
-  width: 150px;
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
 }
 
-.profile-form button:hover {
-  background-color: #218838;
+.upload-btn:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px);
+}
+
+.upload-btn-wrapper input[type="file"] {
+  display: none; /* Hide the default file input */
 }
 
 /* Profile Image Preview */
@@ -95,17 +133,42 @@
   height: var(--profile-image-size);
   border-radius: var(--profile-image-border-radius);
   object-fit: cover;
-  margin-top: var(--spacing-small);
+  margin-left: var(--spacing-medium);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow to the profile image */
+}
+
+/* Button styling */
+.profile-form button {
+  padding: var(--spacing-small);
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-medium);
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
+  width: 150px; /* Make button fill width */
+}
+
+.profile-form button:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px);
+}
+
+.save-btn-wrapper {
+  display: flex;
+  justify-content: flex-end
 }
 
 /* Style for the textarea */
 .profile-form textarea {
   padding: var(--spacing-small);
   border: 1px solid var(--color-divider);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-large);
   font-size: var(--font-size-medium);
   width: 100%;
   resize: none;
+  background-color: var(--color-background);
 }
 
 /* Success and error messages */

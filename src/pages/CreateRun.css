@@ -24,7 +24,6 @@
   background-color: var(--color-background);
   border-radius: 30px 30px 0 0; /* Rounded top corners for continuity */
   z-index: 1; /* Slightly below the title */
-  box-shadow: var(--box-shadow-light);
   flex-grow: 1; /* This allows it to fill the available space */
   flex-direction: column;
   justify-content: space-between; /* Align content to the top and bottom */
@@ -44,31 +43,55 @@
   flex-direction: column;
   gap: var(--spacing-medium);
   margin-bottom: var(--spacing-large);
+  margin-top: var(--spacing-medium);
 }
 
-.arrangement-form div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--spacing-small);
-}
-
-/* Use standard form label and input styles */
+/* Modern input, select, and textarea styling */
 .arrangement-form label {
-  flex: 1;
-  font-size: var(--font-size-small);
+  font-weight: bold;
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
 }
 
+/* Adjust input field styles */
 .arrangement-form input,
+.arrangement-form select,
 .arrangement-form textarea {
-  flex: 2; /* Ensures inputs take up more space compared to labels */
-  
+  padding: var(--spacing-small);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius-large);
+  font-size: var(--font-size-medium);
+  width: 100%;
+  background-color: var(--color-background);
+  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+  margin-top: var(--spacing-small);
+}
 
+/* Focus effect for inputs */
+.arrangement-form input:focus,
+.arrangement-form select:focus,
+.arrangement-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* More prominent shadow on focus */
 }
 
 /* Button styling */
 .arrangement-form button {
+  padding: var(--spacing-small);
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-medium);
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
   width: 100%;
+}
+
+.arrangement-form button:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px); /* Subtle lift on hover */
 }
 
 /* Success and error messages */
@@ -136,15 +159,11 @@
   margin-top: 0;
   color: var(--color-text);
   font-size: var(--font-size-medium);
+  margin-bottom: var(--spacing-small);
 }
 
 .arrangement-item p {
-  margin: var(--spacing-small) 0;
   font-size: var(--font-size-small);
-}
-
-.arrangement-item strong {
-  color: var(--color-text);
 }
 
 .no-arrangements {

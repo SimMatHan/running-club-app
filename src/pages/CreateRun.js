@@ -12,6 +12,7 @@ const CreateRun = () => {
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [distance, setDistance] = useState("");
+  const [typeOfRun, setTypeOfRun] = useState(""); // New state for type of run
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -65,6 +66,7 @@ const CreateRun = () => {
         time,
         location,
         distance,
+        typeOfRun, // Added type of run to Firestore
         description,
         createdAt: new Date().toISOString(),
         createdBy: username, // Use the username fetched from Firestore
@@ -78,6 +80,7 @@ const CreateRun = () => {
       setTime("");
       setLocation("");
       setDistance("");
+      setTypeOfRun(""); // Reset type of run
       setDescription("");
 
       fetchArrangements();
@@ -184,15 +187,32 @@ const CreateRun = () => {
             />
           </div>
 
+          {/* Distance Dropdown */}
           <div>
-            <label>Distance (e.g., 5K, 10K)</label>
+            <label>Distance of Run</label>
             <input
-              type="text"
-              value={distance}
+              value="text"
               onChange={(e) => setDistance(e.target.value)}
               required
               placeholder="Enter the distance of the run"
             />
+          </div>
+
+          {/* Type of Run Dropdown */}
+          <div>
+            <label>Type of Run</label>
+            <select
+              value={typeOfRun}
+              onChange={(e) => setTypeOfRun(e.target.value)}
+              required
+            >
+              <option value="">Select Type of Run</option>
+              <option value="Interval">Interval</option>
+              <option value="Easy Run">Easy Run</option>
+              <option value="Race Run">Race Run</option>
+              <option value="Long Run">Long Run</option>
+              <option value="Hygge">Hygge</option>
+            </select>
           </div>
 
           <div>
@@ -220,12 +240,11 @@ const CreateRun = () => {
                 onClick={() => startEditing(arrangement)} // Make the item clickable
               >
                 <h3>{arrangement.title}</h3>
-                <p>
-                  <strong>Date:</strong> {arrangement.date}<br />
-                  <strong>Time:</strong> {arrangement.time}<br />
-                  <strong>Location:</strong> {arrangement.location}<br />
-                  <strong>Distance:</strong> {arrangement.distance}<br />
-                </p>
+                <p> Date: {arrangement.date} </p>
+                <p> Time: {arrangement.time} </p>
+                <p> Location: {arrangement.location} </p>
+                <p> Distance: {arrangement.distance} </p>
+                <p> Type of Run: {arrangement.typeOfRun} </p> {/* Display the type of run */}
               </div>
             ))
           ) : (

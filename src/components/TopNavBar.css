@@ -4,24 +4,30 @@
   left: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between; /* Align items to the left and right */
+  justify-content: space-between;
   align-items: center;
-  padding: 10px 25px;
+  padding: var(--spacing-small) var(--spacing-medium);
   height: 76px;
-  background-color: #2979ff;
+  background-color: var(--color-primary); /* Use primary color */
+  font-family: 'Poppins', sans-serif; /* Poppins font for the navbar */
 }
 
 /* Logo Placeholder styling */
 .logo-placeholder h1 {
-  font-size: 16px;
+  font-family: 'Audiowide', sans-serif; /* Use the chosen font */
+  font-size: var(--font-size-xl);       /* Adjust the size as needed */
   color: #ffffff;
+  font-style: italic;
 }
+
 
 /* Profile link styling */
 .top-navbar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .top-navbar ul li {
@@ -29,64 +35,70 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-left: var(--spacing-medium);
 }
 
 .top-navbar ul li a {
   text-decoration: none;
   color: #ffffff;
-  font-size: 16px;
-  padding: 10px;
+  font-size: var(--font-size-medium); /* Consistent font size */
+  font-weight: 500;
+  padding: var(--spacing-small);
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center;    /* Center align items */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-duration);
 }
 
 .top-navbar ul li a:hover {
-  color: #e4e4e4;
+  color: #e4e4e4; /* Slight color change on hover */
 }
 
 /* Profile picture styling */
 .profile-pic {
-  width: 40px; /* Default size for larger screens */
-  height: 40px; 
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* Profile text styling */
 .profile-text {
-  font-size: 12px; /* Smaller text below the image */
-  margin-top: 5px; /* Small margin between the image and text */
+  font-size: var(--font-size-small); /* Consistent text size */
+  margin-top: var(--spacing-small);
   color: #ffffff;
+  font-weight: 400;
 }
 
 /* Media query for tablets and smaller screens */
 @media (max-width: 768px) {
   .profile-pic {
-    width: 30px; /* Slightly smaller on tablets */
+    width: 30px;
     height: 30px;
   }
   
   .profile-text {
-    font-size: 12px; /* Smaller text on tablets */
+    font-size: var(--font-size-small);
   }
   
   .logo-placeholder h1 {
-    font-size: 16px; /* Smaller logo font */
+    font-size: var(--font-size-large); /* Responsive font */
   }
 }
 
 /* Media query for mobile screens */
 @media (max-width: 480px) {
   .profile-pic {
-    width: 24px; /* Smaller on mobile phones */
-    height: 24px;
+    width: 36px;
+    height: 36px;
   }
   
   .profile-text {
-    font-size: 12px; /* Small text on mobile */
+    font-size: var(--font-size-small);
   }
   
   .logo-placeholder h1 {
-    font-size: 16px; /* Even smaller logo font on mobile */
+    font-size: var(--font-size-medium); /* Responsive font on mobile */
   }
-
 }

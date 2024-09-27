@@ -119,6 +119,11 @@ const EventDetails = ({ event, onClose }) => {
           <p><strong>Distance:</strong> {event.distance}</p>
         </div>
 
+        {/* New Section: Event Type */}
+        <div className="event-type">
+          <p><strong>Type of Run:</strong> {event.typeOfRun}</p>
+        </div>
+
         {/* Event Description */}
         <div className="event-description">
           <p><strong>Description:</strong> {event.description}</p>

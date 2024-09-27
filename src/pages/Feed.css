@@ -24,7 +24,6 @@
   background-color: var(--color-background);
   border-radius: 30px 30px 0 0;
   z-index: 1;
-  box-shadow: var(--box-shadow-light);
   flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
@@ -58,16 +57,28 @@
 /* Event item styling for horizontal display */
 .event-item {
   background-color: var(--color-background);
-  padding: var(--spacing-medium);
+  border: 1px solid var(--color-divider);
   border-radius: var(--border-radius);
+  padding: var(--spacing-medium);
   box-shadow: var(--box-shadow-light);
-  min-width: 250px;
-  flex-shrink: 0;
-  transition: box-shadow var(--transition-duration) ease;
+  min-width: 250px; /* Set a minimum width for each item to fit */
+  flex-shrink: 0; /* Prevent items from shrinking */
+  transition: box-shadow var(--transition-duration) var(--transition-ease);
 }
 
 .event-item:hover {
   box-shadow: var(--box-shadow-heavy);
+}
+
+.event-item h3 {
+  margin-top: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
+  margin-bottom: var(--spacing-small);
+}
+
+.event-item p {
+  font-size: var(--font-size-small);
 }
 
 /* Style the scrollbar */

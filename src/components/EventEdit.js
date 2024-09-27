@@ -9,6 +9,7 @@ const EventEdit = ({ event, onClose, refreshEvents }) => {
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [distance, setDistance] = useState("");
+  const [typeOfRun, setTypeOfRun] = useState(""); // New state for type of run
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -24,6 +25,7 @@ const EventEdit = ({ event, onClose, refreshEvents }) => {
       setTime(event.time || "");
       setLocation(event.location || "");
       setDistance(event.distance || "");
+      setTypeOfRun(event.typeOfRun || ""); // Populate type of run
       setDescription(event.description || "");
     }
   }, [event]); // Re-run this effect whenever the event prop changes
@@ -42,6 +44,7 @@ const EventEdit = ({ event, onClose, refreshEvents }) => {
         time,
         location,
         distance,
+        typeOfRun, // Include type of run in the update
         description,
       });
 
@@ -116,7 +119,7 @@ const EventEdit = ({ event, onClose, refreshEvents }) => {
           </div>
 
           <div>
-            <label>Distance (e.g., 5K, 10K)</label>
+            <label>Distance of Run</label>
             <input
               type="text"
               value={distance}
@@ -124,6 +127,23 @@ const EventEdit = ({ event, onClose, refreshEvents }) => {
               required
               placeholder="Enter the distance of the run"
             />
+          </div>
+
+          {/* New Dropdown for Type of Run */}
+          <div>
+            <label>Type of Run</label>
+            <select
+              value={typeOfRun}
+              onChange={(e) => setTypeOfRun(e.target.value)}
+              required
+            >
+              <option value="">Select Type of Run</option>
+              <option value="Interval">Interval</option>
+              <option value="Easy Run">Easy Run</option>
+              <option value="Race Run">Race Run</option>
+              <option value="Long Run">Long Run</option>
+              <option value="Hygge">Hygge</option>
+            </select>
           </div>
 
           <div>

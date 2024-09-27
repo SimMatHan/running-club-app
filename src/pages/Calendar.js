@@ -164,13 +164,12 @@ const Calendar = () => {
                   onClick={() => openEventDetails(arrangement)}  // Open event details on click
                 >
                   <h3>{arrangement.title}</h3>
-                  <p>
-                    <strong>Date:</strong> {arrangement.date}<br />
-                    <strong>Time:</strong> {arrangement.time}<br />
-                    <strong>Location:</strong> {arrangement.location}<br />
-                    <strong>Distance:</strong> {arrangement.distance}<br />
-                    <strong>Organizer:</strong> {arrangement.createdBy}
-                  </p>
+                  <p>Date: {arrangement.date}</p>
+                  <p>Time: {arrangement.time}</p>
+                  <p>Location: {arrangement.location}</p>
+                  <p>Distance: {arrangement.distance}k</p>
+                  <p>Type of Run: {arrangement.typeOfRun}</p>
+                  <p>Organizer: {arrangement.createdBy}</p>
                 </div>
               ))
             ) : (
