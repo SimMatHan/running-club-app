@@ -26,13 +26,16 @@ function App() {
       
       <Routes>
         {/* Redirect to Feed if user is authenticated, otherwise go to Login */}
-        <Route path="/" element={user ? <Feed /> : <Navigate to="/login" />} />
+        {/* Updated the default route to redirect authenticated users to /feed */}
+        <Route path="/" element={user ? <Navigate to="/feed" /> : <Navigate to="/login" />} />
         <Route path="/feed" element={user ? <Feed /> : <Navigate to="/login" />} />
         <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
         <Route path="/createrun" element={user ? <CreateRun /> : <Navigate to="/login" />} />
         <Route path="/calendar" element={user ? <Calendar /> : <Navigate to="/login" />} />
         <Route path="/members" element={user ? <Members /> : <Navigate to="/login" />} />
-        <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />  {/* If already logged in, redirect to Feed */}
+        
+        {/* Handle the login route - if already logged in, redirect to /feed */}
+        <Route path="/login" element={!user ? <Login /> : <Navigate to="/feed" />} />  
       </Routes>
 
       {/* Only show the bottom Navbar when the user is authenticated */}

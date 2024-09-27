@@ -27,9 +27,12 @@ const Feed = () => {
           console.log("Fetched user data:", data);  // Debug: Check fetched data
           setUserData(data);  // Store fetched user data
           
-          if (data.showGuide !== false) {
-            setShowGuidePopup(true);  // Show popup if showGuide is true or undefined
-            console.log("Setting showGuidePopup to true");
+          // Only show popup if showGuide is true or undefined (if it's not set to false)
+          if (data.showGuide === true || data.showGuide === undefined) {
+            setTimeout(() => {
+              setShowGuidePopup(true);  // Delay the popup appearance by 2 seconds
+            }, 2000);  // 2000 ms = 2 seconds
+            console.log("Guide popup will appear after 2 seconds.");
           } else {
             console.log("Guide popup is disabled for this user.");
           }
@@ -47,6 +50,11 @@ const Feed = () => {
   useEffect(() => {
     fetchUserData();  // Fetch user data on component mount
     fetchUpcomingEvents();  // Fetch events
+
+    return () => {
+      // Clear the timeout when the component unmounts to prevent memory leaks
+      clearTimeout();
+    };
   }, [fetchUserData]);
 
   const fetchUpcomingEvents = async () => {

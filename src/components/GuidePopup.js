@@ -11,9 +11,9 @@ const GuidePopup = ({ onClose, onDoNotShowAgain }) => {
 
   const handleClose = () => {
     if (dontShowAgain) {
-      onDoNotShowAgain(); // Trigger the update to Firebase
+      onDoNotShowAgain();  // Trigger the update to Firebase
     }
-    onClose(); // Close the popup
+    onClose();  // Close the popup
   };
 
   const handleToggleChange = (browser) => {
