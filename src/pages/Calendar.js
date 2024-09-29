@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";  // Firestore
 import { collection, getDocs } from "firebase/firestore";  // Firestore methods
 import './Calendar.css';  // Reuse the CreateRun CSS for the same styling
+import { getRunTypeColor } from '../utils/utils'; // Import the utility function for color
 import EventDetails from '../components/EventDetails';  // Import the EventDetails component
 import { startOfMonth, endOfMonth, eachDayOfInterval, format, isSameDay, isSameMonth, addMonths, subMonths, isToday, isPast } from 'date-fns';  // Import necessary date-fns functions
 
@@ -162,6 +163,7 @@ const Calendar = () => {
                   key={arrangement.id}
                   className="run-item"
                   onClick={() => openEventDetails(arrangement)}  // Open event details on click
+                  style={{ backgroundColor: getRunTypeColor(arrangement.typeOfRun) }}  // Set background color based on run type
                 >
                   <h3>{arrangement.title}</h3>
                   <p>Date: {arrangement.date}</p>

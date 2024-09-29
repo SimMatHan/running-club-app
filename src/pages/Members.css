@@ -61,7 +61,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--color-run-5k); /* Light background color for the member card */
   padding: var(--spacing-medium);
   border-radius: var(--border-radius-large);
   margin-bottom: var(--spacing-small);

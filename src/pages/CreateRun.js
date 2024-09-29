@@ -191,12 +191,14 @@ const CreateRun = () => {
           <div>
             <label>Distance of Run</label>
             <input
-              value="text"
+              type="text"
+              value={distance}
               onChange={(e) => setDistance(e.target.value)}
               required
               placeholder="Enter the distance of the run"
             />
           </div>
+
 
           {/* Type of Run Dropdown */}
           <div>

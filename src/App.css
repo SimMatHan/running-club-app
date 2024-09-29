@@ -16,14 +16,13 @@
   --color-input-border: #ccc;  /* Border color for input fields */
   --color-event-marker: #FC5203;  /* Border color for input fields */
 
-  /* Colors for running types in similar nuance to #f5fbff */
-  --color-run-5k: #f5fbff;  /* Light blue for 5k runs */
-  --color-run-10k: #e1f5fe;  /* Slightly darker blue for 10k */
-  --color-run-15k: #cfefff;  /* Light turquoise for 15k */
-  --color-run-half-marathon: #b3e5fc;  /* Blue for half marathon (21k) */
-  --color-run-marathon: #a0d8ff;  /* Deeper blue for marathon (42k) */
+  /* Lighter, softer gradient between blue and orange for running types */
+  --color-run-5k: linear-gradient(135deg, #d6e5ff, #fcd4b2);  /* Lys sart blå til sart orange */
+  --color-run-10k: linear-gradient(135deg, #e0ddff, #fcd4b2);  /* Lys lilla med blå toner til sart orange */
+  --color-run-15k: linear-gradient(135deg, #ead9f7, #fcd4b2);  /* Lys lavendel til sart orange */
+  --color-run-half-marathon: linear-gradient(135deg, #eab08a, #fcd4b2);  /* Lys orange/lilla til sart orange */
+  --color-run-marathon: linear-gradient(135deg, #fcd4b2, #a3c6ff);  /* Sart orange til sart blå */
 
-  /* Font sizes */
   --font-size-small: 12px;
   --font-size-medium: 16px;
   --font-size-large: 20px;

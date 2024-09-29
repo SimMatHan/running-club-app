@@ -5,6 +5,7 @@ import { collection, getDocs, doc, getDoc, updateDoc } from "firebase/firestore"
 import GuidePopup from "../components/GuidePopup";
 import './Feed.css';
 import EventDetails from "../components/EventDetails"; 
+import { getRunTypeColor } from '../utils/utils';
 
 const Feed = () => {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
@@ -104,6 +105,7 @@ const Feed = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
+  
 
   return (
     <div className="feed-page">
@@ -111,11 +113,11 @@ const Feed = () => {
       {showGuidePopup && (
         <GuidePopup onClose={closeGuidePopup} onDoNotShowAgain={disableGuidePopup} />
       )}
-
+  
       <div className="feed-title">
         <h1>Feed</h1>
       </div>
-
+  
       <div className="feed-content">
         <section className="event-list">
           <h2>Upcoming Runs</h2>
@@ -128,6 +130,7 @@ const Feed = () => {
                     key={event.id}
                     className="event-item"
                     onClick={() => setSelectedEvent(event)}
+                    style={{ backgroundColor: getRunTypeColor(event.typeOfRun) }} // Tilføj dynamisk baggrundsfarve
                   >
                     <h3>{event.title}</h3>
                     <p>Date: {event.date}</p>
@@ -143,13 +146,10 @@ const Feed = () => {
             <p className="no-events">No upcoming events found.</p>
           )}
         </section>
-
+  
         <button className="see-all-events-btn" onClick={goToCalendar}>
           See All Events
         </button>
-
-        <hr />
-
         <section className="message-list">
           <h2>Messages</h2>
           <div>
@@ -164,7 +164,7 @@ const Feed = () => {
           </div>
         </section>
       </div>
-
+  
       {selectedEvent && (
         <EventDetails event={selectedEvent} onClose={closeEventDetails} />
       )}
