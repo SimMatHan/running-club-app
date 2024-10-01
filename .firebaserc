@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "club-send-it"
-  }
+    "default": "club-send-it",
+    "dev": "club-send-it"
+  },
+  "targets": {},
+  "etags": {}
 }

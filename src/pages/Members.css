@@ -106,12 +106,25 @@
 .member-picture {
   width: 64px;
   height: 64px;
-  border-radius: var(--profile-image-border-radius);
+  border-radius: 50%; /* Circular profile picture */
   overflow: hidden;
 }
 
 .profile-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px; /* Emoji size */
+  background-color: #fafafa; /* Default background color */
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image fits nicely inside the circle */
+  border-radius: 50%; /* Ensure the image stays circular */
 }

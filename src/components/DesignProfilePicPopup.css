@@ -1,0 +1,150 @@
+/* Design Profile Picture Panel */
+.design-profile-pic-panel {
+    position: fixed;
+    bottom: 75px;
+    left: 0;
+    right: 0;
+    height: calc(75% - 75px);
+    background-color: var(--color-background);
+    border-radius: 30px 30px 0 0;
+    padding: var(--spacing-medium);
+    box-shadow: var(--box-shadow-light);
+    z-index: 3;
+    overflow-y: auto;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Close button */
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: var(--font-size-large);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text);
+    font-weight: bold;
+  }
+  
+  .close-button:hover {
+    color: var(--color-secondary);
+  }
+  
+  /* Overlay */
+  .design-profile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 75px;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+  
+  /* Avatar Preview */
+  .avatar-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 64px;
+    border: 2px solid #ccc;
+  }
+  
+  .avatar-emoji {
+    font-size: 64px;
+  }
+  
+  /* Avatar Options */
+  .avatar-options {
+    margin-top: var(--spacing-large);
+    text-align: center;
+  }
+  
+  .emoji-grid {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .emoji-btn {
+    font-size: 32px;
+    background: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  
+  .emoji-btn.selected {
+    border-color: var(--color-primary);
+  }
+  
+  /* Color Options */
+  .color-options {
+    margin-top: var(--spacing-large);
+    text-align: center;
+  }
+  
+  .color-grid {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .color-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  
+  .color-btn.selected {
+    border-color: var(--color-primary);
+  }
+  
+  /* Save and Cancel buttons */
+  .design-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-large);
+  }
+  
+  .save-avatar-button, .cancel-avatar-button {
+    padding: var(--spacing-small) var(--spacing-medium);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-medium);
+    cursor: pointer;
+    border: none;
+    width: 45%;
+  }
+  
+  .save-avatar-button {
+    background-color: var(--color-primary);
+    color: white;
+  }
+  
+  .save-avatar-button:hover {
+    background-color: #005bb5;
+  }
+  
+  .cancel-avatar-button {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  .cancel-avatar-button:hover {
+    background-color: #b71c1c;
+  }
+  

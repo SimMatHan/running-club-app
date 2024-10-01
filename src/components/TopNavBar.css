@@ -20,7 +20,6 @@
   font-style: italic;
 }
 
-
 /* Profile link styling */
 .top-navbar ul {
   list-style-type: none;
@@ -55,12 +54,19 @@
   color: #e4e4e4; /* Slight color change on hover */
 }
 
-/* Profile picture styling */
-.profile-pic {
+/* Profile picture (avatar) container in navbar */
+.topnav-profile-pic {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
+  border-radius: 50%; /* Ensure the profile picture is round */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  font-size: 16px; /* Smaller font size for the emoji */
+  color: white; /* Emoji color */
+  transition: background-color var(--transition-duration);
 }
 
 /* Profile text styling */
@@ -71,11 +77,20 @@
   font-weight: 400;
 }
 
+.topbarnav-avatar-emoji {
+  font-size: 25px;
+}
+
 /* Media query for tablets and smaller screens */
 @media (max-width: 768px) {
-  .profile-pic {
+  .topnav-profile-pic {
     width: 30px;
     height: 30px;
+    font-size: 20px; /* Adjust emoji size for smaller screens */
+  }
+
+  .topbarnav-avatar-emoji {
+    font-size: 25px;
   }
   
   .profile-text {
@@ -89,9 +104,14 @@
 
 /* Media query for mobile screens */
 @media (max-width: 480px) {
-  .profile-pic {
+  .topnav-profile-pic {
     width: 36px;
     height: 36px;
+    font-size: 22px; /* Adjust emoji size for smaller screens */
+  }
+
+  .topbarnav-avatar-emoji {
+    font-size: 25px;
   }
   
   .profile-text {

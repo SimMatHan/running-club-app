@@ -50,7 +50,6 @@
   font-weight: bold;
   color: var(--color-text);
   font-size: var(--font-size-medium);
-
 }
 
 /* Adjust profile image and input alignment */
@@ -58,26 +57,55 @@
   display: flex;
   justify-content: space-between;
   align-items: center; /* Align items in the center vertically */
+  margin-bottom: var(--spacing-medium);
 }
 
-.profile-picture-section .upload-container {
+/* Left container for label and button */
+.profile-details-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Ensure label and button stack vertically */
+  justify-content: center;
   flex-grow: 1;
   max-width: 200px;
 }
 
-.profile-picture-section label {
+.profile-details-container label {
   font-weight: bold;
   color: var(--color-text);
   font-size: var(--font-size-medium);
   margin-bottom: var(--spacing-small); /* Add space between label and button */
 }
 
-.profile-picture-section .upload-btn-wrapper {
+/* Button styling for Design Profile Pic */
+.design-profile-btn {
+  margin-top: var(--spacing-small); /* Add space between label and button */
+  padding: var(--spacing-small);
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-medium);
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
+  width: 150px;
+}
+
+.design-profile-btn:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px);
+}
+
+/* Profile Image Preview */
+.profile-image-preview {
+  width: 100px; /* Define width of the image container */
+  height: 100px; /* Define height of the image container */
+  border-radius: 50%; /* Ensure it's circular */
   display: flex;
+  justify-content: center;
   align-items: center;
+  font-size: 48px; /* Size of the emoji */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow to the profile image */
+  margin-left: var(--spacing-medium); /* Add space between the image and the rest of the form */
 }
 
 /* Modern input, select, and textarea styling */
@@ -116,54 +144,6 @@
 
 .upload-container .profile-form input {
   border: none; /* Ensure no borders on inputs within the upload container */
-}
-
-.upload-input {
-  padding: 8px 16px;
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.upload-input::-webkit-file-upload-button {
-  visibility: hidden; /* Hide the default file upload button */
-}
-
-.upload-input::before {
-  content: 'Upload Image';
-  display: inline-block;
-  background: var(--color-primary);
-  border: 1px solid var(--color-primary);
-  border-radius: 8px;
-  padding: 8px 16px;
-  outline: none;
-  white-space: nowrap;
-  cursor: pointer;
-  font-size: 16px;
-  color: white;
-  width: 150px;
-}
-
-.upload-input:hover::before {
-  background-color: #005bb5; /* Darker color on hover */
-}
-
-.upload-input:active::before {
-  background-color: #004085; /* Even darker color on active */
-}
-
-
-/* Profile Image Preview */
-.profile-image-preview {
-  width: var(--profile-image-size);
-  height: var(--profile-image-size);
-  border-radius: var(--profile-image-border-radius);
-  object-fit: cover;
-  margin-left: var(--spacing-medium);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow to the profile image */
 }
 
 /* Button styling */

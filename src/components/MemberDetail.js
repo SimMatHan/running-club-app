@@ -50,11 +50,26 @@ const MemberDetail = ({ memberId, onClose }) => {
 
         {/* Profile Picture */}
         <div className="memberdetail-picture">
-          <img
-            src={member.profileImageUrl || defaultProfilePic}
-            alt="Profile"
+          <div
             className="memberdetail-profile-image"
-          />
+            style={{
+              background: member.profileBackgroundColor || '#f0f0f0', // Fallback background color
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100px',
+              height: '100px',
+              borderRadius: '50%', // Make it a circle
+              fontSize: '48px', // Emoji size
+              overflow: 'hidden' // Ensure content fits inside the circle
+            }}
+          >
+            {member.profileImageUrl ? (
+              <span className="avatar-emoji">{member.profileImageUrl}</span>
+            ) : (
+              <img src={defaultProfilePic} alt="Profile" />
+            )}
+          </div>
         </div>
 
         {/* Username */}

@@ -39,8 +39,6 @@ const Members = () => {
     fetchMembers();
   }, []);
 
-  
-
   return (
     <div className="members-page">
       {/* Title Section */}
@@ -67,11 +65,26 @@ const Members = () => {
 
                 {/* Profile Picture Placeholder */}
                 <div className="member-picture">
-                  <img
-                    src={member.profileImageUrl || defaultProfilePic}
-                    alt="Profile"
+                  <div
                     className="profile-image"
-                  />
+                    style={{
+                      background: member.profileBackgroundColor || '#fafafa',  // Fallback background color
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: '64px',
+                      height: '64px',
+                      borderRadius: '50%',
+                      overflow: 'hidden',
+                      fontSize: '32px'  // Emoji size
+                    }}
+                  >
+                    {member.profileImageUrl ? (
+                      <span>{member.profileImageUrl}</span>  // Show the emoji if present
+                    ) : (
+                      <img src={defaultProfilePic} alt="Profile" />  // Fallback image
+                    )}
+                  </div>
                 </div>
               </li>
             ))}

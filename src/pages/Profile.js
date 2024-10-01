@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { auth, db, storage } from "../firebaseConfig";  // Firebase auth, Firestore, and Storage
-import { doc, getDoc, updateDoc } from "firebase/firestore";  // Firestore methods
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";  // Firebase Storage methods
+import { auth, db } from "../firebaseConfig";  // Firebase auth, Firestore
+import { doc, getDoc } from "firebase/firestore";  // Firestore methods
 import './Profile.css';
-import defaultProfilePic from '../assets/ProfileGrey.svg';  // Assuming you have a default image in your assets
+import defaultProfilePic from '../assets/ProfileGrey.svg';  // Default image
+import DesignProfilePicPopup from '../components/DesignProfilePicPopup'; // Import the new popup component
 
 const Profile = () => {
   const [userData, setUserData] = useState({});
   const [preferredGear, setPreferredGear] = useState("");
   const [preferredDistance, setPreferredDistance] = useState("");
-  const [profileImageUrl, setProfileImageUrl] = useState(""); // Profile image URL
+  const [profileImageUrl, setProfileImageUrl] = useState(""); // Profile image URL (avatar)
+  const [profileBackgroundColor, setProfileBackgroundColor] = useState(""); // Background color for the avatar
   const [runningGoals, setRunningGoals] = useState(""); // Running goals
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");  // Success or error message
+  const [showDesignPopup, setShowDesignPopup] = useState(false); // State to show/hide avatar design popup
 
   const user = auth.currentUser;  // Get the currently logged-in user
 
@@ -25,7 +27,8 @@ const Profile = () => {
         setUserData(data);
         setPreferredGear(data.preferredGear || "");
         setPreferredDistance(data.preferredDistance || "");
-        setProfileImageUrl(data.profileImageUrl || "");  // Fetch stored profile image URL
+        setProfileImageUrl(data.profileImageUrl || "");  // Fetch stored profile image (avatar)
+        setProfileBackgroundColor(data.profileBackgroundColor || "");  // Fetch stored background color
         setRunningGoals(data.runningGoals || "");  // Fetch running goals
       }
     } catch (err) {
@@ -35,43 +38,16 @@ const Profile = () => {
     }
   }, [user]);
 
-  // Function to handle profile image upload
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const storageRef = ref(storage, `profilePictures/${user.uid}`);  // Create a storage reference
-      await uploadBytes(storageRef, file);  // Upload the file to Firebase Storage
-      const downloadURL = await getDownloadURL(storageRef);  // Get the file's download URL
-      setProfileImageUrl(downloadURL);  // Set the image URL in state
-    }
+  // Function to handle opening the avatar design popup
+  const handleOpenDesignPopup = () => {
+    setShowDesignPopup(true); // Show the design popup
   };
 
-  // Function to update user data
-  const handleSave = async (e) => {
-    e.preventDefault();
-    try {
-      await updateDoc(doc(db, "users", user.uid), {
-        preferredGear,
-        preferredDistance,
-        profileImageUrl,  // Save the profile image URL to Firestore
-        runningGoals    // Save the running goals
-      });
-      setMessage("Profile updated successfully!");
-    } catch (err) {
-      console.error("Error updating profile: ", err);
-      setMessage("Failed to update profile.");
-    }
+  // Function to handle closing the avatar design popup
+  const handleCloseDesignPopup = () => {
+    setShowDesignPopup(false); // Close the popup
+    fetchUserData(); // Re-fetch data to update the avatar in the profile
   };
-
-  // Set timeout to clear the message after 7 seconds
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage("");
-      }, 7000);  // 7 seconds delay
-      return () => clearTimeout(timer); // Clean up the timer on unmount
-    }
-  }, [message]);
 
   // Fetch user data when the component mounts
   useEffect(() => {
@@ -94,43 +70,58 @@ const Profile = () => {
       {/* Main Content Section */}
       <div className="profile-content">
         {/* Profile Form */}
-        <form onSubmit={handleSave} className="profile-form">
-          {/* Profile Picture Section with Upload Button and Image Preview */}
+        <form className="profile-form">
+          {/* Profile Picture Section with Avatar Preview */}
           <div className="profile-picture-section">
-            <div className="upload-container">
+            <div className="profile-details-container">
               <label>Profile Picture</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}  // Image upload handler
-                className="upload-input"  // You can style this input to look like a button
-              />
+              <button
+                type="button"
+                className="design-profile-btn"
+                onClick={handleOpenDesignPopup}
+              >
+                Design Profile Pic
+              </button>
             </div>
-            {profileImageUrl ? (
-              <img
-                src={profileImageUrl}
-                alt="Profile"
-                className="profile-image-preview"
-              />
-            ) : (
-              <img
-                src={defaultProfilePic}
-                alt="Default Profile"
-                className="profile-image-preview"
-              />
-            )}
+
+            <div
+              className="profile-image-preview"
+              style={{
+                background: profileBackgroundColor || "linear-gradient(135deg, #f0f0f0, #f0f0f0)", // Default background if no color is set
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%', // Make it a circle
+                fontSize: '48px', // Emoji size
+                overflow: 'hidden' // Ensure content fits inside the circle
+              }}
+            >
+              <span className="avatar-emoji">{profileImageUrl || "👤"}</span> {/* Fallback emoji */}
+            </div>
           </div>
 
           {/* Username - visually disabled */}
           <div>
             <label>Username</label>
-            <input type="text" value={userData.username || ""} disabled className="disabled-input" />
+            <input
+              type="text"
+              value={userData.username || ""}
+              disabled
+              className="disabled-input"
+            />
           </div>
 
           {/* Email - visually disabled */}
           <div>
             <label>Email</label>
-            <input type="email" value={userData.email || ""} disabled className="disabled-input" />
+            <input
+              type="email"
+              value={userData.email || ""}
+              disabled
+              className="disabled-input"
+            />
           </div>
 
           {/* Preferred Running Brand */}
@@ -188,8 +179,12 @@ const Profile = () => {
           {/* Success/Error Message */}
           {message && <p className="message">{message}</p>}
         </form>
-
       </div>
+
+      {/* Avatar Design Popup */}
+      {showDesignPopup && (
+        <DesignProfilePicPopup onClose={handleCloseDesignPopup} />
+      )}
     </div>
   );
 };
