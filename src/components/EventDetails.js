@@ -4,6 +4,10 @@ import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firest
 import { auth } from "../firebaseConfig";  // Firebase Auth for user info
 import "./EventDetails.css";
 
+// Importing SVG icons
+import close from '../assets/close.svg';
+import comment from '../assets/comment.svg';
+
 const EventDetails = ({ event, onClose }) => {
   const [isClosing, setIsClosing] = useState(false);  // State to track if the panel is closing
   const [isRegistered, setIsRegistered] = useState(false);  // Track if the user is registered for the event
@@ -86,78 +90,71 @@ const EventDetails = ({ event, onClose }) => {
     <div>
       {/* Overlay */}
       <div
-        className={`event-details-overlay ${isClosing ? "overlay-hide" : ""}`}
+        className={`EventDetails-overlay ${isClosing ? "EventDetails-overlay-hide" : ""}`}
         onClick={handleClose}
       ></div>
 
       {/* Event Details Panel */}
-      <div className={`event-details-panel ${isClosing ? "slide-down" : "slide-up"}`}>
-        <button className="close-button" onClick={handleClose}>X</button>
-
-        {/* Event Title */}
-        <div className="event-title">
-          <h2>{event.title}</h2>
+      <div className={`EventDetails-panel ${isClosing ? "EventDetails-slide-down" : "EventDetails-slide-up"}`}>
+        
+        {/* Event Header */}
+        <div className="EventDetails-header">
+          <div className="EventDetails-event-title">
+            <h2>{event.title}</h2>
+            <p>Organized by {event.createdBy}</p>
+          </div>
+          <div className="EventDetails-header-icons">
+            <button className="EventDetails-chat-icon">
+              <img src={comment} alt="Comment" className="EventDetails-icon" />
+            </button>
+            <button className="EventDetails-close-button" onClick={handleClose}>
+              <img src={close} alt="Close" className="EventDetails-icon" />
+            </button>
+          </div>
         </div>
 
-        {/* Event Date */}
-        <div className="event-date">
-          <p><strong>Date:</strong> {event.date}</p>
+        {/* Event Info */}
+        <div className="EventDetails-event-info">
+          <div className="EventDetails-event-location">
+            <p>{event.location}</p>
+          </div>
+          <div className="EventDetails-event-date-time">
+            <p>{event.time}</p>
+            <p>{event.date}</p>
+          </div>
         </div>
 
-        {/* Event Time */}
-        <div className="event-time">
-          <p><strong>Time:</strong> {event.time}</p>
+        {/* Event Type and Distance */}
+        <div className="EventDetails-event-details">
+          <div className="EventDetails-event-distance">
+            <h2>{event.typeOfRun}</h2>
+          </div>
+          <div className="EventDetails-event-distance">
+            <h2>{event.distance}</h2>
+          </div>
         </div>
 
-        {/* Event Location */}
-        <div className="event-location">
-          <p><strong>Location:</strong> {event.location}</p>
-        </div>
-
-        {/* Event Distance */}
-        <div className="event-distance">
-          <p><strong>Distance:</strong> {event.distance}</p>
-        </div>
-
-        {/* New Section: Event Type */}
-        <div className="event-type">
-          <p><strong>Type of Run:</strong> {event.typeOfRun}</p>
-        </div>
-
-        {/* Event Description */}
-        <div className="event-description">
-          <p><strong>Description:</strong> {event.description}</p>
-        </div>
-
-        {/* Event Organizer */}
-        <div className="event-organizer">
-          <p><strong>Organizer:</strong> {event.createdBy}</p>
-        </div>
-
-        {/* Show the list of attendees */}
-        <div className="attendees-section">
-          <h3>Attendees ({attendees.length}):</h3>
-          {attendees.length > 0 ? (
-            <ul>
-              {attendees.map((attendee, index) => (
-                <li key={index}>{attendee}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>No attendees yet.</p>
-          )}
+        {/* Attendees */}
+        <div className="EventDetails-attendees">
+          <ul>
+            {attendees.length > 0 ? (
+              attendees.map((attendee, index) => <li key={index}>{attendee}</li>)
+            ) : (
+              <p>No attendees yet.</p>
+            )}
+          </ul>
         </div>
 
         {/* Registration and Unregistration buttons placed at the bottom */}
-        <div className="event-buttons">
+        <div className="EventDetails-buttons">
           <button
-            className="register-button"
+            className="EventDetails-register-button"
             onClick={handleRegister}
             disabled={isRegistered}  // Disable if already registered
           >
             Register
           </button>
-          <button className="unregister-button" onClick={handleUnregister}>
+          <button className="EventDetails-unregister-button" onClick={handleUnregister}>
             Unregister
           </button>
         </div>

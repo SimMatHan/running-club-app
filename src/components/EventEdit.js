@@ -3,6 +3,8 @@ import { updateDoc, doc } from "firebase/firestore"; // Firestore methods
 import { db } from "../firebaseConfig"; // Import db from firebaseConfig
 import './EventEdit.css'; // Ensure appropriate CSS for the edit modal
 
+import close from '../assets/close.svg';
+
 const EventEdit = ({ event, onClose, refreshEvents }) => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -13,7 +15,7 @@ const EventEdit = ({ event, onClose, refreshEvents }) => {
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  
+
   const [isClosing, setIsClosing] = useState(false); // To track closing animation
 
   // Update state when event prop changes (populate the form fields)
@@ -72,9 +74,13 @@ const EventEdit = ({ event, onClose, refreshEvents }) => {
 
       {/* Edit Panel with slide-up and slide-down animation */}
       <div className={`edit-panel ${isClosing ? "slide-down" : "slide-up"}`}>
-        <button className="close-button" onClick={handleClose}>X</button>
-        <form onSubmit={handleSubmit} className="arrangement-form">
+        <div className="EventEdit-header">
           <h2>Update Your Run</h2>
+          <button className="EventDetails-close-button" onClick={handleClose}>
+            <img src={close} alt="Close" className="EventDetails-icon" />
+          </button>
+        </div> 
+        <form onSubmit={handleSubmit} className="arrangement-form">
 
           <div>
             <label>Event Title</label>

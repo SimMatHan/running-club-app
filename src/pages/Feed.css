@@ -30,58 +30,32 @@
   overflow-y: auto;
 }
 
-/* Styling for h1 and subtitle */
+/* Styling for h1 */
 .feed-title h1 {
   margin: 0;
   font-size: var(--font-size-xxl);
   color: var(--color-background);
 }
 
-/* Upcoming Events Section - Horizontal Scroll */
+/* Event List Section - Horizontal Scroll */
 .scroll-container {
   display: flex;
   overflow-x: auto;
   padding-bottom: var(--spacing-small);
   scrollbar-width: thin;
+  gap: var(--spacing-medium);
 }
 
 .scroll-container ul {
   display: flex;
   flex-direction: row;
-  gap: var(--spacing-medium);
+  gap: var(--spacing-medium); /* Space between event items */
   padding: 0;
   margin: 0;
   list-style: none;
+  margin-left: 2px;
 }
 
-/* Event item styling for horizontal display */
-.event-item {
-  background-color: var(--color-background);
-  border: 1px solid var(--color-divider);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-medium);
-  box-shadow: var(--box-shadow-light);
-  min-width: 250px; /* Set a minimum width for each item to fit */
-  flex-shrink: 0; /* Prevent items from shrinking */
-  transition: box-shadow var(--transition-duration) var(--transition-ease);
-}
-
-.event-item:hover {
-  box-shadow: var(--box-shadow-heavy);
-}
-
-.event-item h3 {
-  margin-top: 0;
-  color: var(--color-text);
-  font-size: var(--font-size-medium);
-  margin-bottom: var(--spacing-small);
-}
-
-.event-item p {
-  font-size: var(--font-size-small);
-}
-
-/* Style the scrollbar */
 .scroll-container::-webkit-scrollbar {
   height: 8px;
 }
@@ -95,6 +69,99 @@
   background-color: #555;
 }
 
+/* Event item styling */
+.event-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure content is spaced top to bottom */
+  min-width: 250px;
+  max-width: 300px;
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius);
+  background-color: var(--color-background);
+  box-shadow: var(--box-shadow-light);
+  margin-bottom: var(--spacing-small);
+  transition: box-shadow var(--transition-duration) var(--transition-ease);
+}
+
+.event-item:hover {
+  box-shadow: var(--box-shadow-heavy);
+}
+
+/* Event header (title, date, time) */
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.event-title {
+  font-size: var(--font-size-medium);
+  font-weight: bold;
+  margin: 0;
+  color: var(--color-text);
+  flex-grow: 1;
+}
+
+.event-datetime {
+  font-size: var(--font-size-small);
+  text-align: right;
+  color: var(--color-muted-text);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 75px;
+}
+
+/* Event details (type, distance, organizer, attendees) */
+.event-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.event-type-distance {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-type {
+  font-size: var(--font-size-medium);
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.event-distance {
+  font-size: var(--font-size-large);
+  font-weight: bold;
+}
+
+.event-distance small {
+  display: block;
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
+}
+
+/* Attendees count styling */
+.event-attendees {
+  text-align: right;
+  margin-bottom: auto;
+}
+
+.attendees-count {
+  font-size: var(--font-size-xxl);
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+/* Organizer section at the bottom */
+.event-organizer {
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
+  text-align: left; /* Align text to the left */
+}
+
 /* No events styling */
 .no-events {
   color: var(--color-muted-text);
@@ -103,43 +170,7 @@
   text-align: center;
 }
 
-/* Upcoming Events and Messages */
-h2 {
-  font-size: var(--font-size-xl);
-  color: var(--color-primary);
-}
-
-/* Event list and message list container */
-.event-list,
-.message-list {
-  flex-grow: 1;
-}
-
-/* Event list styling */
-.event-list ul {
-  padding: 0;
-  list-style: none;
-  margin-top: var(--spacing-large);
-}
-
-/* Event item styling */
-.event-item {
-  background-color: var(--color-background);
-  padding: var(--spacing-medium);
-  border-radius: var(--border-radius);
-  margin-bottom: var(--spacing-medium);
-  box-shadow: var(--box-shadow-light);
-}
-
-/* Message item styling */
-.message-item {
-  background-color: var(--color-background);
-  padding: var(--spacing-medium);
-  border-radius: var(--border-radius);
-  margin-bottom: var(--spacing-medium);
-  box-shadow: var(--box-shadow-light);
-}
-
+/* Button styling */
 .see-all-events-btn {
   margin-top: var(--spacing-small);
   padding: var(--spacing-small);
@@ -166,8 +197,11 @@ hr {
     font-size: var(--font-size-large);
   }
 
-  .event-item,
-  .message-item {
-    padding: var(--spacing-small);
+  .event-datetime {
+    font-size: 10px;
+  }
+
+  .attendees-count {
+    font-size: var(--font-size-large);
   }
 }

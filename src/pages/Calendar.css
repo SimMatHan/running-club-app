@@ -3,7 +3,7 @@
   height: calc(100vh - 150px);
   margin-top: 75px;
   position: relative;
-  background-color: var(--color-primary); /* Use primary blue background */
+  background-color: var(--color-primary);
   display: flex;
   flex-direction: column;
 }
@@ -90,33 +90,104 @@ input:checked + .slider:before {
 
 /* Run-item clickable card style */
 .run-item {
-  background-color: var(--color-background);
-  border: 1px solid var(--color-divider);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-medium);
-  box-shadow: var(--box-shadow-light);
-  transition: transform var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
-  cursor: pointer;
-  margin-bottom: var(--spacing-small);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  min-width: 250px;
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius);
+  background-color: var(--color-background);
+  box-shadow: var(--box-shadow-light);
+  margin-bottom: var(--spacing-small);
+  transition: box-shadow var(--transition-duration) var(--transition-ease);
+  cursor: pointer;
 }
 
 .run-item h3 {
-  margin-top: 0;
+  font-size: var(--font-size-large);
+  font-weight: bold;
+  margin: 0;
   color: var(--color-text);
-  font-size: var(--font-size-medium);
-  margin-bottom: var(--spacing-small);
 }
 
 .run-item p {
   font-size: var(--font-size-small);
+  margin: var(--spacing-xxsmall) 0;
 }
 
 .run-item:hover {
-  transform: translateY(-5px);
   box-shadow: var(--box-shadow-heavy);
-  background-color: var(--color-run-5k);
+}
+
+/* Event header (title, date, time) */
+.run-item .event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-large);
+  margin-bottom: var(--spacing-small);
+}
+
+.run-item .event-datetime {
+  font-size: var(--font-size-small);
+  text-align: right;
+  color: var(--color-muted-text);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Event details (type, distance, organizer, attendees) */
+.run-item .event-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.run-item .event-type-distance {
+  display: flex;
+  flex-direction: column;
+}
+
+.run-item .event-type {
+  font-size: var(--font-size-medium);
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.run-item .event-distance {
+  font-size: var(--font-size-medium);
+  font-weight: bold;
+}
+
+.run-item .event-distance small {
+  display: block;
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
+}
+
+/* Attendees count styling */
+.run-item .event-attendees {
+  text-align: right;
+}
+
+.run-item .attendees-titel {
+  font-size: var(--font-size-medium);
+  font-weight: bold;
+}
+
+.run-item .attendees-count {
+  font-size: var(--font-size-large);
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+/* Organizer section at the bottom */
+.run-item .event-organizer {
+  margin-top: auto;
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
+  text-align: left;
 }
 
 /* Month selector styling */

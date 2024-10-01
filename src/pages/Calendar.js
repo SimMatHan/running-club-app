@@ -159,19 +159,37 @@ const Calendar = () => {
           <div className="run-list">
             {filteredArrangements.length > 0 ? (
               filteredArrangements.map((arrangement) => (
-                <div
+                <div className="run-item"
                   key={arrangement.id}
-                  className="run-item"
-                  onClick={() => openEventDetails(arrangement)}  // Open event details on click
-                  style={{ backgroundColor: getRunTypeColor(arrangement.typeOfRun) }}  // Set background color based on run type
+                  onClick={() => openEventDetails(arrangement)}
+                  style={{ background: getRunTypeColor(arrangement.typeOfRun) }}  // Dynamic background color
                 >
-                  <h3>{arrangement.title}</h3>
-                  <p>Date: {arrangement.date}</p>
-                  <p>Time: {arrangement.time}</p>
-                  <p>Location: {arrangement.location}</p>
-                  <p>Distance: {arrangement.distance}k</p>
-                  <p>Type of Run: {arrangement.typeOfRun}</p>
-                  <p>Organizer: {arrangement.createdBy}</p>
+                  <div className="event-header">
+                    <h3 className="event-title">{arrangement.title}</h3>
+                    <div className="event-datetime">
+                      <p>{arrangement.time}</p>
+                      <p>{arrangement.date}</p>
+                    </div>
+                  </div>
+
+                  <div className="event-details">
+                    <div className="event-type-distance">
+                      <p className="event-distance">
+                        {arrangement.typeOfRun}
+                      </p>
+                      <p className="attendees-count">
+                        {arrangement.distance}
+                      </p>
+                    </div>
+                    <div className="event-attendees">
+                      <p className="attendees-titel">Attendees</p>
+                      <p className="attendees-count">{arrangement.attendees?.length || 0}</p>
+                    </div>
+                  </div>
+
+                  <div className="event-organizer">
+                    <small>Organised by {arrangement.createdBy}</small>
+                  </div>
                 </div>
               ))
             ) : (

@@ -3,6 +3,7 @@ import { db } from "../firebaseConfig";  // Firestore
 import { doc, getDoc } from "firebase/firestore";  // Firestore methods
 import './MemberDetail.css';
 import defaultProfilePic from '../assets/ProfileGrey.svg';  // Default profile picture
+import close from '../assets/close.svg';
 
 const MemberDetail = ({ memberId, onClose }) => {
   const [member, setMember] = useState(null);  // State to store the member data
@@ -46,9 +47,8 @@ const MemberDetail = ({ memberId, onClose }) => {
 
       {/* Member Details Panel */}
       <div className={`member-details-panel ${isClosing ? "slide-down" : "slide-up"}`}>
-        <button className="close-button" onClick={handleClose}>X</button>
 
-        {/* Profile Picture */}
+        {/* Profile Picture and Close Button */}
         <div className="memberdetail-picture">
           <div
             className="memberdetail-profile-image"
@@ -59,9 +59,8 @@ const MemberDetail = ({ memberId, onClose }) => {
               alignItems: 'center',
               width: '100px',
               height: '100px',
-              borderRadius: '50%', // Make it a circle
-              fontSize: '48px', // Emoji size
-              overflow: 'hidden' // Ensure content fits inside the circle
+              borderRadius: '50%',
+              overflow: 'hidden' 
             }}
           >
             {member.profileImageUrl ? (
@@ -70,6 +69,9 @@ const MemberDetail = ({ memberId, onClose }) => {
               <img src={defaultProfilePic} alt="Profile" />
             )}
           </div>
+          <button className="close-button" onClick={handleClose}>
+            <img src={close} alt="Close" className="EventDetails-icon" />
+          </button>
         </div>
 
         {/* Username */}
@@ -77,25 +79,35 @@ const MemberDetail = ({ memberId, onClose }) => {
           <h2>{member.username}</h2>
         </div>
 
-        {/* Email */}
-        <div className="member-email">
-          <p><strong>Email:</strong> {member.email}</p>
+        {/* First Row: Running Brand and Total Runs */}
+        <div className="member-row">
+          <div className="member-data">
+            <p>Favorite Running Brand</p>
+            <h3>{member.preferredGear || "Not specified"}</h3>
+          </div>
+          <div className="member-data">
+            <p>Total Runs for CSI</p>
+            <h3>{member.totalRuns || "0"}</h3>
+          </div>
         </div>
 
-        {/* Preferred Running Brand */}
-        <div className="member-brand">
-          <p><strong>Preferred Running Brand:</strong> {member.preferredGear || "Not specified"}</p>
-        </div>
-
-        {/* Preferred Running Distance */}
-        <div className="member-distance">
-          <p><strong>Preferred Running Distance:</strong> {member.preferredDistance ? `${member.preferredDistance} km` : "Not specified"}</p>
+        {/* Second Row: Preferred Distance and Total KM */}
+        <div className="member-row">
+          <div className="member-data">
+            <p>Favorite Distance</p>
+            <h3>{member.preferredDistance ? `${member.preferredDistance} km` : "Not specified"}</h3>
+          </div>
+          <div className="member-data">
+            <p>Total KMs for CSI</p>
+            <h3>{member.totalKM ? `${member.totalKM} km` : "0 km"}</h3>
+          </div>
         </div>
 
         {/* Running Goals */}
         {member.runningGoals && (
           <div className="member-goals">
-            <p><strong>Running Goals:</strong> {member.runningGoals}</p>
+            <p><strong>Goal for the season</strong></p>
+            <h3>{member.runningGoals}</h3>
           </div>
         )}
       </div>

@@ -1,10 +1,10 @@
 /* Member details panel */
 .member-details-panel {
   position: fixed;
-  bottom: 75px;  /* Stop the panel 75px from the bottom */
+  bottom: 75px;
   left: 0;
   right: 0;
-  height: calc(75% - 75px); /* Adjust height so that the panel does not overlap the navigation */
+  height: calc(75% - 75px);
   background-color: var(--color-background);
   border-radius: 30px 30px 0 0;
   padding: var(--spacing-medium);
@@ -16,6 +16,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* Overlay to darken background */
+.member-details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 75px; /* Match the bottom of the overlay to the navigation bar */
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.overlay-hide {
+  opacity: 0;
+  pointer-events: none; /* Prevent interactions after hiding */
 }
 
 /* Slide up animation for opening the member details panel */
@@ -48,41 +66,44 @@
   }
 }
 
-/* Close button in the top-right corner of the member details panel */
+/* Profile Picture and Close Button */
+.memberdetail-picture {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: var(--spacing-medium);
+}
+
+.memberdetail-profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  background-color: #f0f0f0;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.memberdetail-profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .close-button {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: var(--font-size-xl);
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--color-text);
-  font-weight: bold;
-  z-index: 10;
-  transition: color var(--transition-duration) var(--transition-ease);
 }
 
-.close-button:hover {
-  color: var(--color-secondary); /* Use a defined hover color */
-}
-
-/* Overlay to darken background */
-.member-details-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 75px;  /* Match the bottom of the overlay to the navigation bar */
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 2;
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
-
-.overlay-hide {
-  opacity: 0;
-  pointer-events: none; /* Prevent interactions after hiding */
+.close-button img {
+  width: 36px;
+  height: 36px;
 }
 
 /* Member Username */
@@ -93,42 +114,45 @@
   color: var(--color-text);
 }
 
-/* Member detail text sections */
-.member-email p,
-.member-brand p,
-.member-distance p,
-.member-goals p {
-  font-size: var(--font-size-medium);
-  color: var(--color-text);
-  text-align: center;
-  margin-bottom: var(--spacing-small);
-}
-
-/* Member picture styling */
-.memberdetail-picture {
+/* Rows for member details */
+.member-row {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: var(--spacing-large);
-}
-
-.memberdetail-profile-image {
-  width: 100px; /* Standardized profile image size */
-  height: 100px;
-  border-radius: 50%; /* Ensure image is circular */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 48px; /* Emoji size */
-  background-color: #f0f0f0; /* Default background color if no profile background is available */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  overflow: hidden;
-}
-
-/* Default image styling */
-.memberdetail-profile-image img {
+  justify-content: space-between;
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensure the image fills the container */
-  border-radius: 50%; /* Ensure the image remains circular */
+  padding: var(--spacing-medium);
+}
+
+.member-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.member-data p {
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
+  margin: 0;
+}
+
+.member-data h3 {
+  font-size: var(--font-size-large);
+  color: var(--color-text);
+  margin: var(--spacing-small) 0 0 0;
+}
+
+/* Running Goals */
+.member-goals {
+  padding: var(--spacing-medium);
+  text-align: center;
+}
+
+.member-goals p {
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
+}
+
+.member-goals h3 {
+  font-size: var(--font-size-large);
+  color: var(--color-text);
 }

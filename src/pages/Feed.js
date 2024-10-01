@@ -4,7 +4,7 @@ import { auth, db } from "../firebaseConfig";
 import { collection, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 import GuidePopup from "../components/GuidePopup";
 import './Feed.css';
-import EventDetails from "../components/EventDetails"; 
+import EventDetails from "../components/EventDetails";
 import { getRunTypeColor } from '../utils/utils';
 
 const Feed = () => {
@@ -27,7 +27,7 @@ const Feed = () => {
           const data = userDoc.data();
           console.log("Fetched user data:", data);  // Debug: Check fetched data
           setUserData(data);  // Store fetched user data
-          
+
           // Only show popup if showGuide is true or undefined (if it's not set to false)
           if (data.showGuide === true || data.showGuide === undefined) {
             setTimeout(() => {
@@ -105,7 +105,7 @@ const Feed = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
-  
+
 
   return (
     <div className="feed-page">
@@ -113,11 +113,11 @@ const Feed = () => {
       {showGuidePopup && (
         <GuidePopup onClose={closeGuidePopup} onDoNotShowAgain={disableGuidePopup} />
       )}
-  
+
       <div className="feed-title">
         <h1>Feed</h1>
       </div>
-  
+
       <div className="feed-content">
         <section className="event-list">
           <h2>Upcoming Runs</h2>
@@ -130,14 +130,31 @@ const Feed = () => {
                     key={event.id}
                     className="event-item"
                     onClick={() => setSelectedEvent(event)}
-                    style={{ backgroundColor: getRunTypeColor(event.typeOfRun) }} // Tilføj dynamisk baggrundsfarve
+                    style={{ background: getRunTypeColor(event.typeOfRun) }} // Dynamic background color
                   >
-                    <h3>{event.title}</h3>
-                    <p>Date: {event.date}</p>
-                    <p>Distance: {event.distance}k</p>
-                    <p>Type of Run: {event.typeOfRun}</p>
-                    <p>Location: {event.location}</p>
-                    <p>Organizer: {event.createdBy}</p>
+                    <div className="event-header">
+                      <h3 className="event-title">{event.title}</h3>
+                      <div className="event-datetime">
+                        <p>{event.time}</p>
+                        <p>{event.date}</p>
+                      </div>
+                    </div>
+                    <div className="event-details">
+                      <div className="event-type-distance">
+                        <p className="event-type">{event.typeOfRun}</p>
+                        <p className="event-distance">
+                          {event.distance}
+                        </p>
+                      </div>
+                      <div className="event-attendees">
+                        <p>Attendees</p>
+                        <p className="attendees-count">{event.attendees?.length || 0}</p>
+                      </div>
+                    </div>
+                    {/* New organizer div */}
+                    <div className="event-organizer">
+                      <small>Organised by {event.createdBy}</small>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -146,7 +163,7 @@ const Feed = () => {
             <p className="no-events">No upcoming events found.</p>
           )}
         </section>
-  
+
         <button className="see-all-events-btn" onClick={goToCalendar}>
           See All Events
         </button>
@@ -164,7 +181,7 @@ const Feed = () => {
           </div>
         </section>
       </div>
-  
+
       {selectedEvent && (
         <EventDetails event={selectedEvent} onClose={closeEventDetails} />
       )}

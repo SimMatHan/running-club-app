@@ -41,22 +41,18 @@
   }
 }
 
-.close-button {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: var(--font-size-large);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--color-text);
-  font-weight: bold;
-  z-index: 10;
-  transition: color var(--transition-duration) var(--transition-ease);
+.EventEdit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-background);
+  z-index: 2;
+  margin-top: auto;
+  padding-top: 10px;
 }
 
-.close-button:hover {
-  color: var(--color-secondary); /* Use secondary color for hover */
+.EventEdit-header h2 {
+  margin: 0;
 }
 
 .edit-overlay {

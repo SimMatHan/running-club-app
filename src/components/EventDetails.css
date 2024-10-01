@@ -1,5 +1,5 @@
-/* Event details panel */
-.event-details-panel {
+/* Full height setup for the event details panel */
+.EventDetails-panel {
   position: fixed;
   bottom: 75px;  /* Stop the panel 75px from the bottom */
   left: 0;
@@ -15,16 +15,60 @@
   animation-fill-mode: forwards;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Push buttons to the bottom */
+  font-weight: bold;
+}
+
+/* Header styling */
+.EventDetails-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--spacing-medium);
+  padding-bottom: var(--spacing-medium);
+  background-color: var(--color-background);
+  z-index: 2;
+}
+
+.EventDetails-event-title h2 {
+  font-size: var(--font-size-large);
+  margin: 0;
+  color: var(--color-text);
+}
+
+.EventDetails-event-title p {
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
+}
+
+/* Icons in the header */
+.EventDetails-header-icons {
+  display: flex;
+  align-items: center;
+  margin-bottom: auto;
+}
+
+.EventDetails-chat-icon, .EventDetails-close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.EventDetails-chat-icon {
+  margin-right: 15px; /* Add spacing between chat icon and close button */
+}
+
+.EventDetails-icon {
+  width: 36px;
+  height: 36px;
 }
 
 /* Slide up animation for opening the details panel */
-.slide-up {
+.EventDetails-slide-up {
   animation-name: slideUp;
 }
 
 /* Slide down animation for closing the details panel */
-.slide-down {
+.EventDetails-slide-down {
   animation-name: slideDown;
 }
 
@@ -48,27 +92,8 @@
   }
 }
 
-/* Close button in the top-right corner of the details panel */
-.close-button {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: var(--font-size-large);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--color-text);
-  font-weight: bold;
-  z-index: 10;
-  transition: color var(--transition-duration) var(--transition-ease);
-}
-
-.close-button:hover {
-  color: var(--color-secondary); /* Use secondary color for hover */
-}
-
 /* Overlay to darken background */
-.event-details-overlay {
+.EventDetails-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -80,82 +105,110 @@
   transition: opacity var(--transition-duration) var(--transition-ease);
 }
 
-.overlay-hide {
+.EventDetails-overlay-hide {
   opacity: 0;
   pointer-events: none; /* Prevent interactions after hiding */
 }
 
-/* Individual event detail styling */
-.event-title, .event-date, .event-time, .event-location, .event-distance, .event-description, .event-organizer {
-  margin-bottom: var(--spacing-medium);
+/* Event info section */
+.EventDetails-event-info {
+  display: flex;
+  justify-content: space-between;
+  padding-top: var(--spacing-medium);
+  padding-bottom: var(--spacing-medium);
+  background-color: var(--color-background);
 }
 
-/* Font sizes and colors */
-.event-title h2 {
+.EventDetails-event-location p,
+.EventDetails-event-date-time p {
+  font-size: var(--font-size-medium);
+  margin: 0;
+  text-align: right;
+}
+
+/* Event Type and Distance */
+.EventDetails-event-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--spacing-medium);
+  padding-bottom: var(--spacing-medium);
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-muted-text);
+}
+
+.EventDetails-event-type h3 {
   font-size: var(--font-size-large);
+  color: var(--color-primary);
   margin: 0;
 }
 
-.event-date p, .event-time p, .event-location p, .event-distance p, .event-description p, .event-organizer p {
-  font-size: var(--font-size-medium);
+.EventDetails-event-distance h2 {
+  font-size: 36px;
   color: var(--color-text);
+  margin: 0;
 }
 
 /* Attendees section */
-.attendees-section {
-  margin-top: var(--spacing-large);
+.EventDetails-attendees {
+  padding-top: var(--spacing-medium);
+  padding-bottom: var(--spacing-medium);
+  background-color: var(--color-background);
 }
 
-.attendees-section ul {
+.EventDetails-attendees ul {
   list-style: none;
   padding: 0;
 }
 
-.attendees-section li {
+.EventDetails-attendees li {
+  font-size: var(--font-size-small);
+  color: var(--color-text);
   margin-bottom: var(--spacing-small);
 }
 
-/* Event buttons placed at the bottom */
-.event-buttons {
+/* Buttons at the bottom */
+.EventDetails-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: var(--spacing-large);
-  width: 100%;
-  padding-bottom: var(--spacing-large); /* Add some padding to push them up slightly */
+  padding-top: var(--spacing-medium);
+  padding-bottom: var(--spacing-medium);
+  background-color: var(--color-background);
+  margin-top: auto;
 }
 
-/* Register and unregister buttons */
-.register-button, .unregister-button {
-  padding: var(--spacing-small) var(--spacing-medium);
+.EventDetails-register-button,
+.EventDetails-unregister-button {
+  width: 45%;
+  padding: var(--spacing-small);
   border-radius: var(--border-radius);
   font-size: var(--font-size-medium);
   cursor: pointer;
-  transition: background-color var(--transition-duration) var(--transition-ease);
   border: none;
-  width: 45%;
+  transition: background-color var(--transition-duration);
 }
 
 /* Register button (primary) */
-.register-button {
+.EventDetails-register-button {
   background-color: var(--color-primary);
   color: white;
 }
 
-.register-button:hover {
+.EventDetails-register-button:hover {
   background-color: #005bb5; /* Darker shade of primary color for hover */
 }
 
-.register-button:disabled {
+.EventDetails-register-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-/* Unregister button (secondary, cancel) */
-.unregister-button {
+/* Unregister button (secondary) */
+.EventDetails-unregister-button {
   background-color: #d32f2f;
   color: white;
 }
 
-.unregister-button:hover {
+.EventDetails-unregister-button:hover {
   background-color: #d32f2f; /* Darker shade of secondary color for hover */
 }

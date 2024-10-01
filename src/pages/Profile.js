@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { auth, db } from "../firebaseConfig";  // Firebase auth, Firestore
-import { doc, getDoc } from "firebase/firestore";  // Firestore methods
+import { doc, getDoc, updateDoc } from "firebase/firestore";  // Firestore methods
 import './Profile.css';
 import defaultProfilePic from '../assets/ProfileGrey.svg';  // Default image
 import DesignProfilePicPopup from '../components/DesignProfilePicPopup'; // Import the new popup component
@@ -38,6 +38,32 @@ const Profile = () => {
     }
   }, [user]);
 
+  // Function to handle form submission (saving changes)
+  const handleSaveChanges = async (e) => {
+    e.preventDefault();  // Prevent page reload on form submission
+    if (!user) return;
+
+    try {
+      const userDocRef = doc(db, "users", user.uid);  // Reference to the user's document
+
+      // Update Firestore with the new profile data
+      await updateDoc(userDocRef, {
+        preferredGear,
+        preferredDistance,
+        profileImageUrl,
+        profileBackgroundColor,
+        runningGoals,  // Make sure runningGoals is being updated
+      });
+
+      // Display success message
+      setMessage("Profile updated successfully!");
+
+    } catch (err) {
+      console.error("Error updating profile: ", err);
+      setMessage("Error updating profile. Please try again.");
+    }
+  };
+
   // Function to handle opening the avatar design popup
   const handleOpenDesignPopup = () => {
     setShowDesignPopup(true); // Show the design popup
@@ -70,7 +96,7 @@ const Profile = () => {
       {/* Main Content Section */}
       <div className="profile-content">
         {/* Profile Form */}
-        <form className="profile-form">
+        <form className="profile-form" onSubmit={handleSaveChanges}>
           {/* Profile Picture Section with Avatar Preview */}
           <div className="profile-picture-section">
             <div className="profile-details-container">
@@ -173,9 +199,11 @@ const Profile = () => {
             />
           </div>
 
-          <div className="save-btn-wrapper">{/* Save Button */}
+          <div className="save-btn-wrapper">
+            {/* Save Button */}
             <button type="submit" className="save-button">Save Changes</button>
           </div>
+          
           {/* Success/Error Message */}
           {message && <p className="message">{message}</p>}
         </form>
