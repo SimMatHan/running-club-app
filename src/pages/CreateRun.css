@@ -11,7 +11,7 @@
 /* Title section with white background and rounded corners */
 .createrun-title {
   color: black;
-  padding: var(--spacing-large);
+  padding: var(--spacing-medium);
   text-align: left;
   z-index: 2; /* Ensures it appears above the background */
   position: relative;

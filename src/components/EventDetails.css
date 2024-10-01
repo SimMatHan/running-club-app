@@ -162,7 +162,7 @@
 }
 
 .EventDetails-attendees li {
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-medium);
   color: var(--color-text);
   margin-bottom: var(--spacing-small);
 }
