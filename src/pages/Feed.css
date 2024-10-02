@@ -184,7 +184,7 @@
   min-width: 200px;
 }
 
-.SeeAllBtn{
+.SeeAllBtn {
   padding-top: 10px;
   display: flex;
   justify-content: center;
@@ -200,6 +200,87 @@ hr {
   border: 0;
   height: 1px;
   background: var(--color-divider);
+}
+
+/* Comments section in the feed */
+.message-list {
+  max-height: 250px; /* Set a max-height for the comment list */
+  overflow-y: auto;  /* Enable scrolling if the content exceeds the max height */
+}
+
+.message-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.message-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: var(--border-radius-large);
+}
+
+.message-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Comment item styling */
+.comment-item {
+  display: flex;
+  padding-bottom: var(--spacing-small);
+  padding-top: var(--spacing-small);
+  margin-bottom: var(--spacing-small);
+  align-items: center;
+}
+
+.no-comments {
+  font-style: italic;
+  font-size: var(--font-size-small);
+}
+
+.comments-on-events {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.comment-profile {
+  display: flex;
+  align-items: center;
+}
+
+.feed-avatar-emoji {
+  font-size: 14px;
+}
+
+.feed-comment-text {
+  font-size: var(--font-size-small);
+}
+
+.comment-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.comment-username {
+  font-weight: bold;
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
+}
+
+.comment-timestamp {
+  font-size: var(--font-size-small);
+  color: var(--color-muted-text);
+}
+
+.comment-text {
+  margin-top: var(--spacing-small);
+  font-size: var(--font-size-medium);
+  color: var(--color-text);
 }
 
 /* Responsive adjustments */

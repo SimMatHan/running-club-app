@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebaseConfig";
-import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc } from "firebase/firestore";
 import "./CommentSection.css"; // Make sure to link the new CSS
 import close from '../assets/close.svg'; // Close icon
+import deleteIcon from '../assets/DeleteNotFilled.svg'; // Delete icon
+import defaultProfilePic from '../assets/ProfileGrey.svg'; // Default profile picture
+import { formatDistanceToNow } from 'date-fns'; // Library to format timestamps (install via npm if needed)
 
 const CommentSection = ({ eventId, user, onClose }) => {
     const [commentText, setCommentText] = useState("");
     const [comments, setComments] = useState([]);
+    const [usersData, setUsersData] = useState({}); // To store user profile data
     const [isClosing, setIsClosing] = useState(false); // Track closing animation state
     const [charCount, setCharCount] = useState(40); // Track the remaining character count
 
     useEffect(() => {
+        // Fetch comments
         const commentsRef = collection(db, "arrangements", eventId, "comments");
         const q = query(commentsRef, orderBy("timestamp", "desc"));
 
@@ -19,7 +24,20 @@ const CommentSection = ({ eventId, user, onClose }) => {
             setComments(commentsData);
         });
 
-        return () => unsubscribe();
+        // Fetch user profile data (assuming it's stored in a users collection)
+        const usersRef = collection(db, "users");
+        const unsubscribeUsers = onSnapshot(usersRef, (snapshot) => {
+            const usersDataObj = snapshot.docs.reduce((acc, doc) => {
+                acc[doc.id] = doc.data();
+                return acc;
+            }, {});
+            setUsersData(usersDataObj);
+        });
+
+        return () => {
+            unsubscribe();
+            unsubscribeUsers();
+        };
     }, [eventId]);
 
     const handleCommentSubmit = async (e) => {
@@ -64,13 +82,26 @@ const CommentSection = ({ eventId, user, onClose }) => {
         setCharCount(40 - inputText.length); // Update the remaining character count
     };
 
-    // Function to handle the close action with slide-down animation
-    const handleClose = () => {
-        setIsClosing(true);
-        setTimeout(() => {
-            onClose(); // Trigger the actual close function passed down from parent
-            setIsClosing(false); // Reset the closing state
-        }, 500); // Duration should match the animation-duration in CSS
+    const handleDeleteComment = async (commentId) => {
+        if (window.confirm("Are you sure you want to delete this comment?")) {
+            try {
+                const commentDocRef = doc(db, "arrangements", eventId, "comments", commentId);
+                await deleteDoc(commentDocRef);
+                console.log("Comment deleted successfully.");
+            } catch (err) {
+                console.error("Error deleting comment:", err);
+            }
+        }
+    };
+
+    const getUserProfileImage = (userId) => {
+        // Use profileImageUrl from Firestore, falling back to a default avatar if not available
+        return usersData[userId]?.profileImageUrl || '/default-avatar.png'; // Default if no picture is available
+    };
+
+    const formatTimestamp = (timestamp) => {
+        if (!timestamp) return '';
+        return formatDistanceToNow(new Date(timestamp.seconds * 1000)) + ' ago'; // Display time ago
     };
 
     return (
@@ -78,7 +109,13 @@ const CommentSection = ({ eventId, user, onClose }) => {
             {/* Overlay */}
             <div
                 className={`CommentSection-overlay ${isClosing ? "CommentSection-overlay-hide" : ""}`}
-                onClick={handleClose}
+                onClick={() => {
+                    setIsClosing(true);
+                    setTimeout(() => {
+                        onClose(); // Close the comment section
+                        setIsClosing(false); // Reset state after animation
+                    }, 500);
+                }}
             ></div>
 
             {/* Comment Section Panel */}
@@ -86,7 +123,7 @@ const CommentSection = ({ eventId, user, onClose }) => {
                 {/* Comment Section Header */}
                 <div className="CommentSection-header">
                     <h3>Comments</h3>
-                    <button className="CommentSection-close-button" onClick={handleClose}>
+                    <button className="CommentSection-close-button" onClick={onClose}>
                         <img src={close} alt="Close" />
                     </button>
                 </div>
@@ -96,8 +133,43 @@ const CommentSection = ({ eventId, user, onClose }) => {
                     <ul>
                         {comments.map((comment) => (
                             <li key={comment.id} className="CommentSection-comment">
-                                <p>{comment.commentText}</p>
-                                <small>{new Date(comment.timestamp?.toDate()).toLocaleString()} by {comment.userName}</small>
+                                <div className="comment-profile">
+                                    <div
+                                        className="comment-profile-img"
+                                        style={{
+                                            background: usersData[comment.userId]?.profileBackgroundColor || '#f0f0f0', // Fallback background color
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            width: '40px',
+                                            height: '40px',
+                                            borderRadius: '50%',
+                                            overflow: 'hidden'
+                                        }}
+                                    >
+                                        {usersData[comment.userId]?.profileImageUrl ? (
+                                            <span className="comment-avatar-emoji">{usersData[comment.userId].profileImageUrl}</span>
+                                        ) : (
+                                            <img src={defaultProfilePic} alt="Profile" />
+                                        )}
+                                    </div>
+                                    <div className="comment-info">
+                                        <div className="comment-header">
+                                            <span className="comment-username">{comment.userName}</span>
+                                            <span className="comment-timestamp">{formatTimestamp(comment.timestamp)}</span>
+                                        </div>
+                                        <p className="comment-text">{comment.commentText}</p>
+                                    </div>
+                                    {/* Show delete button only for the user's own comments */}
+                                    {comment.userId === user.uid && (
+                                        <button
+                                            className="CommentSection-delete-button"
+                                            onClick={() => handleDeleteComment(comment.id)}
+                                        >
+                                            <img src={deleteIcon} alt="Delete" />
+                                        </button>
+                                    )}
+                                </div>
                             </li>
                         ))}
                     </ul>

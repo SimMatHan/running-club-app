@@ -5,16 +5,16 @@ import "./DesignProfilePicPopup.css";
 
 // Updated emoji and color options
 const emojiOptions = [
-  "🏃‍♂️", "🏃‍♀️", "👟", "🎽", "🏅", "🎖️", "🥇", "🥈", "🥉",
-  "🦸‍♂️", "🦸‍♀️", "🚴‍♂️", "🚴‍♀️", "🏋️‍♂️", "🏋️‍♀️", "🧗‍♂️", "🧗‍♀️"
+  "🏃‍♂️", "🏃‍♀️", "👟", "🎽", "🏅", "🎖️", "🥇",
+  "🦸‍♂️", "🦸‍♀️", "🏋️‍♂️", "🏋️‍♀️"
 ];
 
 const colorOptions = [
-  { name: "5k", gradient: "linear-gradient(135deg, #d6e5ff, #fcd4b2)" },
-  { name: "10k", gradient: "linear-gradient(135deg, #e0ddff, #fcd4b2)" },
-  { name: "15k", gradient: "linear-gradient(135deg, #ead9f7, #fcd4b2)" },
-  { name: "Half Marathon", gradient: "linear-gradient(135deg, #eab08a, #fcd4b2)" },
-  { name: "Marathon", gradient: "linear-gradient(135deg, #fcd4b2, #a3c6ff)" }
+  { name: "5k", gradient: "linear-gradient(135deg, #d6f5d6, #f7e7b9)" },  // Light green to light yellow
+  { name: "10k", gradient: "linear-gradient(135deg, #f7e7b9, #fff7d6)" },  // Light yellow to light cream
+  { name: "15k", gradient: "linear-gradient(135deg, #c1f0c1, #e8f3f5)" },  // Light green to light blue
+  { name: "Half Marathon", gradient: "linear-gradient(135deg, #d0eaff, #a3c6ff)" },  // Light blue to medium blue
+  { name: "Marathon", gradient: "linear-gradient(135deg, #fcd4b2, #b5f7d1)" }  // Light peach to mint green
 ];
 
 const DesignProfilePicPopup = ({ onClose }) => {
