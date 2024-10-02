@@ -1,0 +1,176 @@
+/* Full height setup for the comment section panel */
+.CommentSection-panel {
+    position: fixed;
+    bottom: 0;  /* Stop the panel 75px from the bottom */
+    left: 0;
+    right: 0;
+    min-height: 600px;
+    max-height: 700px;
+    background-color: var(--color-background);
+    border-radius: 30px 30px 0 0;
+    padding: var(--spacing-medium);
+    box-shadow: var(--box-shadow-light);
+    z-index: 3;
+    overflow-y: auto;
+    animation-duration: var(--transition-duration);
+    animation-fill-mode: forwards;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+  }
+  
+  /* Header styling for the comment section */
+  .CommentSection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--spacing-medium);
+    padding-bottom: var(--spacing-medium);
+    background-color: var(--color-background);
+  }
+  
+  .CommentSection-header h3 {
+    font-size: var(--font-size-large);
+    color: var(--color-text);
+  }
+  
+  .CommentSection-close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .CommentSection-close-button img {
+    width: 36px;
+    height: 36px;
+  }
+  
+  /* Comments list styling */
+  .CommentSection-comments {
+    flex: 1; /* Allows the comment list to grow while keeping the form at the bottom */
+  }
+  
+  .CommentSection-comments ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .CommentSection-comment {
+    padding: var(--spacing-small);
+    border-bottom: 1px solid var(--color-muted-text);
+    margin-bottom: var(--spacing-small);
+  }
+  
+  .CommentSection-comment p {
+    margin: 0;
+    font-size: var(--font-size-small);
+    color: var(--color-text);
+  }
+  
+  .CommentSection-comment small {
+    display: block;
+    margin-top: var(--spacing-small);
+    font-size: var(--font-size-small);
+    color: var(--color-muted-text);
+    font-weight: 100;
+  }
+  
+  /* Comment input form */
+  .CommentSection-form {
+    background-color: var(--color-background);
+    padding-top: var(--spacing-medium);
+    padding-bottom: var(--spacing-medium);
+  }
+  
+  .CommentSection-form textarea {
+    padding: var(--spacing-small);
+    border: 1px solid var(--color-divider);
+    border-radius: var(--border-radius-large);
+    font-size: var(--font-size-medium);
+    width: 100%;
+    background-color: var(--color-background);
+    transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+    margin-top: var(--spacing-small);
+  }
+
+  .commentsubmit {
+    display: flex;
+    justify-content: center;
+    padding-top: 25px;
+  }
+  
+  .CommentSection-form button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: var(--spacing-small);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-medium);
+    cursor: pointer;
+    transition: background-color var(--transition-duration);
+    min-width: 150px;
+  }
+
+  .char-count {
+    font-size: var(--font-size-small);
+    color: var(--color-muted-text);
+    text-align: right;
+    margin-top: var(--spacing-small);
+    margin-bottom: var(--spacing-small);
+    }
+
+  
+  .CommentSection-form button:hover {
+    background-color: #005bb5; /* Darker shade of primary color for hover */
+  }
+  
+  /* Slide up animation for opening the comment panel */
+  .CommentSection-slide-up {
+    animation-name: slideUp;
+  }
+  
+  /* Slide down animation for closing the comment panel */
+  .CommentSection-slide-down {
+    animation-name: slideDown;
+  }
+  
+  /* Animation for sliding the panel up */
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  /* Animation for sliding the panel down */
+  @keyframes slideDown {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+  
+  /* Overlay to darken background */
+  .CommentSection-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 75px;  /* Match the bottom of the overlay to the navigation bar */
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    opacity: 1;
+    transition: opacity var(--transition-duration) var(--transition-ease);
+  }
+  
+  .CommentSection-overlay-hide {
+    opacity: 0;
+    pointer-events: none; /* Prevent interactions after hiding */
+  }
+  

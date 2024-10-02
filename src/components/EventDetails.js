@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebaseConfig";  // Firestore
-import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore";  // Firestore methods
-import { auth } from "../firebaseConfig";  // Firebase Auth for user info
+import { db } from "../firebaseConfig"; // Firestore
+import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore"; // Firestore methods
+import { auth } from "../firebaseConfig"; // Firebase Auth for user info
 import "./EventDetails.css";
+import CommentSection from './CommentSection'; // Import the CommentSection component
 
 // Importing SVG icons
 import close from '../assets/close.svg';
@@ -13,6 +14,7 @@ const EventDetails = ({ event, onClose }) => {
   const [isRegistered, setIsRegistered] = useState(false);  // Track if the user is registered for the event
   const [attendees, setAttendees] = useState([]);  // Track attendees of the event
   const [user, setUser] = useState(null);  // Current logged-in user
+  const [showComments, setShowComments] = useState(false); // State to toggle comment section
 
   useEffect(() => {
     // Set up the current user
@@ -86,6 +88,11 @@ const EventDetails = ({ event, onClose }) => {
     }, 500);  // Duration should match the animation-duration in CSS
   };
 
+  // Toggle comments section visibility
+  const handleToggleComments = () => {
+    setShowComments(!showComments);
+  };
+
   return (
     <div>
       {/* Overlay */}
@@ -104,7 +111,7 @@ const EventDetails = ({ event, onClose }) => {
             <p>Organized by {event.createdBy}</p>
           </div>
           <div className="EventDetails-header-icons">
-            <button className="EventDetails-chat-icon">
+            <button className="EventDetails-chat-icon" onClick={handleToggleComments}>
               <img src={comment} alt="Comment" className="EventDetails-icon" />
             </button>
             <button className="EventDetails-close-button" onClick={handleClose}>
@@ -144,6 +151,9 @@ const EventDetails = ({ event, onClose }) => {
             )}
           </ul>
         </div>
+
+        {/* Comment Section */}
+        {showComments && <CommentSection eventId={event.id} user={user} onClose={handleToggleComments} />}
 
         {/* Registration and Unregistration buttons placed at the bottom */}
         <div className="EventDetails-buttons">

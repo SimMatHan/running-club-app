@@ -8,9 +8,14 @@ service cloud.firestore {
       allow write: if request.auth != null && request.auth.uid == userId;  // Allow users to write only to their own document
     }
 
-    // Arrangements collection: allow authenticated users to read and write
+    // Arrangements collection: allow authenticated users to read and write to arrangements
     match /arrangements/{arrangementId} {
       allow read, write: if request.auth != null;  // Only allow authenticated users to read/write
+
+      // Comments subcollection: allow authenticated users to read and write to comments
+      match /comments/{commentId} {
+        allow read, write: if request.auth != null;  // Only allow authenticated users to read/write
+      }
     }
 
     // Profile Pictures collection in Firestore (if needed to store metadata)
