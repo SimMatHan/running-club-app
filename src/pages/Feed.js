@@ -120,7 +120,9 @@ const Feed = () => {
 
       <div className="feed-content">
         <section className="event-list">
-          <h2>Upcoming Runs</h2>
+          <div className="upcoming-runs">
+            <h2>Upcoming Runs</h2>
+          </div>
           {error && <p className="error-message">{error}</p>}
           {upcomingEvents.length > 0 ? (
             <div className="scroll-container">
@@ -163,21 +165,14 @@ const Feed = () => {
             <p className="no-events">No upcoming events found.</p>
           )}
         </section>
-
-        <button className="see-all-events-btn" onClick={goToCalendar}>
-          See All Events
-        </button>
+        <div className="SeeAllBtn">
+          <button className="see-all-events-btn" onClick={goToCalendar}>
+            See All Events
+          </button>
+        </div>
         <section className="message-list">
-          <h2>Messages</h2>
+          <h2>Comments on events</h2>
           <div>
-            <div className="message-item">
-              <strong>John:</strong>
-              <p>Who's joining the marathon this weekend?</p>
-            </div>
-            <div className="message-item">
-              <strong>Sara:</strong>
-              <p>Great trail run yesterday!</p>
-            </div>
           </div>
         </section>
       </div>

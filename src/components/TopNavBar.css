@@ -78,7 +78,7 @@
 }
 
 .topbarnav-avatar-emoji {
-  font-size: 25px;
+  font-size: 24px;
 }
 
 /* Media query for tablets and smaller screens */
@@ -90,7 +90,7 @@
   }
 
   .topbarnav-avatar-emoji {
-    font-size: 25px;
+    font-size: 24px;
   }
   
   .profile-text {
@@ -111,7 +111,7 @@
   }
 
   .topbarnav-avatar-emoji {
-    font-size: 25px;
+    font-size: 20px;
   }
   
   .profile-text {
