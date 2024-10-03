@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { db, auth } from "../firebaseConfig"; // Firestore and Firebase Auth
-import { collection, addDoc, getDocs, doc, getDoc, query, where } from "firebase/firestore"; // Firestore methods
+import { collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc  } from "firebase/firestore"; // Firestore methods
 import { onAuthStateChanged } from "firebase/auth"; // Firebase Auth methods
 import './CreateRun.css';
 import EventEdit from '../components/EventEdit'; // Import the EventEdit component
+
+import deleteFilled from '../assets/DeleteFilled.svg'
 
 const CreateRun = () => {
   // State for creating a new run
@@ -134,6 +136,18 @@ const CreateRun = () => {
     setEditingEvent(null); // Clear the editing event
   };
 
+  // Handle deleting an arrangement
+  const handleDelete = async (arrangementId) => {
+    try {
+      await deleteDoc(doc(db, "arrangements", arrangementId));
+      setMessage("Run successfully deleted!");
+      fetchArrangements(); // Refresh arrangements after deletion
+    } catch (err) {
+      console.error("Error deleting arrangement: ", err);
+      setError("Failed to delete arrangement.");
+    }
+  };
+
   return (
     <div className="createrun-page">
       {/* Title Section */}
@@ -247,6 +261,13 @@ const CreateRun = () => {
                 <p> Location: {arrangement.location} </p>
                 <p> Distance: {arrangement.distance} </p>
                 <p> Type of Run: {arrangement.typeOfRun} </p> {/* Display the type of run */}
+                <img
+                  src={deleteFilled}
+                  alt="Delete"
+                  className="delete-icon"
+                  onClick={() => handleDelete(arrangement.id)} // Trigger delete
+                />
+
               </div>
             ))
           ) : (

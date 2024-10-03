@@ -174,12 +174,26 @@
 }
 
 .arrangement-item {
+  position: relative; /* Ensure the delete icon can be positioned absolutely */
   cursor: pointer;
   transition: background-color var(--transition-duration) var(--transition-ease);
 }
 
 .arrangement-item:hover {
   background-color: #f0f0f0; /* Optional hover effect */
+}
+
+.delete-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
 }
 
 /* Responsive adjustments */

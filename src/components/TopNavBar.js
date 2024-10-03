@@ -4,6 +4,8 @@ import { auth, db } from "../firebaseConfig";  // Firebase auth, Firestore
 import { doc, getDoc } from "firebase/firestore";  // Firestore methods
 import './TopNavBar.css';
 
+import profile from '../assets/ProfileGrey.svg'; // Import profile SVG
+
 const TopNavBar = () => {
   const [profileImageUrl, setProfileImageUrl] = useState(""); // Profile avatar (emoji)
   const [profileBackgroundColor, setProfileBackgroundColor] = useState(""); // Background color
@@ -37,7 +39,12 @@ const TopNavBar = () => {
               className="topnav-profile-pic"
               style={{ background: profileBackgroundColor }}
             >
-              <span className="topbarnav-avatar-emoji">{profileImageUrl}</span>
+              {/* Conditionally render the profileImageUrl or the profile SVG */}
+              {profileImageUrl ? (
+                <span className="topbarnav-avatar-emoji">{profileImageUrl}</span>
+              ) : (
+                <img src={profile} alt="Profile" className="topbarnav-avatar-svg" />
+              )}
             </div>
           </Link>
         </li>
