@@ -69,6 +69,12 @@
   transition: background-color var(--transition-duration);
 }
 
+/* Style for the default profile SVG */
+.topbarnav-avatar-svg {
+  width: 100%;
+  height: auto;
+}
+
 /* Profile text styling */
 .profile-text {
   font-size: var(--font-size-small); /* Consistent text size */

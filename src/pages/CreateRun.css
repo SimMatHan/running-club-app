@@ -76,6 +76,69 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* More prominent shadow on focus */
 }
 
+/* Styling for all input fields */
+.arrangement-form input[type="text"],
+.arrangement-form input[type="date"],
+.arrangement-form input[type="time"],
+.arrangement-form input[type="number"],
+.arrangement-form select,
+.arrangement-form textarea {
+  appearance: none; /* Reset default browser styling */
+  -webkit-appearance: none; /* Reset default iOS Safari styling */
+  -moz-appearance: none;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--border-radius-large);
+  padding: var(--spacing-small);
+  font-size: var(--font-size-medium);
+  width: 100%; /* Ensure all inputs take the full width */
+  background-color: var(--color-background);
+  transition: border-color var(--transition-duration), box-shadow var(--transition-duration);
+  margin-top: var(--spacing-small);
+}
+
+/* Date and time input placeholder simulation */
+.arrangement-form input[type="date"]::placeholder,
+.arrangement-form input[type="time"]::placeholder {
+  color: var(--color-muted-text); /* Use a muted color to simulate a placeholder */
+  opacity: 0.7;
+}
+
+.arrangement-form input[type="date"]:not(:focus):invalid,
+.arrangement-form input[type="time"]:not(:focus):invalid {
+  color: var(--color-muted-text); /* Light color when no value is present */
+}
+
+/* Add focus styles */
+.arrangement-form input[type="date"]:focus,
+.arrangement-form input[type="time"]:focus {
+  color: var(--color-text); /* Normal text color on focus */
+}
+
+/* Focus effect for inputs */
+.arrangement-form input[type="text"]:focus,
+.arrangement-form input[type="date"]:focus,
+.arrangement-form input[type="time"]:focus,
+.arrangement-form input[type="number"]:focus,
+.arrangement-form select:focus,
+.arrangement-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* More prominent shadow on focus */
+}
+
+/* Remove extra controls from iOS */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* Add extra margin and spacing to match other inputs */
+.arrangement-form input,
+.arrangement-form select,
+.arrangement-form textarea {
+  margin-bottom: var(--spacing-medium); /* Add consistent margin to bottom */
+}
+
 /* Button styling */
 .arrangement-form button {
   padding: var(--spacing-small);

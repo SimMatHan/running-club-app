@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { db, auth } from "../firebaseConfig"; // Firestore and Firebase Auth
-import { collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc  } from "firebase/firestore"; // Firestore methods
+import { collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc } from "firebase/firestore"; // Firestore methods
 import { onAuthStateChanged } from "firebase/auth"; // Firebase Auth methods
 import './CreateRun.css';
 import EventEdit from '../components/EventEdit'; // Import the EventEdit component
@@ -177,6 +177,9 @@ const CreateRun = () => {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
+              placeholder="YYYY-MM-DD" // Acts as a visual guide, though placeholder doesn't work
+              onFocus={(e) => (e.target.type = 'date')} // For iOS Safari compatibility
+              onBlur={(e) => date === '' && (e.target.type = 'text')} // Clear input if not selected
             />
           </div>
 
@@ -187,6 +190,9 @@ const CreateRun = () => {
               value={time}
               onChange={(e) => setTime(e.target.value)}
               required
+              placeholder="HH:MM"
+              onFocus={(e) => (e.target.type = 'time')}
+              onBlur={(e) => time === '' && (e.target.type = 'text')}
             />
           </div>
 
@@ -205,11 +211,13 @@ const CreateRun = () => {
           <div>
             <label>Distance of Run</label>
             <input
-              type="text"
+              type="number"
               value={distance}
               onChange={(e) => setDistance(e.target.value)}
               required
               placeholder="Enter the distance of the run"
+              min="0" // Optional: Ensures no negative numbers
+              step="any" // Optional: Allows decimal numbers
             />
           </div>
 
