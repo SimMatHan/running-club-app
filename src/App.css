@@ -8,6 +8,7 @@
 :root {
   /* Color scheme */
   --color-primary: #2979ff;  /* Main primary blue */
+  --color-secondary: #43a047;  /* Soft green for secondary actions */
   --color-background: #FFFFFF;  /* General background color */
   --color-navbar: #f8f8f8;  /* Navbar background color */
   --color-divider: #ddd;  /* Divider line color */
@@ -15,13 +16,14 @@
   --color-muted-text: #777;  /* Muted text for secondary information */
   --color-input-border: #ccc;  /* Border color for input fields */
   --color-event-marker: #FC5203;  /* Border color for input fields */
+  --color-delete-button: #D9534F;
 
   /* Lighter, softer gradient between blue, white, and orange for running types */
-  --color-run-5k: linear-gradient(135deg, #d6e5ff, #ffffff, #fcd4b2);  /* Lys blå til hvid til sart orange */
-  --color-run-10k: linear-gradient(135deg, #e0ddff, #ffffff, #fcd4b2);  /* Lys lilla med blå toner til hvid til sart orange */
+  --color-run-5k: linear-gradient(20deg, #d6e5ff, #ffffff, #fcd4b2);  /* Lys blå til hvid til sart orange */
+  --color-run-10k: linear-gradient(150deg, #d6ffdb, #ffffff, #fcd4b2);  /* Lys lilla med blå toner til hvid til sart orange */
   --color-run-15k: linear-gradient(135deg, #ead9f7, #ffffff, #f9c1a2);  /* Lys lavendel til hvid til lidt mørkere orange */
-  --color-run-half-marathon: linear-gradient(135deg, #eab08a, #ffffff, #f0a86f);  /* Lys orange/lilla til hvid til mørkere orange */
-  --color-run-marathon: linear-gradient(135deg, #a3c6ff, #ffffff, #fcd4b2);  /* Sart blå til hvid til sart orange */
+  --color-run-half-marathon: linear-gradient(65deg, #d6e5ff, #ffffff, #adfafa);  /* Lys orange/lilla til hvid til mørkere orange */
+  --color-run-marathon: linear-gradient(190deg, #c7cacf, #ffffff, #fcb2b2);  /* Sart blå til hvid til sart orange */
 
   --font-size-small: 12px;
   --font-size-medium: 16px;

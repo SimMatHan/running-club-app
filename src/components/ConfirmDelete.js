@@ -8,7 +8,7 @@ const ConfirmDelete = ({ onConfirm, onCancel }) => {
         <p>Are you sure you want to delete this run?</p>
         <div className="confirm-delete-buttons">
           <button className="button-yes" onClick={onConfirm}>Yes</button>
-          <button className="button-cancel" onClick={onCancel}>Cancel</button>
+          <button className="button-cancel-confirmdelete" onClick={onCancel}>Cancel</button>
         </div>
       </div>
     </div>
