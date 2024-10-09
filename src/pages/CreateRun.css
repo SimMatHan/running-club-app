@@ -96,54 +96,50 @@
   margin-top: var(--spacing-small);
 }
 
-/* Date and time input placeholder simulation */
-.arrangement-form input[type="date"]::placeholder,
-.arrangement-form input[type="time"]::placeholder {
-  color: var(--color-muted-text); /* Use a muted color to simulate a placeholder */
-  opacity: 0.7;
-}
-
-.arrangement-form input[type="date"]:not(:focus):invalid,
-.arrangement-form input[type="time"]:not(:focus):invalid {
-  color: var(--color-muted-text); /* Light color when no value is present */
-}
-
-/* Add focus styles */
-.arrangement-form input[type="date"]:focus,
-.arrangement-form input[type="time"]:focus {
-  color: var(--color-text); /* Normal text color on focus */
-}
-
-/* Focus effect for inputs */
-.arrangement-form input[type="text"]:focus,
-.arrangement-form input[type="date"]:focus,
-.arrangement-form input[type="time"]:focus,
-.arrangement-form input[type="number"]:focus,
-.arrangement-form select:focus,
-.arrangement-form textarea:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* More prominent shadow on focus */
-}
-
-/* Remove extra controls from iOS */
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-  display: none;
-}
-
-/* Add extra margin and spacing to match other inputs */
-.arrangement-form input,
-.arrangement-form select,
-.arrangement-form textarea {
-  margin-bottom: var(--spacing-medium); /* Add consistent margin to bottom */
+/* Button container for Create and Reset buttons */
+.button-container {
+  display: flex;
+  gap: var(--spacing-small); /* Space between buttons */
+  justify-content: flex-start; /* Align buttons to the left */
 }
 
 /* Button styling */
 .arrangement-form button {
   padding: var(--spacing-small);
-  background-color: var(--color-primary);
   color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-medium);
+  transition: background-color var(--transition-duration), transform var(--transition-duration);
+}
+
+.button-primary {
+  background-color: var(--color-primary);
+  width: 70%; /* Create Run button is 70% of the available width */
+  font-weight: bold;
+}
+
+.button-primary:hover {
+  background-color: #005bb5;
+  transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+.button-reset {
+  background-color: #d9534f; /* Red color for reset (danger indication) */
+  width: 30%; /* Reset button takes 30% of the available width */
+}
+
+.button-reset:hover {
+  background-color: #c9302c; /* Darker red on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Reset button styling */
+.button-secondary {
+  padding: var(--spacing-small);
+  background-color: #f0f0f0; /* Light grey for reset */
+  color: #333;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
@@ -152,9 +148,9 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   width: 100%;
 }
 
-.arrangement-form button:hover {
-  background-color: #005bb5;
-  transform: translateY(-2px); /* Subtle lift on hover */
+.button-secondary:hover {
+  background-color: #e0e0e0; /* Darker grey on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
 }
 
 /* Success and error messages */

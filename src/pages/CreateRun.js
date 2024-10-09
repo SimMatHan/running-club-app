@@ -1,38 +1,37 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { db, auth } from "../firebaseConfig"; // Firestore and Firebase Auth
-import { collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc } from "firebase/firestore"; // Firestore methods
+import { collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc, updateDoc } from "firebase/firestore"; // Firestore methods
 import { onAuthStateChanged } from "firebase/auth"; // Firebase Auth methods
 import './CreateRun.css';
-import EventEdit from '../components/EventEdit'; // Import the EventEdit component
-
+import ConfirmDelete from '../components/ConfirmDelete'; // Import ConfirmDelete component
+import EventEdit from '../components/EventEdit'; // Import EventEdit component
 import deleteFilled from '../assets/DeleteFilled.svg'
 
 const CreateRun = () => {
-  // State for creating a new run
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [distance, setDistance] = useState("");
-  const [typeOfRun, setTypeOfRun] = useState(""); // New state for type of run
+  const [typeOfRun, setTypeOfRun] = useState(""); 
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [arrangements, setArrangements] = useState([]);
-  const [user, setUser] = useState(null); // To store the logged-in user
-  const [username, setUsername] = useState(""); // To store the username
+  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState("");
 
-  // State for editing an event
   const [isEditing, setIsEditing] = useState(false);
-  const [editingEvent, setEditingEvent] = useState(null); // Store the event object being edited
+  const [editingEvent, setEditingEvent] = useState(null);
 
-  // Fetch the current logged-in user and retrieve their username
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false); 
+  const [deleteEventId, setDeleteEventId] = useState(null);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
 
-        // Fetch the user's username from Firestore using the user's UID
         const userDocRef = doc(db, "users", currentUser.uid);
         const userDocSnap = await getDoc(userDocRef);
         if (userDocSnap.exists()) {
@@ -61,57 +60,58 @@ const CreateRun = () => {
     }
 
     try {
-      // Add new arrangement logic only
-      await addDoc(collection(db, "arrangements"), {
-        title,
-        date,
-        time,
-        location,
-        distance,
-        typeOfRun, // Added type of run to Firestore
-        description,
-        createdAt: new Date().toISOString(),
-        createdBy: username, // Use the username fetched from Firestore
-        userId: user.uid, // Store the user's unique ID for reference
-      });
-      setMessage("Run successfully created!");
+      if (isEditing && editingEvent) {
+        await updateDoc(doc(db, "arrangements", editingEvent.id), {
+          title,
+          date,
+          time,
+          location,
+          distance,
+          typeOfRun,
+          description,
+        });
+        setMessage("Run successfully updated!");
+      } else {
+        await addDoc(collection(db, "arrangements"), {
+          title,
+          date,
+          time,
+          location,
+          distance,
+          typeOfRun, 
+          description,
+          createdAt: new Date().toISOString(),
+          createdBy: username, 
+          userId: user.uid, 
+        });
+        setMessage("Run successfully created!");
+      }
 
-      // Reset form
-      setTitle("");
-      setDate("");
-      setTime("");
-      setLocation("");
-      setDistance("");
-      setTypeOfRun(""); // Reset type of run
-      setDescription("");
-
+      handleReset();
+      setIsEditing(false);
       fetchArrangements();
     } catch (err) {
-      console.error("Error creating run: ", err);
-      setError("Failed to create run. Please try again.");
+      console.error("Error creating or updating run: ", err);
+      setError("Failed to create or update run. Please try again.");
     }
   };
 
-  // Memoize fetchArrangements function to avoid re-renders
   const fetchArrangements = useCallback(async () => {
     if (!user) return;
 
     try {
-      // Fetch arrangements only for the logged-in user
       const q = query(collection(db, "arrangements"), where("userId", "==", user.uid));
       const querySnapshot = await getDocs(q);
 
-      // Get the current date
       const currentDate = new Date();
 
-      // Filter out past events and sort by the closest upcoming date
       const fetchedArrangements = querySnapshot.docs
         .map(doc => ({
           id: doc.id,
           ...doc.data(),
         }))
-        .filter(arrangement => new Date(arrangement.date) >= currentDate) // Exclude past events
-        .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by closest date
+        .filter(arrangement => new Date(arrangement.date) >= currentDate) 
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
 
       setArrangements(fetchedArrangements);
     } catch (err) {
@@ -120,44 +120,69 @@ const CreateRun = () => {
     }
   }, [user]);
 
-  // Use effect to fetch events when the user is set
   useEffect(() => {
     fetchArrangements();
   }, [fetchArrangements]);
 
-  // Start editing an arrangement
+  const handleReset = () => {
+    setTitle("");
+    setDate("");
+    setTime("");
+    setLocation("");
+    setDistance("");
+    setTypeOfRun("");
+    setDescription("");
+    setError("");
+    setMessage("");
+  };
+
   const startEditing = (arrangement) => {
-    setEditingEvent(arrangement); // Set the event object for editing
-    setIsEditing(true); // Show the edit panel
+    setIsEditing(true);
+    setEditingEvent(arrangement);
+    setTitle(arrangement.title);
+    setDate(arrangement.date);
+    setTime(arrangement.time);
+    setLocation(arrangement.location);
+    setDistance(arrangement.distance);
+    setTypeOfRun(arrangement.typeOfRun);
+    setDescription(arrangement.description);
   };
 
   const closeEditPanel = () => {
-    setIsEditing(false); // Hide the edit panel
-    setEditingEvent(null); // Clear the editing event
+    setIsEditing(false);
+    setEditingEvent(null);
+    handleReset();
   };
 
-  // Handle deleting an arrangement
-  const handleDelete = async (arrangementId) => {
+  const handleDeleteClick = (arrangementId) => {
+    setDeleteEventId(arrangementId); 
+    setShowConfirmDelete(true); 
+  };
+
+  const handleConfirmDelete = async () => {
     try {
-      await deleteDoc(doc(db, "arrangements", arrangementId));
+      await deleteDoc(doc(db, "arrangements", deleteEventId));
       setMessage("Run successfully deleted!");
-      fetchArrangements(); // Refresh arrangements after deletion
+      fetchArrangements(); 
+      setShowConfirmDelete(false); 
     } catch (err) {
       console.error("Error deleting arrangement: ", err);
       setError("Failed to delete arrangement.");
     }
   };
 
+  const handleCancelDelete = () => {
+    setShowConfirmDelete(false); 
+    setDeleteEventId(null); 
+  };
+
   return (
     <div className="createrun-page">
-      {/* Title Section */}
       <div className="createrun-title">
-        <h1>Create a Run</h1>
+        <h1>{isEditing ? "Edit Run" : "Create a Run"}</h1>
       </div>
 
-      {/* Main Content Section */}
       <div className="createrun-content">
-
         <form onSubmit={handleSubmit} className="arrangement-form">
           <div>
             <label>Event Title</label>
@@ -177,9 +202,7 @@ const CreateRun = () => {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
-              placeholder="YYYY-MM-DD" // Acts as a visual guide, though placeholder doesn't work
-              onFocus={(e) => (e.target.type = 'date')} // For iOS Safari compatibility
-              onBlur={(e) => date === '' && (e.target.type = 'text')} // Clear input if not selected
+              placeholder="YYYY-MM-DD"
             />
           </div>
 
@@ -191,8 +214,6 @@ const CreateRun = () => {
               onChange={(e) => setTime(e.target.value)}
               required
               placeholder="HH:MM"
-              onFocus={(e) => (e.target.type = 'time')}
-              onBlur={(e) => time === '' && (e.target.type = 'text')}
             />
           </div>
 
@@ -207,7 +228,6 @@ const CreateRun = () => {
             />
           </div>
 
-          {/* Distance Dropdown */}
           <div>
             <label>Distance of Run</label>
             <input
@@ -216,13 +236,11 @@ const CreateRun = () => {
               onChange={(e) => setDistance(e.target.value)}
               required
               placeholder="Enter the distance of the run"
-              min="0" // Optional: Ensures no negative numbers
-              step="any" // Optional: Allows decimal numbers
+              min="0"
+              step="any"
             />
           </div>
 
-
-          {/* Type of Run Dropdown */}
           <div>
             <label>Type of Run</label>
             <select
@@ -248,7 +266,12 @@ const CreateRun = () => {
             />
           </div>
 
-          <button type="submit" className="button-primary">Create Run</button>
+          <div className="button-container">
+            <button type="submit" className="button-primary">
+              {isEditing ? "Update Run" : "Create Run"}
+            </button>
+            <button type="button" className="button-reset" onClick={handleReset}>Reset</button>
+          </div>
         </form>
 
         {message && <p className="success-message">{message}</p>}
@@ -261,21 +284,23 @@ const CreateRun = () => {
               <div
                 key={arrangement.id}
                 className="arrangement-item"
-                onClick={() => startEditing(arrangement)} // Make the item clickable
+                onClick={() => startEditing(arrangement)}
               >
                 <h3>{arrangement.title}</h3>
                 <p> Date: {arrangement.date} </p>
                 <p> Time: {arrangement.time} </p>
                 <p> Location: {arrangement.location} </p>
                 <p> Distance: {arrangement.distance} </p>
-                <p> Type of Run: {arrangement.typeOfRun} </p> {/* Display the type of run */}
+                <p> Type of Run: {arrangement.typeOfRun} </p> 
                 <img
                   src={deleteFilled}
                   alt="Delete"
                   className="delete-icon"
-                  onClick={() => handleDelete(arrangement.id)} // Trigger delete
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteClick(arrangement.id);
+                  }}
                 />
-
               </div>
             ))
           ) : (
@@ -284,12 +309,18 @@ const CreateRun = () => {
         </div>
       </div>
 
-      {/* Render EventEdit component when editing */}
+      {showConfirmDelete && (
+        <ConfirmDelete
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
+
       {isEditing && editingEvent && (
         <EventEdit
           event={editingEvent}
           onClose={closeEditPanel}
-          refreshEvents={fetchArrangements} // To fetch updated events list after editing
+          refreshEvents={fetchArrangements}
         />
       )}
     </div>

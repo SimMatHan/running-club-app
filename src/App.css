@@ -16,12 +16,12 @@
   --color-input-border: #ccc;  /* Border color for input fields */
   --color-event-marker: #FC5203;  /* Border color for input fields */
 
-  /* Lighter, softer gradient between blue and orange for running types */
-  --color-run-5k: linear-gradient(135deg, #d6e5ff, #fcd4b2);  /* Lys sart blå til sart orange */
-  --color-run-10k: linear-gradient(135deg, #e0ddff, #fcd4b2);  /* Lys lilla med blå toner til sart orange */
-  --color-run-15k: linear-gradient(135deg, #ead9f7, #fcd4b2);  /* Lys lavendel til sart orange */
-  --color-run-half-marathon: linear-gradient(135deg, #eab08a, #fcd4b2);  /* Lys orange/lilla til sart orange */
-  --color-run-marathon: linear-gradient(135deg, #fcd4b2, #a3c6ff);  /* Sart orange til sart blå */
+  /* Lighter, softer gradient between blue, white, and orange for running types */
+  --color-run-5k: linear-gradient(135deg, #d6e5ff, #ffffff, #fcd4b2);  /* Lys blå til hvid til sart orange */
+  --color-run-10k: linear-gradient(135deg, #e0ddff, #ffffff, #fcd4b2);  /* Lys lilla med blå toner til hvid til sart orange */
+  --color-run-15k: linear-gradient(135deg, #ead9f7, #ffffff, #f9c1a2);  /* Lys lavendel til hvid til lidt mørkere orange */
+  --color-run-half-marathon: linear-gradient(135deg, #eab08a, #ffffff, #f0a86f);  /* Lys orange/lilla til hvid til mørkere orange */
+  --color-run-marathon: linear-gradient(135deg, #a3c6ff, #ffffff, #fcd4b2);  /* Sart blå til hvid til sart orange */
 
   --font-size-small: 12px;
   --font-size-medium: 16px;
